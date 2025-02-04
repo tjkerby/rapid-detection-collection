@@ -1,0 +1,1 @@
+# rapid-detection-collection
