@@ -49,5 +49,5 @@ if __name__ == "__main__":
     # Example usage
     latitude = 41.7306162
     longitude = -111.8154619
-    zoom = 20 # Adjust zoom level as needed
+    zoom = 21 # Adjust zoom level as needed
     get_satellite_image(latitude, longitude, zoom, scale=2)
