@@ -2,7 +2,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-def get_satellite_image(latitude, longitude, zoom, size="1280x1280", scale=2):
+def get_satellite_image(latitude, longitude, zoom, size="1280x1280", scale=2, output_path=None):
     """
     Fetch satellite image from Google Maps Static API
     Args:
@@ -11,6 +11,7 @@ def get_satellite_image(latitude, longitude, zoom, size="1280x1280", scale=2):
         zoom (int): Zoom level (0-21, where 21 is closest)
         size (str): Image dimensions in pixels (width x height), max 1280x1280
         scale (int): Image scale/resolution multiplier (1, 2, or 4)
+        output_path (str): Optional custom output path for the image
     """
     # Try loading from .env file first
     load_dotenv()
@@ -35,8 +36,8 @@ def get_satellite_image(latitude, longitude, zoom, size="1280x1280", scale=2):
     response = requests.get(base_url, params=params)
     
     if response.status_code == 200:
-        # Create filename using coordinates
-        filename = f"satellite_{latitude}_{longitude}_{zoom}.png"
+        # Use custom output path if provided, otherwise create default filename
+        filename = output_path if output_path else f"satellite_{latitude}_{longitude}_{zoom}.png"
         
         # Save the image
         with open(filename, 'wb') as f:
