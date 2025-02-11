@@ -3,7 +3,7 @@ import os
 import sys
 from pull_image import get_satellite_image
 
-def process_coordinates(json_file, output_dir="satellite_images", limit=None):
+def process_coordinates(json_file, output_dir="satellite_images", limit=None, zoom=18):
     """
     Process coordinates from JSON file and download satellite images
     Args:
@@ -33,8 +33,8 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None):
                 
             longitude, latitude = coord[0], coord[1]
             
-            # Create filename using river name and coordinates
-            filename = f"{river_name}_{longitude}_{latitude}.png"
+            # Create filename using river name and coordinates with zoom at end
+            filename = f"{river_name}_{longitude}_{latitude}_z{zoom}.png"
             filepath = os.path.join(output_dir, filename)
             
             # Skip if image already exists
@@ -47,7 +47,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None):
                 get_satellite_image(
                     latitude=latitude,
                     longitude=longitude,
-                    zoom=18,  # Adjust zoom level as needed
+                    zoom=zoom,  # Adjust zoom level as needed
                     size="1280x1280",
                     scale=4,
                     output_path=filepath
@@ -66,7 +66,7 @@ def main():
     output_dir = sys.argv[2] if len(sys.argv) > 2 else 'satellite_images'
     limit = int(sys.argv[3]) if len(sys.argv) > 3 else None
     
-    process_coordinates(json_file, output_dir, limit)
+    process_coordinates(json_file, output_dir, limit,19)
 
 if __name__ == "__main__":
     main()
