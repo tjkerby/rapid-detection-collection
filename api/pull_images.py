@@ -21,11 +21,11 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
     
     request_count = 0
     # Process each feature in the collection
-    hasStarted = not start is None
+    hasStarted = start is None
     for feature in data['features']:
         
         river_name = "unnamed" if 'name' not in feature['properties'] else feature['properties']['name'].replace(" ", "_")
-        if start is not None and river_name == start:
+        if river_name == start:
             hasStarted = True
         if hasStarted:
             coordinates = feature['geometry']['coordinates']
@@ -36,7 +36,12 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                     print(f"Request limit of {limit} reached. Stopping.")
                     return
                     
-                longitude, latitude = coord[0], coord[1]
+                print(f"Processing: {river_name}")
+                print(f"Coordinates: {coord}")
+                if isinstance(coord, list):
+                    longitude, latitude = coord[0], coord[1]
+                else:
+                    longitude, latitude = coordinates[0], coordinates[1]
                 
                 # Create filename using river name and coordinates with zoom at end
                 filename = f"{river_name}_{longitude}_{latitude}_z{zoom}.png"
@@ -75,8 +80,8 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                         json.dump(dict, f, indent=4)
                 except Exception as e:
                     print(f"Error downloading {filename}: {str(e)}")
-            if end is not None and river_name == end:
-                break
+        if river_name == end:
+            break
 
 def main():
     # if len(sys.argv) < 2:
