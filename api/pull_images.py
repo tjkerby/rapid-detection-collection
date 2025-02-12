@@ -38,7 +38,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
             filepath = os.path.join(output_dir, filename)
             
             # Skip if image already exists
-            if os.path.exists(filepath):
+            if os.path.exists(filepath) or os.path.exists("image_jsons/"+filename.replace("png","json")):
                 print(f"Skipping existing image: {filename}")
                 continue
             
@@ -54,6 +54,20 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                 )
                 request_count += 1
                 print(f"Downloaded: {filename} ({request_count} requests made)")
+                filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
+                # filepathJson = os.path.join(output_dir, filename)
+                dict = {
+                    "name": river_name,
+                    "longitude": longitude,
+                    "latitude": latitude,
+                    "zoom": zoom,
+                    "image": filepath,
+                    "class": "",
+                    "map": ""
+                }
+
+                with open("./image_jsons/"+filenameJson, 'w') as f:
+                    json.dump(dict, f, indent=4)
             except Exception as e:
                 print(f"Error downloading {filename}: {str(e)}")
 
@@ -65,8 +79,9 @@ def main():
     json_file = sys.argv[1]
     output_dir = sys.argv[2] if len(sys.argv) > 2 else 'satellite_images'
     limit = int(sys.argv[3]) if len(sys.argv) > 3 else None
+    zoom = int(sys.argv[4]) if len(sys.argv) > 4 else 18
     
-    process_coordinates(json_file, output_dir, limit,19)
+    process_coordinates(json_file, output_dir, limit,zoom)
 
 if __name__ == "__main__":
     main()
