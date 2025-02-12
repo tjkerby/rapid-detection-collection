@@ -2,8 +2,8 @@ import json
 import os
 import sys
 from pull_image import get_satellite_image
-
-def process_coordinates(json_file, output_dir="satellite_images", limit=None, zoom=18):
+import argparse 
+def process_coordinates(json_file, output_dir="satellite_images", limit=None, zoom=18,start=None,end=None):
     """
     Process coordinates from JSON file and download satellite images
     Args:
@@ -21,67 +21,92 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
     
     request_count = 0
     # Process each feature in the collection
+    hasStarted = start is None
     for feature in data['features']:
-        river_name = "unnamed" if 'name' not in feature['properties'] else feature['properties']['name'].replace(" ", "_")
-        coordinates = feature['geometry']['coordinates']
         
-        # Process each coordinate pair
-        for coord in coordinates:
-            if limit and request_count >= limit:
-                print(f"Request limit of {limit} reached. Stopping.")
-                return
+        river_name = "unnamed" if 'name' not in feature['properties'] else feature['properties']['name'].replace(" ", "_")
+        
+        if river_name == start:
+            hasStarted = True
+        if hasStarted:
+            coordinates = feature['geometry']['coordinates']
+            
+            # Process each coordinate pair
+            for coord in coordinates:
+                if limit and request_count >= limit:
+                    print(f"Request limit of {limit} reached. Stopping.")
+                    return
+                    
+                print(f"Processing: {river_name}")
+                print(f"Coordinates: {coord}")
+                if isinstance(coord, list):
+                    longitude, latitude = coord[0], coord[1]
+                else:
+                    longitude, latitude = coordinates[0], coordinates[1]
                 
-            longitude, latitude = coord[0], coord[1]
-            
-            # Create filename using river name and coordinates with zoom at end
-            filename = f"{river_name}_{longitude}_{latitude}_z{zoom}.png"
-            filepath = os.path.join(output_dir, filename)
-            
-            # Skip if image already exists
-            if os.path.exists(filepath) or os.path.exists("image_jsons/"+filename.replace("png","json")):
-                print(f"Skipping existing image: {filename}")
-                continue
-            
-            try:
-                # Call the satellite image API
-                get_satellite_image(
-                    latitude=latitude,
-                    longitude=longitude,
-                    zoom=zoom,  # Adjust zoom level as needed
-                    size="1280x1280",
-                    scale=4,
-                    output_path=filepath
-                )
-                request_count += 1
-                print(f"Downloaded: {filename} ({request_count} requests made)")
-                filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
-                # filepathJson = os.path.join(output_dir, filename)
-                dict = {
-                    "name": river_name,
-                    "longitude": longitude,
-                    "latitude": latitude,
-                    "zoom": zoom,
-                    "image": filepath,
-                    "class": "",
-                    "map": ""
-                }
+                # Create filename using river name and coordinates with zoom at end
+                filename = f"{river_name}_{longitude}_{latitude}_z{zoom}.png"
+                filepath = os.path.join(output_dir, filename)
+                
+                # Skip if image already exists
+                if os.path.exists(filepath) or os.path.exists("image_jsons/"+filename.replace("png","json")):
+                    print(f"Skipping existing image: {filename}")
+                    continue
+                
+                try:
+                    # Call the satellite image API
+                    get_satellite_image(
+                        latitude=latitude,
+                        longitude=longitude,
+                        zoom=zoom,  # Adjust zoom level as needed
+                        size="1280x1280",
+                        scale=4,
+                        output_path=filepath
+                    )
+                    request_count += 1
+                    print(f"Downloaded: {filename} ({request_count} requests made)")
+                    filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
+                    # filepathJson = os.path.join(output_dir, filename)
+                    dict = {
+                        "name": river_name,
+                        "longitude": longitude,
+                        "latitude": latitude,
+                        "zoom": zoom,
+                        "image": filepath,
+                        "class": "",
+                        "map": ""
+                    }
 
-                with open("./image_jsons/"+filenameJson, 'w') as f:
-                    json.dump(dict, f, indent=4)
-            except Exception as e:
-                print(f"Error downloading {filename}: {str(e)}")
+                    with open("./image_jsons/"+filenameJson, 'w') as f:
+                        json.dump(dict, f, indent=4)
+                except Exception as e:
+                    print(f"Error downloading {filename}: {str(e)}")
+        # print(f"Finished processing: {river_name} is it {end}")
+        if river_name == end.replace(" ", "_"):
+            return
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python pull_images.py <json_file> [output_dir] [limit]")
-        sys.exit(1)
+    # if len(sys.argv) < 2:
+    #     print("Usage: python pull_images.py <json_file> [output_dir] [limit]")
+    #     sys.exit(1)
     
-    json_file = sys.argv[1]
-    output_dir = sys.argv[2] if len(sys.argv) > 2 else 'satellite_images'
-    limit = int(sys.argv[3]) if len(sys.argv) > 3 else None
-    zoom = int(sys.argv[4]) if len(sys.argv) > 4 else 18
+    parser = argparse.ArgumentParser(description='Process coordinates from JSON file and download satellite images')
+    parser.add_argument('--json_file', help='Path to JSON file containing coordinates')
+    parser.add_argument('--output_dir', default='images', help='Directory to store downloaded images')
+    parser.add_argument('--limit', type=int, default=None, help='Optional limit on number of API requests')
+    parser.add_argument('--zoom', type=int, default=18, help='Zoom level for satellite images')
+    parser.add_argument('--start', help='River name to start processing from')
+    parser.add_argument('--end', help='River name to end processing at')
     
-    process_coordinates(json_file, output_dir, limit,zoom)
+    args = parser.parse_args()
+    
+    json_file = args.json_file
+    output_dir = args.output_dir
+    limit = args.limit
+    zoom = args.zoom
+    start = args.start
+    end = args.end
+    process_coordinates(json_file, output_dir, limit,zoom,start,end)
 
 if __name__ == "__main__":
     main()
