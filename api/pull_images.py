@@ -25,6 +25,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
     for feature in data['features']:
         
         river_name = "unnamed" if 'name' not in feature['properties'] else feature['properties']['name'].replace(" ", "_")
+        
         if river_name == start:
             hasStarted = True
         if hasStarted:
@@ -80,8 +81,9 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                         json.dump(dict, f, indent=4)
                 except Exception as e:
                     print(f"Error downloading {filename}: {str(e)}")
-        if river_name == end:
-            break
+        # print(f"Finished processing: {river_name} is it {end}")
+        if river_name == end.replace(" ", "_"):
+            return
 
 def main():
     # if len(sys.argv) < 2:
