@@ -3,7 +3,7 @@ import os
 import sys
 from pull_image import get_satellite_image
 import argparse 
-def process_coordinates(json_file, output_dir="satellite_images", limit=None, zoom=18,start=None,end=None):
+def process_coordinates(json_file, output_dir="satellite_images", limit=None, zoom=18,start=None,end='thereisnoend!'):
     """
     Process coordinates from JSON file and download satellite images
     Args:
@@ -32,7 +32,16 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
             coordinates = feature['geometry']['coordinates']
             
             # Process each coordinate pair
-            for coord in coordinates:
+            for coords in coordinates:
+                if feature['geometry']['type'] == 'Polygon':
+                    if len(coords) > 0:
+                        avg_lon = sum(point[0] for point in coords) / len(coords)
+                        avg_lat = sum(point[1] for point in coords) / len(coords)
+                        coord = [avg_lon, avg_lat]
+                    else:
+                        coord = coords
+                else:
+                    coord = coords
                 if limit and request_count >= limit:
                     print(f"Request limit of {limit} reached. Stopping.")
                     return
@@ -65,7 +74,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                     )
                     request_count += 1
                     print(f"Downloaded: {filename} ({request_count} requests made)")
-                    filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
+                    filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}_s{1}.json"
                     # filepathJson = os.path.join(output_dir, filename)
                     dict = {
                         "name": river_name,
@@ -96,7 +105,7 @@ def main():
     parser.add_argument('--limit', type=int, default=None, help='Optional limit on number of API requests')
     parser.add_argument('--zoom', type=int, default=18, help='Zoom level for satellite images')
     parser.add_argument('--start', help='River name to start processing from')
-    parser.add_argument('--end', help='River name to end processing at')
+    parser.add_argument('--end', help='River name to end processing at',default='thereisnoend!')
     
     args = parser.parse_args()
     
