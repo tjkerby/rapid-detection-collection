@@ -82,8 +82,11 @@ class ImageMask():
 
         image = self.image.copy()
 
-        for mask, score in zip(self.masks, self.scores):
+        for mask in self.masks:
+            
+            print(mask)
             image = self.show_mask(mask, image)
+            # cv2.fillPoly(image, pts=mask, color=(0, 0, 255))
 
         # if self.input_points is not None:
         #     image = self.show_points(image, self.input_points, self.input_labels)
@@ -141,6 +144,7 @@ if __name__=="__main__":
     # TODO: implement glob (or similar) to get images
 
     cv2.namedWindow(winname='image')
+    cv2.moveWindow("image", 100, 100)
     cv2.setMouseCallback('image', imageMask.click_event) 
 
     while True:
@@ -151,10 +155,11 @@ if __name__=="__main__":
 
     cv2.destroyAllWindows() 
 
-    # np.save(
-    #     f'output/{image_name}_label.npy',
-    #     masks, 
-    # )
+    np.save(
+        # f'output/{image_name}_label.npy',
+        f'output/test.npy',
+        imageMask.masks, 
+    )
 
 
 
