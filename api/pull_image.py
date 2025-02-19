@@ -48,7 +48,8 @@ def get_satellite_image(latitude, longitude, zoom, size="1280x1280", scale=2, ou
 
 if __name__ == "__main__":
     # Example usage
-    latitude = 41.7306162
-    longitude = -111.8154619
-    zoom = 21 # Adjust zoom level as needed
+    # 9447_-71.68399351583908_44.07510219825334_z18
+    latitude = 44.07510219825334
+    longitude = -71.68399351583908
+    zoom = 18 # Adjust zoom level as needed
     get_satellite_image(latitude, longitude, zoom, scale=2)
