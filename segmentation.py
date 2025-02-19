@@ -1,15 +1,13 @@
+import cv2
 import torch
 import numpy as np
-
-import cv2
-from PIL import Image
-import matplotlib.pyplot as plt
+from glob import glob
 
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 
-class ImageMask():
+class Image():
     
     def __init__(self, image, predictor):
         self.image = self.image_mask = image
@@ -17,85 +15,70 @@ class ImageMask():
         self.predictor = predictor
         self.predictor.set_image(self.image)
 
-        self.input_points = np.empty((0, 2), dtype=float)
+        self.input_points = np.empty((0, 2), dtype=int)
         self.input_labels = np.empty((0), dtype=int)
 
         self.masks = None
         self.scores = None
         self.logits = None
 
+
     def click_event(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
-            
             self.input_points = np.vstack([self.input_points, [x, y]])
             self.input_labels = np.append(self.input_labels, 1)
 
-            print(self.input_points, self.input_labels, '\n')
+            self.update_masks()
+            self.show_masks()
 
-            self.update_mask()
+        
+        elif event == cv2.EVENT_RBUTTONDOWN:
+            self.input_points = np.vstack([self.input_points, [x, y]])
+            self.input_labels = np.append(self.input_labels, 0)
+
+            self.update_masks()
             self.show_masks()
 
 
-    # def set_image(self):
-    #     # TODO: update mask_image given the input_points/input_labels
-        
-    #     return
-    
-    def update_mask(self):
+    def remove_last(self):   
+        # TODO: fix out-of-bounds error         
+        self.input_points = self.input_points[:-1]
+        self.input_labels = self.input_labels[:-1]
+
+        self.update_masks()
+        self.show_masks()
+            
+
+    def update_masks(self):
         self.masks, self.scores, self.logits = self.predictor.predict(
             point_coords=self.input_points,
             point_labels=self.input_labels,
             multimask_output=False,
         )
         
-
-
-
-
-
-
-
-    def show_mask(self, mask, image):
-
-        mask = mask.astype(np.uint8) * 255  # Convert mask to binary
-        mask_colored = np.zeros_like(image, dtype=np.uint8)
-        mask_colored[:, :, :] = np.array([30, 144, 255], dtype=np.uint8)  # BGR for OpenCV
-        overlay = cv2.addWeighted(image, 1, mask_colored, 0.6, 0, dtype=cv2.CV_8U)
-
-        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        contours = [cv2.approxPolyDP(contour, epsilon=0.01 * cv2.arcLength(contour, True), closed=True) for contour in contours]
-        cv2.drawContours(overlay, contours, -1, (255, 255, 255), thickness=2)
-        
-        return overlay
     
+    def show_masks(self):
+        masks = np.logical_or.reduce(self.masks).astype(np.uint8)
 
-    def show_points(self, image, coords, labels, marker_size=4):
+        new_masks = np.zeros((*masks.shape, 4), dtype=np.uint8)
+        new_masks[masks == 1] = [255, 127, 0, 127]
 
-        for point, label in zip(coords, labels):
-            color = (0, 255, 0) if label == 1 else (0, 0, 255)  # Green for positive, Red for negative
-            cv2.drawMarker(image, tuple(point), color, markerType=cv2.MARKER_STAR, markerSize=marker_size, thickness=2, line_type=cv2.LINE_AA)
-        
-        return image
-    
+        image_alpha = cv2.cvtColor(self.image, cv2.COLOR_BGR2BGRA)
 
-    def show_masks(self): # , image, masks, scores, point_coords=None, box_coords=None, input_labels=None, borders=True):
+        alpha_mask = new_masks[:, :, 3] / 255.0  # Normalize to [0,1]
+        alpha_mask = alpha_mask[..., np.newaxis]  # Expand dims to match shape
 
-        image = self.image.copy()
+        blended = (new_masks[:, :, :3] * alpha_mask + image_alpha[:, :, :3] * (1 - alpha_mask)).astype(np.uint8)
+        image_alpha = np.dstack([blended, (alpha_mask * 255).astype(np.uint8)])
 
-        for mask in self.masks:
-            
-            print(mask)
-            image = self.show_mask(mask, image)
-            # cv2.fillPoly(image, pts=mask, color=(0, 0, 255))
+        self.image_mask = cv2.cvtColor(image_alpha, cv2.COLOR_BGRA2BGR)
 
-        # if self.input_points is not None:
-        #     image = self.show_points(image, self.input_points, self.input_labels)
-
-        self.image_mask = image
-
-
-
-
+        for i in range(len(self.input_points)):
+            if self.input_labels[i] == 1:
+                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 223, 31), thickness=-1)
+            else:
+                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 31, 223), thickness=-1)
+            self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=9, color=(255, 255, 255), thickness=2)
 
 
 def select_device():
@@ -123,43 +106,59 @@ def select_device():
     return device
 
 
-
 if __name__=="__main__": 
-    
-    # np.random.seed(3)
+    np.random.seed(3)
     
     device = select_device()
 
     sam2_checkpoint = "../checkpoints/sam2.1_hiera_large.pt"
     model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
-
     sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
-    imageMask = ImageMask(
-        image=cv2.imread('ExamplesFromDataRelease/Rogue_Devil_05012015.jpg', 1),
-        predictor=SAM2ImagePredictor(sam2_model)
-    )
 
-    # TODO: can i load the model once for many images?
-    # TODO: begin while loop
-    # TODO: implement glob (or similar) to get images
+    model = SAM2ImagePredictor(sam2_model)
 
-    cv2.namedWindow(winname='image')
-    cv2.moveWindow("image", 100, 100)
-    cv2.setMouseCallback('image', imageMask.click_event) 
+    print()
+    print('Left click to add a positive point.')
+    print('Right click to add a negative point.')
+    print('Press "z" to remove the most recent point.')
+    print('Press "q" to exit and save masks.')
 
-    while True:
-        cv2.imshow('image', imageMask.image_mask)
-        key = cv2.waitKey(1) 
-        if key == ord('q'):
+    all_images = glob("input/*")
+    finished_images = glob("output/*")
+
+    files = []
+    for i in all_images:
+        if i not in finished_images:
+            files.append(i)
+
+    for file in files:
+        image_name = file.split("/")[-1].strip(".jpg")
+        print(f'\n\nImage: {image_name}')
+
+        my_image = Image(
+            image=cv2.imread(file, 1),
+            predictor=model
+        )
+
+        cv2.namedWindow(winname='image')
+        cv2.setWindowProperty("image", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.setMouseCallback('image', my_image.click_event) 
+
+        while True:
+            cv2.imshow('image', my_image.image_mask)
+            key = cv2.waitKey(1) 
+            if key == ord('z'):
+                my_image.remove_last()
+            elif key == ord('q'):
+                break
+
+        cv2.destroyAllWindows() 
+
+        np.save(
+            f'output/{image_name}.npy',
+            my_image.masks, 
+        )
+
+        again = input("\nWould you like to continue? [y/n] ")
+        if again.lower() == 'n' or again.lower() == 'no':
             break
-
-    cv2.destroyAllWindows() 
-
-    np.save(
-        # f'output/{image_name}_label.npy',
-        f'output/test.npy',
-        imageMask.masks, 
-    )
-
-
-
