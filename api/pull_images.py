@@ -81,7 +81,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                         "longitude": longitude,
                         "latitude": latitude,
                         "zoom": zoom,
-                        "image": filepath,
+                        "image": filepath.replace("\\","/"),
                         "class": "",
                         "map": ""
                     }
