@@ -2,6 +2,7 @@ import cv2
 import torch
 import numpy as np
 from glob import glob
+from pathlib import Path
 
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
@@ -111,8 +112,9 @@ if __name__=="__main__":
     
     device = select_device()
 
-    sam2_checkpoint = "../checkpoints/sam2.1_hiera_large.pt"
-    model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
+    sam2_checkpoint = "../checkpoints/sam2.1_hiera_large.pt" # change this to where your local "checkpoints" folder lives
+    
+    model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml" # don't change this line
     sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
 
     model = SAM2ImagePredictor(sam2_model)
@@ -124,15 +126,18 @@ if __name__=="__main__":
     print('Press "q" to exit and save masks.')
 
     all_images = glob("input/*")
-    finished_images = glob("output/*")
+    finished_image_names = [Path(i).stem for i in glob("output/*")]
+    print(all_images[0])
+    print(finished_image_names[0])
 
     files = []
     for i in all_images:
-        if i not in finished_images:
+        if Path(i).stem not in finished_image_names:
             files.append(i)
 
     for file in files:
-        image_name = file.split("/")[-1].strip(".jpg")
+        image_name = Path(i).stem
+        # image_name = file
         print(f'\n\nImage: {image_name}')
 
         my_image = Image(
