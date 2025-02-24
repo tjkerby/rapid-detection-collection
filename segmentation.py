@@ -127,8 +127,12 @@ if __name__=="__main__":
     print('Press "z" to remove the most recent point.')
     print('Press "q" to exit and save masks.')
 
+    json_folder = "input"
+    image_input_folder = "input"
+    output_folder = "output"
+
     all_json = []
-    for file in glob("input/*.json"):
+    for file in glob("{json_folder}/*.json"):
         with open(file, 'r') as f:
             all_json.append(json.load(f))
 
@@ -146,7 +150,7 @@ if __name__=="__main__":
 
         # TODO: make usable for png OR jpg/jpeg
         my_image = Image(
-            image=cv2.imread(f'input/{signature}.png', 1),
+            image=cv2.imread(f'{image_input_folder}/{signature}.png', 1),
             predictor=model
         )
 
@@ -168,11 +172,11 @@ if __name__=="__main__":
         if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
             npy_file_name = f"{signature}.npy"
             np.save(
-                f"output/{npy_file_name}",
+                f"{output_folder}/{npy_file_name}",
                 my_image.masks, 
             )
             file["map"] = npy_file_name
-            with open(f"input/{signature}.json", 'w') as f:
+            with open(f"{json_folder}/{signature}.json", 'w') as f:
                 json.dump(file, f, indent=4)
 
         again = input("\nWould you like to continue? [y/n] ")
