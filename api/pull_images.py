@@ -124,7 +124,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                             "rapid_class": "",
                             "uhj_class": "",
                             "map": ""
-                        }
+                        }#
                         with open("./image_jsons/"+filenameJson, 'w') as jf:
                             json.dump(data_dict, jf, indent=4)
                     except Exception as e:
