@@ -1,4 +1,6 @@
+import re
 import cv2
+import json
 import torch
 import numpy as np
 from glob import glob
@@ -112,7 +114,7 @@ if __name__=="__main__":
     
     device = select_device()
 
-    sam2_checkpoint = "../checkpoints/sam2.1_hiera_large.pt" # change this to where your local "checkpoints" folder lives
+    sam2_checkpoint = "checkpoints/sam2.1_hiera_large.pt" # change this to where your local "checkpoints" folder lives
     
     model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml" # don't change this line
     sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
@@ -125,27 +127,30 @@ if __name__=="__main__":
     print('Press "z" to remove the most recent point.')
     print('Press "q" to exit and save masks.')
 
-    all_images = glob("input/*")
-    finished_image_names = [Path(i).stem for i in glob("output/*")]
-    print(all_images[0])
-    print(finished_image_names[0])
+    all_json = []
+    for file in glob("input/*.json"):
+        with open(file, 'r') as f:
+            all_json.append(json.load(f))
 
-    files = []
-    for i in all_images:
-        if Path(i).stem not in finished_image_names:
-            files.append(i)
+    unlabelled = []
+    for file in all_json:
+        if file["map"] == "":
+            unlabelled.append(file)
 
-    for file in files:
-        image_name = Path(i).stem
-        # image_name = file
-        print(f'\n\nImage: {image_name}')
+    # TODO: change for loop to recursive function
+    for file in unlabelled:
+        signature = re.split(r"[/\\]", file["image"])[-1].rsplit(".", 1)[0]
+        print(signature)
 
+        print(f'\n\nImage: {file["name"]}')
+
+        # TODO: make usable for png OR jpg/jpeg
         my_image = Image(
-            image=cv2.imread(file, 1),
+            image=cv2.imread(f'input/{signature}.png', 1),
             predictor=model
         )
 
-        cv2.namedWindow(winname='image')
+        cv2.namedWindow(winname='image') # TODO: do i need to set this every time
         cv2.setWindowProperty("image", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         cv2.setMouseCallback('image', my_image.click_event) 
 
@@ -159,11 +164,18 @@ if __name__=="__main__":
 
         cv2.destroyAllWindows() 
 
-        np.save(
-            f'output/{image_name}.npy',
-            my_image.masks, 
-        )
+        save_npy = input("\nWould you like to save your masks for this image? [y/n] ")
+        if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
+            npy_file_name = f"{signature}.npy"
+            np.save(
+                f"output/{npy_file_name}",
+                my_image.masks, 
+            )
+            file["map"] = npy_file_name
+            with open(f"input/{signature}.json", 'w') as f:
+                json.dump(file, f, indent=4)
 
         again = input("\nWould you like to continue? [y/n] ")
         if again.lower() == 'n' or again.lower() == 'no':
             break
+ 
