@@ -4,10 +4,20 @@ import json
 import torch
 import numpy as np
 from glob import glob
-from pathlib import Path
 
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
+
+
+################################################################
+# These may need to be changed 
+################################################################
+JSON_FOLDER = 'input'
+IMAGE_FOLDER = 'input'
+NPY_FOLDER = 'output'
+
+SAM2_CHECKPOINT = 'checkpoints/sam2.1_hiera_large.pt' 
+################################################################
 
 
 class Image():
@@ -33,7 +43,6 @@ class Image():
 
             self.update_masks()
             self.show_masks()
-
         
         elif event == cv2.EVENT_RBUTTONDOWN:
             self.input_points = np.vstack([self.input_points, [x, y]])
@@ -59,127 +68,161 @@ class Image():
             multimask_output=False,
         )
         
-    
+
     def show_masks(self):
-        masks = np.logical_or.reduce(self.masks).astype(np.uint8)
+        if len(self.input_labels) == 0:
+            self.image_mask = self.image
+        else:
+            masks = np.logical_or.reduce(self.masks).astype(np.uint8)
 
-        new_masks = np.zeros((*masks.shape, 4), dtype=np.uint8)
-        new_masks[masks == 1] = [255, 127, 0, 127]
+            new_masks = np.zeros((*masks.shape, 4), dtype=np.uint8)
+            new_masks[masks == 1] = [255, 127, 0, 127]
 
-        image_alpha = cv2.cvtColor(self.image, cv2.COLOR_BGR2BGRA)
+            image_alpha = cv2.cvtColor(self.image, cv2.COLOR_BGR2BGRA)
 
-        alpha_mask = new_masks[:, :, 3] / 255.0  # Normalize to [0,1]
-        alpha_mask = alpha_mask[..., np.newaxis]  # Expand dims to match shape
+            alpha_mask = new_masks[:, :, 3] / 255.0  # Normalize to [0,1]
+            alpha_mask = alpha_mask[..., np.newaxis]  # Expand dims to match shape
 
-        blended = (new_masks[:, :, :3] * alpha_mask + image_alpha[:, :, :3] * (1 - alpha_mask)).astype(np.uint8)
-        image_alpha = np.dstack([blended, (alpha_mask * 255).astype(np.uint8)])
+            blended = (new_masks[:, :, :3] * alpha_mask + image_alpha[:, :, :3] * (1 - alpha_mask)).astype(np.uint8)
+            image_alpha = np.dstack([blended, (alpha_mask * 255).astype(np.uint8)])
 
-        self.image_mask = cv2.cvtColor(image_alpha, cv2.COLOR_BGRA2BGR)
+            self.image_mask = cv2.cvtColor(image_alpha, cv2.COLOR_BGRA2BGR)
 
-        for i in range(len(self.input_points)):
-            if self.input_labels[i] == 1:
-                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 223, 31), thickness=-1)
-            else:
-                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 31, 223), thickness=-1)
-            self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=9, color=(255, 255, 255), thickness=2)
+            for i in range(len(self.input_points)):
+                if self.input_labels[i] == 1:
+                    self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 223, 31), thickness=-1)
+                else:
+                    self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 31, 223), thickness=-1)
+                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=9, color=(255, 255, 255), thickness=2)    
 
 
 def select_device():
     # select the device for computation
     if torch.cuda.is_available():
-        device = torch.device("cuda")
+        device = torch.device('cuda')
     else:
-        device = torch.device("cpu")
-    print(f"using device: {device}")
+        device = torch.device('cpu')
+    print(f'using device: {device}')
 
-    if device.type == "cuda":
+    if device.type == 'cuda':
         # use bfloat16 for the entire notebook
-        torch.autocast("cuda", dtype=torch.bfloat16).__enter__()
+        torch.autocast('cuda', dtype=torch.bfloat16).__enter__()
         # turn on tfloat32 for Ampere GPUs (https://pytorch.org/docs/stable/notes/cuda.html#tensorfloat-32-tf32-on-ampere-devices)
         if torch.cuda.get_device_properties(0).major >= 8:
             torch.backends.cuda.matmul.allow_tf32 = True
             torch.backends.cudnn.allow_tf32 = True
-    elif device.type == "mps":
+    elif device.type == 'mps':
         print(
-            "\nSupport for MPS devices is preliminary. SAM 2 is trained with CUDA and might "
-            "give numerically different outputs and sometimes degraded performance on MPS. "
-            "See e.g. https://github.com/pytorch/pytorch/issues/84936 for a discussion."
+            '\nSupport for MPS devices is preliminary. SAM 2 is trained with CUDA and might '
+            'give numerically different outputs and sometimes degraded performance on MPS. '
+            'See e.g. https://github.com/pytorch/pytorch/issues/84936 for a discussion.'
         )
     
     return device
 
 
-if __name__=="__main__": 
-    np.random.seed(3)
+def option_menu(option, files):
+    option = option.strip()
+
+    if option == '1':
+        device = select_device()
+        model_cfg = 'configs/sam2.1/sam2.1_hiera_l.yaml' # don't change this line
+        sam2_model = build_sam2(model_cfg, SAM2_CHECKPOINT, device=device)
+        model = SAM2ImagePredictor(sam2_model)
+        print()
+        
+        print('Left click to add a positive point.')
+        print('Right click to add a negative point.')
+        print('Press "z" to remove the most recent point.')
+        print('Press "q" to exit and save masks.')
+        print()
+
+        label_image(files, model)
+
+    elif option == '2':
+        # label_rapids(files)
+        pass
     
-    device = select_device()
-
-    sam2_checkpoint = "checkpoints/sam2.1_hiera_large.pt" # change this to where your local "checkpoints" folder lives
+    elif option == '3':
+        # label_both(files)
+        pass
     
-    model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml" # don't change this line
-    sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
+    elif option == '4':
+        pass
+    
+    else:
+        option = input('Enter a number: [1, 2, 3, 4] ')
+        option_menu(option, files)
+    
 
-    model = SAM2ImagePredictor(sam2_model)
+def label_image(files, model):
+    while True:
+        file_name = files.pop(0)
+        with open(file_name, 'r') as f:
+            file = json.load(f)
+        if file['map'] == '':
+            break        
 
+    signature = re.split(r'[/\\]', file['image'])[-1].rsplit('.', 1)[0]
+
+    print(f'Image: {file['name']}')
     print()
-    print('Left click to add a positive point.')
-    print('Right click to add a negative point.')
-    print('Press "z" to remove the most recent point.')
-    print('Press "q" to exit and save masks.')
 
-    json_folder = "input"
-    image_input_folder = "input"
-    output_folder = "output"
-
-    all_json = []
-    for file in glob("{json_folder}/*.json"):
-        with open(file, 'r') as f:
-            all_json.append(json.load(f))
-
-    unlabelled = []
-    for file in all_json:
-        if file["map"] == "":
-            unlabelled.append(file)
-
-    # TODO: change for loop to recursive function
-    for file in unlabelled:
-        signature = re.split(r"[/\\]", file["image"])[-1].rsplit(".", 1)[0]
-        print(signature)
-
-        print(f'\n\nImage: {file["name"]}')
-
-        # TODO: make usable for png OR jpg/jpeg
+    # TODO: make usable for png OR jpg/jpeg
+    try:
         my_image = Image(
-            image=cv2.imread(f'{image_input_folder}/{signature}.png', 1),
+            image=cv2.imread(f'{IMAGE_FOLDER}/{signature}.png', 1),
             predictor=model
         )
+    # TODO: do something with the error/warning message?
+    #       can i send it somewhere else?
+    except Exception: # handle image does not exist
+        print()
+        return label_image(files, model)
 
-        cv2.namedWindow(winname='image') # TODO: do i need to set this every time
-        cv2.setWindowProperty("image", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-        cv2.setMouseCallback('image', my_image.click_event) 
+    cv2.namedWindow(winname='image') # TODO: do i need to set this every time
+    cv2.setWindowProperty('image', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    cv2.setMouseCallback('image', my_image.click_event) 
 
-        while True:
-            cv2.imshow('image', my_image.image_mask)
-            key = cv2.waitKey(1) 
-            if key == ord('z'):
-                my_image.remove_last()
-            elif key == ord('q'):
-                break
-
-        cv2.destroyAllWindows() 
-
-        save_npy = input("\nWould you like to save your masks for this image? [y/n] ")
-        if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
-            npy_file_name = f"{signature}.npy"
-            np.save(
-                f"{output_folder}/{npy_file_name}",
-                my_image.masks, 
-            )
-            file["map"] = npy_file_name
-            with open(f"{json_folder}/{signature}.json", 'w') as f:
-                json.dump(file, f, indent=4)
-
-        again = input("\nWould you like to continue? [y/n] ")
-        if again.lower() == 'n' or again.lower() == 'no':
+    while True:
+        cv2.imshow('image', my_image.image_mask)
+        key = cv2.waitKey(1) 
+        if key == ord('z'):
+            my_image.remove_last()
+        elif key == ord('q'):
             break
- 
+    cv2.destroyAllWindows() 
+
+    save_npy = input('Would you like to save your masks for this image? [y/n] ')
+    if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
+        npy_file_name = f'{signature}.npy'
+        np.save(
+            f'{NPY_FOLDER}/{npy_file_name}',
+            my_image.masks, 
+        )
+        file['map'] = npy_file_name
+        with open(f'{JSON_FOLDER}/{signature}.json', 'w') as f:
+            json.dump(file, f, indent=4)
+    else:
+        files.append(file_name)
+
+    again = input('Would you like to continue? [y/n] ') if len(files) > 0 else 'n'
+    if again.lower() == 'y' or again.lower() == 'yes':
+        print()
+        label_image(files, model)
+
+
+if __name__=='__main__':
+    np.random.seed(3)
+
+    files = glob(f'{JSON_FOLDER}/*.json')
+
+    print('1. Create masks')
+    print('2. Label rapids')
+    print('3. Create masks AND label rapids')
+    print('4. Quit')
+    print()
+
+    option = input('Which option do you choose? ')
+    print()
+    option_menu(option, files)
