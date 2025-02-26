@@ -52,7 +52,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                     )
                     request_count += 1
                     print(f"Downloaded: {filename} ({request_count} requests made)")
-                    filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}_s{1}.json"
+                    filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
                     data_dict = {
                         "name": river_name,
                         "longitude": longitude,
@@ -115,7 +115,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                         )
                         request_count += 1
                         print(f"Downloaded: {filename} ({request_count} requests made)")
-                        filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}_s{1}.json"
+                        filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
                         data_dict = {
                             "name": river_name,
                             "longitude": longitude,
