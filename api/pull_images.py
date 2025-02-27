@@ -4,8 +4,9 @@ import sys
 import csv  # added for CSV support
 from pull_image import get_satellite_image
 import argparse
+from dotenv import load_dotenv
 
-def process_coordinates(json_file, output_dir="satellite_images", limit=None, zoom=18, start=None, end='thereisnoend!'):
+def process_coordinates(json_file, output_dir, limit=None, zoom=18, start=None, end='thereisnoend!'):
     """
     Process coordinates from JSON file and download satellite images
     Args:
@@ -14,8 +15,20 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
         limit (int): Optional limit on number of API requests
     """
     # Create output directory if it doesn't exist
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    if not os.path.isdir(output_dir):
+        try:
+            os.makedirs(output_dir)
+        except OSError as e:
+            print(f"Error creating directory {output_dir}: {e}")
+            return
+    
+    # Set json output directory from the env variable 'DATA_PATH'
+    env_path = os.environ.get('DATA_PATH')
+    if not env_path:
+        env_path = "c:/Users/kaden/Independent-Study/rapid-detection-collection"
+    json_dir = os.path.join(env_path, "jsons")
+    if not os.path.exists(json_dir):
+        os.makedirs(json_dir)
     
     request_count = 0
 
@@ -52,7 +65,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                     )
                     request_count += 1
                     print(f"Downloaded: {filename} ({request_count} requests made)")
-                    filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}_s{1}.json"
+                    filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
                     data_dict = {
                         "name": river_name,
                         "longitude": longitude,
@@ -63,7 +76,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                         "uhj_class": "",
                         "map": ""
                     }
-                    with open("./image_jsons/"+filenameJson, 'w') as jf:
+                    with open(os.path.join(json_dir, filenameJson), 'w') as jf:
                         json.dump(data_dict, jf, indent=4)
                 except Exception as e:
                     print(f"Error downloading {filename}: {str(e)}")
@@ -115,7 +128,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                         )
                         request_count += 1
                         print(f"Downloaded: {filename} ({request_count} requests made)")
-                        filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}_s{1}.json"
+                        filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
                         data_dict = {
                             "name": river_name,
                             "longitude": longitude,
@@ -126,7 +139,7 @@ def process_coordinates(json_file, output_dir="satellite_images", limit=None, zo
                             "uhj_class": "",
                             "map": ""
                         }#
-                        with open("./image_jsons/"+filenameJson, 'w') as jf:
+                        with open(os.path.join(json_dir, filenameJson), 'w') as jf:
                             json.dump(data_dict, jf, indent=4)
                     except Exception as e:
                         print(f"Error downloading {filename}: {str(e)}")
@@ -143,8 +156,12 @@ def main():
     parser.add_argument('--end', help='River name to end processing at', default='thereisnoend!')
     
     args = parser.parse_args()
-    
-    process_coordinates(args.json_file, args.output_dir, args.limit, args.zoom, args.start, args.end)
+    load_dotenv()
+    env_path = os.environ.get('DATA_PATH')
+    if not env_path:
+        env_path = "c:/Users/kaden/Independent-Study/rapid-detection-collection"
+    full_output_dir = os.path.join(env_path, args.output_dir)
+    process_coordinates(args.json_file, full_output_dir, args.limit, args.zoom, args.start, args.end)
 
 if __name__ == "__main__":
     main()
