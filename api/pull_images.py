@@ -25,7 +25,7 @@ def process_coordinates(json_file, output_dir, limit=None, zoom=18, start=None, 
     # Set json output directory from the env variable 'DATA_PATH'
     env_path = os.environ.get('DATA_PATH')
     if not env_path:
-        env_path = "c:/Users/kaden/Independent-Study/rapid-detection-collection"
+        env_path = "c:/Users/kaden/Independent-Study/rapid-detection-collection/api"
     json_dir = os.path.join(env_path, "jsons")
     if not os.path.exists(json_dir):
         os.makedirs(json_dir)
@@ -159,7 +159,7 @@ def main():
     load_dotenv()
     env_path = os.environ.get('DATA_PATH')
     if not env_path:
-        env_path = "c:/Users/kaden/Independent-Study/rapid-detection-collection"
+        env_path = "c:/Users/kaden/Independent-Study/rapid-detection-collection/api"
     full_output_dir = os.path.join(env_path, args.output_dir)
     process_coordinates(args.json_file, full_output_dir, args.limit, args.zoom, args.start, args.end)
 
