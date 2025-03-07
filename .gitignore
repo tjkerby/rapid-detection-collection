@@ -172,3 +172,4 @@ cython_debug/
 sam2.1_hiera_large.pt
 sam2/
 segment-anything/
+api/
