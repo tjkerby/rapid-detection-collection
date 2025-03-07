@@ -12,14 +12,19 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 ################################################################
 # These may need to be changed 
 ################################################################
-folders = {
-    'json_folder': 'input',
-    'image_folder': 'input',
-    'npy_folder': 'output'
-}
+JSON_FOLDER  = '' # Folder Path in Box
+IMAGE_FOLDER = '' # Folder Path in Box
+NPY_FOLDER   = '' # Folder Path in Box
 
-SAM2_CHECKPOINT = 'checkpoints/sam2.1_hiera_tiny.pt' 
+SAM2_CHECKPOINT = 'checkpoints/sam2.1_hiera_tiny.pt' # File Path in Box
 ################################################################
+
+
+folders = {
+    'json_folder' : JSON_FOLDER,
+    'image_folder': IMAGE_FOLDER,
+    'npy_folder'  : NPY_FOLDER
+}
 
 
 def load_model():
