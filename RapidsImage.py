@@ -1,5 +1,5 @@
-import numpy as np
 import cv2
+import numpy as np
 
 class RapidsImage():
     
@@ -55,30 +55,27 @@ class RapidsImage():
         
 
     def show_masks(self):
-        if len(self.input_labels) == 0:
-            self.image_mask = self.image
-        else:
-            masks = np.logical_or.reduce(self.masks).astype(np.uint8)
+        masks = np.logical_or.reduce(self.masks).astype(np.uint8)
 
-            new_masks = np.zeros((*masks.shape, 4), dtype=np.uint8)
-            new_masks[masks == 1] = [255, 127, 0, 127]
+        new_masks = np.zeros((*masks.shape, 4), dtype=np.uint8)
+        new_masks[masks == 1] = [255, 127, 0, 127]
 
-            image_alpha = cv2.cvtColor(self.image, cv2.COLOR_BGR2BGRA)
+        image_alpha = cv2.cvtColor(self.image, cv2.COLOR_BGR2BGRA)
 
-            alpha_mask = new_masks[:, :, 3] / 255.0  # Normalize to [0,1]
-            alpha_mask = alpha_mask[..., np.newaxis]  # Expand dims to match shape
+        alpha_mask = new_masks[:, :, 3] / 255.0  # Normalize to [0,1]
+        alpha_mask = alpha_mask[..., np.newaxis]  # Expand dims to match shape
 
-            blended = (new_masks[:, :, :3] * alpha_mask + image_alpha[:, :, :3] * (1 - alpha_mask)).astype(np.uint8)
-            image_alpha = np.dstack([blended, (alpha_mask * 255).astype(np.uint8)])
+        blended = (new_masks[:, :, :3] * alpha_mask + image_alpha[:, :, :3] * (1 - alpha_mask)).astype(np.uint8)
+        image_alpha = np.dstack([blended, (alpha_mask * 255).astype(np.uint8)])
 
-            self.image_mask = cv2.cvtColor(image_alpha, cv2.COLOR_BGRA2BGR)
+        self.image_mask = cv2.cvtColor(image_alpha, cv2.COLOR_BGRA2BGR)
 
-            for i in range(len(self.input_points)):
-                if self.input_labels[i] == 1:
-                    self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 223, 31), thickness=-1)
-                else:
-                    self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 31, 223), thickness=-1)
-                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=9, color=(255, 255, 255), thickness=2)
+        for i in range(len(self.input_points)):
+            if self.input_labels[i] == 1:
+                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 223, 31), thickness=-1)
+            else:
+                self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=8, color=(31, 31, 223), thickness=-1)
+            self.image_mask = cv2.circle(self.image_mask, self.input_points[i].tolist(), radius=9, color=(255, 255, 255), thickness=2)
 
 
     def show_textbox(self):
