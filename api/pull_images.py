@@ -5,6 +5,8 @@ import csv  # added for CSV support
 from pull_image import get_satellite_image
 import argparse
 from dotenv import load_dotenv
+import time
+import datetime
 
 def process_coordinates(json_file, output_dir, limit=None, zoom=18, start=None, end='thereisnoend!'):
     """
@@ -66,6 +68,9 @@ def process_coordinates(json_file, output_dir, limit=None, zoom=18, start=None, 
                     request_count += 1
                     print(f"Downloaded: {filename} ({request_count} requests made)")
                     filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
+                    # Get current UTC timestamp in milliseconds
+                    timestamp_ms = int(time.time() * 1000)
+                    
                     data_dict = {
                         "name": river_name,
                         "longitude": longitude,
@@ -74,7 +79,8 @@ def process_coordinates(json_file, output_dir, limit=None, zoom=18, start=None, 
                         "image": filepath.replace("\\","/"),
                         "rapid_class": "",
                         "uhj_class": "",
-                        "map": ""
+                        "map": "",
+                        "timestamp": timestamp_ms
                     }
                     with open(os.path.join(json_dir, filenameJson), 'w') as jf:
                         json.dump(data_dict, jf, indent=4)
@@ -129,6 +135,7 @@ def process_coordinates(json_file, output_dir, limit=None, zoom=18, start=None, 
                         request_count += 1
                         print(f"Downloaded: {filename} ({request_count} requests made)")
                         filenameJson = f"{river_name}_{longitude}_{latitude}_z{zoom}.json"
+                        timestamp_ms = int(time.time() * 1000)
                         data_dict = {
                             "name": river_name,
                             "longitude": longitude,
@@ -137,7 +144,8 @@ def process_coordinates(json_file, output_dir, limit=None, zoom=18, start=None, 
                             "image": filepath.replace("\\","/"),
                             "rapid_class": "",
                             "uhj_class": "",
-                            "map": ""
+                            "map": "",
+                            "timestamp": timestamp_ms
                         }#
                         with open(os.path.join(json_dir, filenameJson), 'w') as jf:
                             json.dump(data_dict, jf, indent=4)
