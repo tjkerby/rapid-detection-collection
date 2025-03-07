@@ -1,0 +1,9 @@
+{
+    "name": "Big_Fish_Riffle",
+    "longitude": -124.2125352,
+    "latitude": 42.4924582,
+    "zoom": 18,
+    "image": "images/Big_Fish_Riffle_-124.2125352_42.4924582_z18.png",
+    "class": "",
+    "map": "masks/Big_Fish_Riffle_-124.2125352_42.4924582_z18.npy"
+}

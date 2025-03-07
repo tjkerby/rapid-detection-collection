@@ -1,0 +1,9 @@
+{
+    "name": "Big_Eddy",
+    "longitude": -120.495959,
+    "latitude": 45.464749,
+    "zoom": 18,
+    "image": "images/Big_Eddy_-120.495959_45.464749_z18.png",
+    "class": "",
+    "map": "masks/Big_Eddy_-120.495959_45.464749_z18.npy"
+}

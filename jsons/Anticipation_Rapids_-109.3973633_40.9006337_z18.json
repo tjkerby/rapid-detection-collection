@@ -1,0 +1,9 @@
+{
+    "name": "Anticipation_Rapids",
+    "longitude": -109.3973633,
+    "latitude": 40.9006337,
+    "zoom": 18,
+    "image": "images/Anticipation_Rapids_-109.3973633_40.9006337_z18.png",
+    "class": "",
+    "map": "masks/Anticipation_Rapids_-109.3973633_40.9006337_z18.npy"
+}

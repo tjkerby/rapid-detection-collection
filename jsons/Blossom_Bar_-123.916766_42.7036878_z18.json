@@ -1,0 +1,9 @@
+{
+    "name": "Blossom_Bar",
+    "longitude": -123.916766,
+    "latitude": 42.7036878,
+    "zoom": 18,
+    "image": "images/Blossom_Bar_-123.916766_42.7036878_z18.png",
+    "class": "",
+    "map": "masks/Blossom_Bar_-123.916766_42.7036878_z18.npy"
+}

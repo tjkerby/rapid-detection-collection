@@ -1,0 +1,9 @@
+{
+    "name": "Allen_River",
+    "longitude": -158.7458325,
+    "latitude": 60.1595219,
+    "zoom": 18,
+    "image": "images/Allen_River_-158.7458325_60.1595219_z18.png",
+    "class": "",
+    "map": "masks/Allen_River_-158.7458325_60.1595219_z18.npy"
+}

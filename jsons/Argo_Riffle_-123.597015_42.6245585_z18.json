@@ -1,0 +1,9 @@
+{
+    "name": "Argo_Riffle",
+    "longitude": -123.597015,
+    "latitude": 42.6245585,
+    "zoom": 18,
+    "image": "images/Argo_Riffle_-123.597015_42.6245585_z18.png",
+    "class": "",
+    "map": "masks/Argo_Riffle_-123.597015_42.6245585_z18.npy"
+}
