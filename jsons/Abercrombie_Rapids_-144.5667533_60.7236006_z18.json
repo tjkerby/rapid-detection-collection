@@ -1,0 +1,9 @@
+{
+    "name": "Abercrombie_Rapids",
+    "longitude": -144.5667533,
+    "latitude": 60.7236006,
+    "zoom": 18,
+    "image": "images/Abercrombie_Rapids_-144.5667533_60.7236006_z18.png",
+    "class": "",
+    "map": "masks/Abercrombie_Rapids_-144.5667533_60.7236006_z18.npy"
+}

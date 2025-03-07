@@ -1,0 +1,9 @@
+{
+    "name": "Brumagin_Rapids",
+    "longitude": -74.927073,
+    "latitude": 44.287744,
+    "zoom": 18,
+    "image": "images/Brumagin_Rapids_-74.927073_44.287744_z18.png",
+    "class": "",
+    "map": "masks/Brumagin_Rapids_-74.927073_44.287744_z18.npy"
+}
