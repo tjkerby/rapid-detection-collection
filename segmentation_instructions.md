@@ -1,7 +1,7 @@
 # Segment River Images
 We have finetuned the Segment Anything Model 2 \(SAM2\) model to create segmentation maps \(masks\) of images containing rivers. You have the option of using finetuning.ipynb to finetune the model on your own images of rivers if you have corresponding masks. You also have the option of loading the pretrained model, which can be found on Box, and immediately begin predicting masks for new images of rivers using predict_new.ipynb.
 
-## Using the finetuning Notebook
+## Using the [finetuning.ipynb](finetuning.ipynb) Notebook
 **This is optional!** You may load in the pretrained model that we created and skip directly to predicting masks for new images.
 
 You must first update the rootPath to the location of this repository on your machine. This can be found by running the following command:
@@ -16,7 +16,7 @@ You will also need to ensure you have downloaded the SAM2 checkpoints, and may n
 
 The rest of the defined code will train the model using the data you have provided it with. The final code chunk will save the model that you trained into your current working directory. You may change the name of the model configuration, but ensure that it ends with the ".pt" extension. You are now ready to predict masks for new images!
 
-## Using the predict_new notebook
+## Using the [predict_new.ipynb](predict_new.ipynb) Notebook
 Begin by updating the rootPath \(run `!pwd` to find this\) and the modelPath, which will just be the name of the saved model configuration if your model configuration is stored in the current working directory. The model that we trained is currently set as the value of modelPath.
 
 You will also need to ensure you have downloaded the SAM2 checkpoints, and may need to update the path to load them in. In our example, we use the tiny model checkpoint.
