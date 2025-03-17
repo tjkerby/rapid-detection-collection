@@ -114,7 +114,7 @@ if __name__=="__main__":
     
     device = select_device()
 
-    sam2_checkpoint = "checkpoints/sam2.1_hiera_large.pt" # change this to where your local "checkpoints" folder lives
+    sam2_checkpoint = "sam2.1_hiera_large.pt" # change this to where your local "checkpoints" folder lives
     
     model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml" # don't change this line
     sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
