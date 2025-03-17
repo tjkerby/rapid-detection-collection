@@ -12,11 +12,11 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 ################################################################
 # These may need to be changed 
 ################################################################
-JSON_FOLDER  = '' # Folder Path in Box
-IMAGE_FOLDER = '' # Folder Path in Box
-NPY_FOLDER   = '' # Folder Path in Box
+JSON_FOLDER  = '../../../../../../Box-Box/STAT5810/rapids/data/jsons' # Folder Path in Box
+IMAGE_FOLDER = '../../../../../../Box-Box/STAT5810/rapids/data/images' # Folder Path in Box
+NPY_FOLDER   = '../../../../../../Box-Box/STAT5810/rapids/data/masks' # Folder Path in Box
 
-SAM2_CHECKPOINT = 'checkpoints/sam2.1_hiera_tiny.pt' # File Path in Box
+SAM2_CHECKPOINT = '../../../../../../Box-Box/STAT5810/rapids/sam2.1_hiera_tiny.pt' # File Path in Box
 ################################################################
 
 
