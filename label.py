@@ -8,7 +8,12 @@ from RapidsImage import RapidsImage as Image
 def is_valid_json(file, label_type):
     
     if label_type == 'mask':
-        return file['map'] == ''
+        print(file['image'])
+        print(file['map'])
+        print(file['map'] == None)
+        print()
+
+        return file['map'] == '' # and file['map'] != None
     
     elif label_type == 'rapid':
         if 'class' in file:
@@ -113,6 +118,8 @@ def label(folders, files, label_type, model=None):
             if label_type in ['rapid', 'mask_rapid']:
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
                 file['rapid_class'] = my_image.rapid_class
+                if my_image.rapids_class == 0:
+                    file['uhj_class'] = 0
             elif label_type == 'uhj':
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}UHJs.')
                 file['uhj_class'] = my_image.rapid_class
@@ -127,7 +134,7 @@ def label(folders, files, label_type, model=None):
                 )
                 file['map'] = npy_file_name
             else:
-                files.append(file_name)
+                file['map'] = None
         
         with open(f'{folders["json_folder"]}/{signature}.json', 'w') as f:
             json.dump(file, f, indent=4)
