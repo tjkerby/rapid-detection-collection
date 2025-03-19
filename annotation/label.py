@@ -8,12 +8,7 @@ from RapidsImage import RapidsImage as Image
 def is_valid_json(file, label_type):
     
     if label_type == 'mask':
-        print(file['image'])
-        print(file['map'])
-        print(file['map'] == None)
-        print()
-
-        return file['map'] == '' # and file['map'] != None
+        return file['map'] == ''
     
     elif label_type == 'rapid':
         if 'class' in file:
@@ -43,7 +38,15 @@ def display_image(my_image, label_type):
         while True:
             cv2.imshow('image', my_image.image_mask)
             key = cv2.waitKey(1) 
-            if key == ord('z'):
+            
+            if key == ord('t'):
+                my_image.remove_last()
+                break
+            elif key == ord('f'):
+                my_image.remove_last()
+                break
+            
+            elif key == ord('z'):
                 my_image.remove_last()
             elif key == ord('q'):
                 break

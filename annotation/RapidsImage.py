@@ -107,3 +107,7 @@ class RapidsImage():
 
     def set_rapid_class(self, value):
         self.rapid_class = value
+
+
+    def set_masks(self, masks):
+        self.masks = masks

@@ -36,6 +36,32 @@ def load_model():
     return model
 
 
+def print_mask_instructions():
+    print('Left click to add a positive point.')
+    print('Right click to add a negative point.')
+    print()
+    print('Press "t" to label image as containing all river')
+    print('Press "f" to label image as containing no river')
+    print()
+    print('Press "z" to remove the most recent point.')
+    print('Press "q" to exit and save masks.')
+    print()
+
+
+def print_rapid_instuctions():
+    print('Press one of the following keys to classify a given image:')
+    print('\t0: Image has no rapids.')
+    print('\t1: Image has rapids.')
+    print()
+
+
+def print_uhj_instuctions():
+    print('Press one of the following keys to classify a given image:')
+    print('\t0: Image has no UHJs.')
+    print('\t1: Image has UHJs.')
+    print()
+
+
 def option_menu(option, files):
     option = option.strip()
 
@@ -43,19 +69,12 @@ def option_menu(option, files):
         model = load_model()
         print()
         
-        print('Left click to add a positive point.')
-        print('Right click to add a negative point.')
-        print('Press "z" to remove the most recent point.')
-        print('Press "q" to exit and save masks.')
-        print()
+        print_mask_instructions()
 
         label(folders, files, 'mask', model)
 
     elif option == '2':
-        print('Press one of the following keys to classify a given image:')
-        print('\t0: Image has no rapids.')
-        print('\t1: Image has rapids.')
-        print()
+        print_rapid_instuctions()
 
         label(folders, files, 'rapid')
 
@@ -63,24 +82,13 @@ def option_menu(option, files):
         model = load_model()
         print()
         
-        print('Press one of the following keys to classify a given image:')
-        print('\t0: Image has no rapids.')
-        print('\t1: Image has rapids.')
-        print() 
-
-        print('Left click to add a positive point.')
-        print('Right click to add a negative point.')
-        print('Press "z" to remove the most recent point.')
-        print('Press "q" to exit and save masks.')
-        print()
+        print_rapid_instuctions() 
+        print_mask_instructions()
 
         label(folders, files, 'mask_rapid', model)
     
     elif option == '4':
-        print('Press one of the following keys to classify a given image:')
-        print('\t0: Image has no rapids.')
-        print('\t1: Image has rapids.')
-        print()
+        print_uhj_instuctions()
 
         label(folders, files, 'uhj')
 
