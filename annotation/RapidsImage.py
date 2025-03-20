@@ -92,10 +92,11 @@ class RapidsImage():
         self.image_mask = np.vstack((self.image_mask, textbox))
 
 
-    def display_image(self):
+    def display_image(self, update=True):
         self.image_mask = self.image
         if self.predictor != None:
-            self.update_masks()
+            if update == True:
+                self.update_masks()
             self.show_masks()
         if self.has_textbox:
             self.show_textbox()
@@ -111,3 +112,4 @@ class RapidsImage():
 
     def set_masks(self, masks):
         self.masks = masks
+        self.display_image(update=False)

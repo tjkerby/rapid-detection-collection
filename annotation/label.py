@@ -3,6 +3,7 @@ import cv2
 import json
 import numpy as np
 from RapidsImage import RapidsImage as Image
+from time import sleep
 
 
 def is_valid_json(file, label_type):
@@ -30,9 +31,6 @@ def is_valid_json(file, label_type):
 
 def display_image(my_image, label_type):
     
-    print("masks shape:", my_image.masks.shape)
-    print(my_image.masks)
-    
     cv2.namedWindow(winname='image') 
     cv2.setWindowProperty('image', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
     cv2.setMouseCallback('image', my_image.click_event) 
@@ -43,11 +41,9 @@ def display_image(my_image, label_type):
             key = cv2.waitKey(1) 
             
             if key == ord('t'):
-                my_image.remove_last()
-                break
+                my_image.set_masks(np.ones(my_image.masks.shape))
             elif key == ord('f'):
-                my_image.remove_last()
-                break
+                my_image.set_masks(np.zeros(my_image.masks.shape))
             
             elif key == ord('z'):
                 my_image.remove_last()
@@ -73,15 +69,15 @@ def display_image(my_image, label_type):
                 my_image.set_textmsg(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
                 my_image.display_image()
 
+            if key == ord('t'):
+                my_image.set_masks(np.ones(my_image.masks.shape))
+            elif key == ord('f'):
+                my_image.set_masks(np.zeros(my_image.masks.shape))
+
             if key == ord('z'):
-                my_image.remove_last()
-            
+                my_image.remove_last()            
             elif key == ord('q'):
                 break
-    
-    
-    print("masks shape:", my_image.masks.shape)
-    print(my_image.masks)
     
     cv2.destroyAllWindows()
     return my_image
