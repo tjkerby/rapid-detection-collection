@@ -12,9 +12,9 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 ################################################################
 # These may need to be changed 
 ################################################################
-JSON_FOLDER  = '' # Folder Path in Box
-IMAGE_FOLDER = '' # Folder Path in Box
-NPY_FOLDER   = '' # Folder Path in Box
+JSON_FOLDER  = 'folder/' # Folder Path in Box
+IMAGE_FOLDER = 'folder/' # Folder Path in Box
+NPY_FOLDER   = 'folder/' # Folder Path in Box
 
 SAM2_CHECKPOINT = 'checkpoints/sam2.1_hiera_tiny.pt' # File Path in Box
 ################################################################

@@ -30,6 +30,9 @@ def is_valid_json(file, label_type):
 
 def display_image(my_image, label_type):
     
+    print("masks shape:", my_image.masks.shape)
+    print(my_image.masks)
+    
     cv2.namedWindow(winname='image') 
     cv2.setWindowProperty('image', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
     cv2.setMouseCallback('image', my_image.click_event) 
@@ -75,6 +78,10 @@ def display_image(my_image, label_type):
             
             elif key == ord('q'):
                 break
+    
+    
+    print("masks shape:", my_image.masks.shape)
+    print(my_image.masks)
     
     cv2.destroyAllWindows()
     return my_image
