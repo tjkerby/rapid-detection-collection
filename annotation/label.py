@@ -14,8 +14,8 @@ def is_valid_json(file, label_type):
     elif label_type == 'rapid':
         if 'class' in file:
             file['rapid_class'] = file.pop('class')
-        if 'rapids_class' in file:
-            file['rapid_class'] = file.pop('rapids_class')
+        if '' in file:
+            file['rapid_class'] = file.pop('')
         return file['rapid_class'] == ''
     
     elif label_type == 'mask_rapid':
@@ -124,7 +124,7 @@ def label(folders, files, label_type, model=None):
             if label_type in ['rapid', 'mask_rapid']:
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
                 file['rapid_class'] = my_image.rapid_class
-                if my_image.rapids_class == 0:
+                if my_image.rapid_class == 0:
                     file['uhj_class'] = 0
             elif label_type == 'uhj':
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}UHJs.')
