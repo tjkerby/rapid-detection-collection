@@ -12,11 +12,11 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 ################################################################
 # These may need to be changed 
 ################################################################
-JSON_FOLDER  = 'folder/' # Folder Path in Box
-IMAGE_FOLDER = 'folder/' # Folder Path in Box
-NPY_FOLDER   = 'folder/' # Folder Path in Box
+JSON_FOLDER  = '' # Folder Path in Box
+IMAGE_FOLDER = '' # Folder Path in Box
+NPY_FOLDER   = '' # Folder Path in Box
 
-SAM2_CHECKPOINT = 'checkpoints/sam2.1_hiera_tiny.pt' # File Path in Box
+SAM2_CHECKPOINT_FOLDER = '' # File Path in Box
 ################################################################
 
 
@@ -30,9 +30,9 @@ folders = {
 def load_model():
     device = select_device()
     model_cfg = 'configs/sam2.1/sam2.1_hiera_t.yaml'
-    sam2_model = build_sam2(model_cfg, SAM2_CHECKPOINT, device=device)
+    sam2_model = build_sam2(model_cfg, F'{SAM2_CHECKPOINT_FOLDER}/sam2.1_hiera_tiny.pt', device=device)
     model = SAM2ImagePredictor(sam2_model)
-    model.model.load_state_dict(torch.load('checkpoints/sam2_model_finetuned_epoch_3.pt'))
+    model.model.load_state_dict(torch.load(F'{SAM2_CHECKPOINT_FOLDER}/sam2_model_finetuned_epoch_3.pt'))
     return model
 
 
@@ -103,7 +103,7 @@ def option_menu(option, files):
 if __name__=='__main__':
     np.random.seed(3)
 
-    files = glob(f'{folders['json_folder']}/*.json')
+    files = glob(f'{folders["json_folder"]}/*.json')
 
     print('1. Create masks')
     print('2. Label rapids')

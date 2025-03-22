@@ -14,13 +14,15 @@ def is_valid_json(file, label_type):
     elif label_type == 'rapid':
         if 'class' in file:
             file['rapid_class'] = file.pop('class')
-        if '' in file:
-            file['rapid_class'] = file.pop('')
+        if 'rapids_class' in file:
+            file['rapid_class'] = file.pop('rapids_class')
         return file['rapid_class'] == ''
     
     elif label_type == 'mask_rapid':
         if 'class' in file:
             file['rapid_class'] = file.pop('class')
+        if 'rapids_class' in file:
+            file['rapid_class'] = file.pop('rapids_class')
         return file['map'] == '' and file['rapid_class'] == ''
     
     elif label_type == 'uhj':
@@ -97,7 +99,7 @@ def label(folders, files, label_type, model=None):
 
         signature = re.split(r'[/\\]', file['image'])[-1].rsplit('.', 1)[0]
 
-        print(f'Image: {file['name']}')
+        print(f'Image: {file["name"]}')
         print()
 
         if label_type in ['rapid', 'mask_rapid']:
