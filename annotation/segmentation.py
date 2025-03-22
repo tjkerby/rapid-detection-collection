@@ -16,7 +16,7 @@ JSON_FOLDER  = '' # Folder Path in Box
 IMAGE_FOLDER = '' # Folder Path in Box
 NPY_FOLDER   = '' # Folder Path in Box
 
-SAM2_CHECKPOINT_FOLDER = '' # File Path in Box
+SAM2_CHECKPOINT_FOLDER = '' # Folder Path in Box
 ################################################################
 
 

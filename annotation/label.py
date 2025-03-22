@@ -3,8 +3,7 @@ import cv2
 import json
 import numpy as np
 from RapidsImage import RapidsImage as Image
-from time import sleep
-
+from datetime import datetime
 
 def is_valid_json(file, label_type):
     
