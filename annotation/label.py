@@ -3,8 +3,7 @@ import cv2
 import json
 import numpy as np
 from RapidsImage import RapidsImage as Image
-from time import sleep
-
+from datetime import datetime
 
 def is_valid_json(file, label_type):
     
@@ -21,6 +20,8 @@ def is_valid_json(file, label_type):
     elif label_type == 'mask_rapid':
         if 'class' in file:
             file['rapid_class'] = file.pop('class')
+        if 'rapids_class' in file:
+            file['rapid_class'] = file.pop('rapids_class')
         return file['map'] == '' and file['rapid_class'] == ''
     
     elif label_type == 'uhj':
@@ -97,7 +98,7 @@ def label(folders, files, label_type, model=None):
 
         signature = re.split(r'[/\\]', file['image'])[-1].rsplit('.', 1)[0]
 
-        print(f'Image: {file['name']}')
+        print(f'Image: {file["name"]}')
         print()
 
         if label_type in ['rapid', 'mask_rapid']:
@@ -124,7 +125,7 @@ def label(folders, files, label_type, model=None):
             if label_type in ['rapid', 'mask_rapid']:
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
                 file['rapid_class'] = my_image.rapid_class
-                if my_image.rapids_class == 0:
+                if my_image.rapid_class == 0:
                     file['uhj_class'] = 0
             elif label_type == 'uhj':
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}UHJs.')
