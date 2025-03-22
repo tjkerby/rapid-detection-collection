@@ -1,9 +1,9 @@
 import re
 import cv2
 import json
+import time
 import numpy as np
 from RapidsImage import RapidsImage as Image
-from datetime import datetime
 
 def is_valid_json(file, label_type):
     
@@ -121,17 +121,25 @@ def label(folders, files, label_type, model=None):
 
         my_image = display_image(my_image, label_type)
 
+        today = time.strftime('%D_%T')
+
         if my_image.rapid_class >= 0:
             if label_type in ['rapid', 'mask_rapid']:
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
+                file['rapid_labeled_on'] = today
                 file['rapid_class'] = my_image.rapid_class
+
                 if my_image.rapid_class == 0:
+                    file['uhj_labeled_on'] = today
                     file['uhj_class'] = 0
+            
             elif label_type == 'uhj':
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}UHJs.')
+                file['uhj_labeled_on'] = today
                 file['uhj_class'] = my_image.rapid_class
 
         if label_type in ['mask', 'mask_rapid']:
+            file['mask_created_on'] = today
             save_npy = input('Would you like to save your masks for this image? [y/n] ')
             if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
                 npy_file_name = f'{signature}.npy'
