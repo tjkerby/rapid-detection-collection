@@ -107,7 +107,7 @@ class RiverClassifier:
 
 
     def _create_resnetpre(self, num_classes):
-        resnet = models.resnet18(pretrained=True)
+        resnet = models.resnet152(pretrained=True)
         for param in resnet.parameters():
             param.requires_grad = False
         num_features = resnet.fc.in_features
@@ -119,7 +119,7 @@ class RiverClassifier:
         )
         return resnet
     def _create_resnet(self, num_classes):
-        resnet = models.resnet18(pretrained=False)
+        resnet = models.resnet152(pretrained=False)
         for param in resnet.parameters():
             param.requires_grad = False
         num_features = resnet.fc.in_features
@@ -132,7 +132,7 @@ class RiverClassifier:
         return resnet
 
     def _create_efficientnetpre(self, num_classes):
-        efficientnet = models.efficientnet_b0(pretrained=True)
+        efficientnet = models.efficientnet_b7(pretrained=True)
         for param in efficientnet.parameters():
             param.requires_grad = False
         num_features = efficientnet.classifier[1].in_features
@@ -145,7 +145,7 @@ class RiverClassifier:
         )
         return efficientnet
     def _create_efficientnet(self, num_classes):
-        efficientnet = models.efficientnet_b0(pretrained=False)
+        efficientnet = models.efficientnet_b7(pretrained=False)
         for param in efficientnet.parameters():
             param.requires_grad = False
         num_features = efficientnet.classifier[1].in_features
@@ -201,7 +201,7 @@ class RiverClassifier:
                 early_stop_counter += 1
                 if early_stop_counter >= early_stop_patience:
                     print("Early stopping triggered.")
-                    break
+                    # break
 
         # Save the training plot after training or early stopping
         # torch.save(self.model.state_dict(), f'finished_{self.model_type}_model.pth')
@@ -294,8 +294,9 @@ def prepare_datasets(data_dir, image_size=1280, batch_size=8, random_state=42):
 def main():
     data_dir = './dataset'  # Replace with your data directory
     train_loader, val_loader, test_loader, class_names = prepare_datasets(data_dir)
-    for model in [ 'simple','resnet', 'efficientnet', 'resnetpre', 'efficientnetpre']:
-    # for model in [ 'resnetpre', 'efficientnetpre']:
+    # for model in [ 'simple','resnet', 'efficientnet', 'resnetpre', 'efficientnetpre']:
+    for model in [ 'resnetpre', 'efficientnetpre']:
+    # for model in ['efficientnetpre']:
         print(f"Training {model} model")
         print("=====================================")
         classifier = RiverClassifier(num_classes=len(class_names), model_type=model)
