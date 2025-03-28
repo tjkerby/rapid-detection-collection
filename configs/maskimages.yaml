@@ -1,0 +1,6 @@
+# Default configuration for maskimages.py
+
+input_dir: "input"
+output_dir: "output"
+checkpoint_dir: "checkpoints"
+threshold: 0.5
