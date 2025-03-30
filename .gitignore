@@ -30,7 +30,7 @@ MANIFEST
 api/image_jsons/*
 *.pth
 *.tfevents.*
-*.py
+# *.py  # Commenting out or removing this line to track Python files
 *.pts
 *.pt
 # PyInstaller
