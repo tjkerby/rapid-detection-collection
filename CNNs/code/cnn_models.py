@@ -294,8 +294,8 @@ def prepare_datasets(data_dir, image_size=1280, batch_size=8, random_state=42):
 def main():
     data_dir = './dataset'  # Replace with your data directory
     train_loader, val_loader, test_loader, class_names = prepare_datasets(data_dir)
-    # for model in [ 'simple','resnet', 'efficientnet', 'resnetpre', 'efficientnetpre']:
-    for model in [ 'resnetpre', 'efficientnetpre']:
+    for model in [ 'simple','resnet', 'efficientnet', 'resnetpre', 'efficientnetpre']:
+    # for model in [ 'resnetpre', 'efficientnetpre']:
     # for model in ['efficientnetpre']:
         print(f"Training {model} model")
         print("=====================================")
