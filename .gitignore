@@ -34,6 +34,7 @@ api/image_jsons/*
 *.pts
 *.pt
 *908.*
+*.npy
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.

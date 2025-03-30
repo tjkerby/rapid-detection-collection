@@ -49,10 +49,12 @@ def load_model(checkpoint_dir):
     print(f"Using device: {device}")
     
     # Using path format from segmentation.py
-    model_cfg = 'configs/sam2.1/sam2.1_hiera_t.yaml'
+    model_cfg = '/configs/sam2.1/sam2.1_hiera_t.yaml'
     sam2_model = build_sam2(model_cfg, f'{checkpoint_dir}/sam2.1_hiera_tiny.pt', device=device)
     model = SAM2ImagePredictor(sam2_model)
     model.model.load_state_dict(torch.load(f'{checkpoint_dir}/sam2_model_finetuned_2.pt'))
+    # model.model.load_state_dict(torch.load(f'{checkpoint_dir}/sam2_model_finetuned_epoch_3.pt'))
+
     return model
 
 def create_directory(directory):
@@ -69,37 +71,103 @@ def process_images(input_dir, output_dir, model, threshold=0.5):
     
     print(f"Found {len(image_files)} images to process")
     
-    for image_path in tqdm(image_files, desc="Processing images"):
-        # Extract filename without extension
-        filename = os.path.basename(image_path)
-        base_filename, _ = os.path.splitext(filename)
+    # Create subdirectories for masks and masked images
+    masks_dir = os.path.join(output_dir, "masks")
+    masked_images_dir = os.path.join(output_dir, "masked_images")
+    low_conf_dir = os.path.join(output_dir, "low_confidence")
+    create_directory(masks_dir)
+    create_directory(masked_images_dir)
+    create_directory(low_conf_dir)
+    
+    # Create a log file to track processing details
+    log_path = os.path.join(output_dir, "processing_log.txt")
+    processed_count = 0
+    low_conf_count = 0
+    
+    with open(log_path, 'w') as log_file:
+        log_file.write(f"Processing {len(image_files)} images with threshold {threshold}\n")
+        log_file.write("=" * 80 + "\n")
         
-        # Read image
-        image = cv2.imread(image_path)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        
-        # Set image in model
-        model.set_image(image)
-        
-        # Generate mask using automatic segmentation (no points)
-        masks, scores, _ = model.predict()
-        
-        # If any mask found above threshold
-        if len(masks) > 0 and max(scores) > threshold:
-            # Get best mask
-            best_idx = scores.argmax()
-            mask = masks[best_idx].astype(bool)  # Ensure mask is boolean type
+        for image_path in tqdm(image_files, desc="Processing images"):
+            # Extract filename without extension
+            filename = os.path.basename(image_path)
+            base_filename, _ = os.path.splitext(filename)
             
-            # Save mask as binary image
-            mask_output_path = os.path.join(output_dir, f"{base_filename}_mask.png")
-            cv2.imwrite(mask_output_path, (mask * 255).astype(np.uint8))
+            # Read image
+            image = cv2.imread(image_path)
+            if image is None:
+                log_file.write(f"ERROR: Could not read image {image_path}\n")
+                continue
+                
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             
-            # Optional: Save visualization
-            masked_img = image.copy()
-            # Apply color overlay where mask is True
-            masked_img[mask] = masked_img[mask] * 0.7 + np.array([255, 0, 0]) * 0.3
-            vis_output_path = os.path.join(output_dir, f"{base_filename}_visualization.png")
-            cv2.imwrite(vis_output_path, cv2.cvtColor(masked_img, cv2.COLOR_RGB2BGR))
+            # Set image in model
+            model.set_image(image)
+            
+            # Generate mask using automatic segmentation (no points)
+            masks, scores, _ = model.predict()
+            
+            # Log mask information
+            log_file.write(f"Image: {filename}, Found {len(masks)} masks\n")
+            if len(masks) > 0:
+                log_file.write(f"  Scores: {[float(f'{s:.4f}') for s in scores]}\n")
+                log_file.write(f"  Max score: {float(f'{max(scores):.4f}')}, Threshold: {threshold}\n")
+            
+            # If any mask found above threshold
+            if len(masks) > 0 and max(scores) > threshold:
+                # Get best mask
+                best_idx = scores.argmax()
+                mask = masks[best_idx].astype(bool)  # Ensure mask is boolean type
+                
+                # Save mask as binary .npy file in masks subdirectory
+                mask_output_path = os.path.join(masks_dir, f"{base_filename}_mask.npy")
+                np.save(mask_output_path, mask)
+                
+                # Extract only the masked region (where mask is True)
+                masked_region = image.copy()
+                # Create a black image where the mask is False
+                masked_region[~mask] = 0
+                
+                # Save only the masked region of the image in masked_images subdirectory
+                masked_output_path = os.path.join(masked_images_dir, f"{base_filename}_masked.png")
+                cv2.imwrite(masked_output_path, cv2.cvtColor(masked_region, cv2.COLOR_RGB2BGR))
+                
+                processed_count += 1
+                log_file.write(f"  [SUCCESS] Saved high-confidence mask and masked image\n")
+            else:
+                # If masks were found but below threshold, save the best one anyway in low_confidence folder
+                if len(masks) > 0:
+                    best_idx = scores.argmax()
+                    mask = masks[best_idx].astype(bool)
+                    
+                    # Save mask to low confidence directory
+                    low_conf_mask_path = os.path.join(low_conf_dir, f"{base_filename}_mask.npy")
+                    np.save(low_conf_mask_path, mask)
+                    
+                    # Save visualization for debugging
+                    masked_region = image.copy()
+                    masked_region[~mask] = 0
+                    low_conf_image_path = os.path.join(low_conf_dir, f"{base_filename}_masked.png")
+                    cv2.imwrite(low_conf_image_path, cv2.COLOR_RGB2BGR)
+                    
+                    low_conf_count += 1
+                    log_file.write(f"  [WARNING] Saved low-confidence mask (best score: {float(f'{max(scores):.4f}')})\n")
+                else:
+                    log_file.write(f"  [FAILED] No masks found\n")
+            
+            log_file.write("-" * 40 + "\n")
+            
+        # Write summary statistics
+        log_file.write("\nSUMMARY\n")
+        log_file.write("=" * 80 + "\n")
+        log_file.write(f"Total images processed: {len(image_files)}\n")
+        log_file.write(f"Images with high-confidence masks: {processed_count}\n")
+        log_file.write(f"Images with low-confidence masks: {low_conf_count}\n")
+        log_file.write(f"Images with no masks: {len(image_files) - processed_count - low_conf_count}\n")
+    
+    print(f"Processed {processed_count} images with high confidence")
+    print(f"Found {low_conf_count} images with low confidence masks (below threshold {threshold})")
+    print(f"See {log_path} for detailed processing information")
 
 if __name__ == "__main__":
     # Parse command-line arguments
