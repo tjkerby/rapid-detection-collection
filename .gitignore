@@ -27,6 +27,12 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+api/image_jsons/*
+*.pth
+*.tfevents.*
+*.py
+*.pts
+*.pt
 *908.*
 # PyInstaller
 #  Usually these files are written by a python script from a template
