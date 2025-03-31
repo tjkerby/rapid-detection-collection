@@ -300,7 +300,7 @@ def main():
         print(f"Training {model} model")
         print("=====================================")
         classifier = RiverClassifier(num_classes=len(class_names), model_type=model)
-        classifier.train(train_loader, val_loader, epochs=50)
+        classifier.train(train_loader, val_loader, epochs=20)
         classifier.evaluate(test_loader, class_names)
     # classifier = TrashClassifier(num_classes=len(class_names), model_type='efficientnet')
     # classifier.train(train_loader, val_loader, epochs=20)
