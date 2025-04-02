@@ -42,5 +42,7 @@ def show_masks(image, masks, scores, point_coords=None, box_coords=None, input_l
             show_box(box_coords, plt.gca())
         if len(scores) > 1:
             plt.title(f"Mask {i+1}, Score: {score:.3f}", fontsize=18)
+        elif len(scores) == 1:
+            plt.title(f"Score: {score:.3f}", fontsize=18)
         plt.axis('off')
         plt.show()
