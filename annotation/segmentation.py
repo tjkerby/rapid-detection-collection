@@ -12,7 +12,9 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 ################################################################
 # These may need to be changed 
 ################################################################
-JSON_FOLDER  = '../folder' # Folder Path in Box
+USER = 'fluh'
+
+METADATA  = 'fluh.csv' # Folder Path in Box
 IMAGE_FOLDER = '../folder' # Folder Path in Box
 NPY_FOLDER   = '../folder' # Folder Path in Box
 
@@ -21,7 +23,7 @@ SAM2_CHECKPOINT_FOLDER = '../checkpoints' # Folder Path in Box
 
 
 folders = {
-    'json_folder' : JSON_FOLDER,
+    'metadata' : METADATA,
     'image_folder': IMAGE_FOLDER,
     'npy_folder'  : NPY_FOLDER
 }
