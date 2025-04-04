@@ -1,0 +1,1339 @@
+Processing 266 images with threshold 0.5
+================================================================================
+Image: unnamed_-123.7744507_42.3375095_z18.png, Found 3 masks
+  Scores: [0.2735, 0.2573, 0.7886]
+  Max score: 0.7886, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7744899_42.3029044_z18.png, Found 3 masks
+  Scores: [0.0632, 0.1947, 0.5045]
+  Max score: 0.5045, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7754303_42.3027251_z18.png, Found 3 masks
+  Scores: [0.1328, 0.2851, 0.6153]
+  Max score: 0.6153, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7778011_42.3341427_z18.png, Found 3 masks
+  Scores: [0.1226, 0.4448, 0.7483]
+  Max score: 0.7483, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7792146_42.322957_z18.png, Found 3 masks
+  Scores: [0.1905, 0.0688, 0.5526]
+  Max score: 0.5526, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7804024_42.3331632_z18.png, Found 3 masks
+  Scores: [0.0909, 0.2321, 0.616]
+  Max score: 0.616, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7813906_42.3282865_z18.png, Found 3 masks
+  Scores: [0.2838, 0.0262, 0.5131]
+  Max score: 0.5131, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7816206_42.3481703_z18.png, Found 3 masks
+  Scores: [0.3295, 0.3411, 0.792]
+  Max score: 0.792, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7817117_42.3484558_z18.png, Found 3 masks
+  Scores: [0.1629, 0.2082, 0.6158]
+  Max score: 0.6158, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.8256732_42.3773602_z18.png, Found 3 masks
+  Scores: [0.3833, 0.307, 0.8383]
+  Max score: 0.8383, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.8287872_42.3776851_z18.png, Found 3 masks
+  Scores: [0.1179, 0.1796, 0.5697]
+  Max score: 0.5697, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.8394785_42.3842809_z18.png, Found 3 masks
+  Scores: [0.2055, 0.1211, 0.4045]
+  Max score: 0.4045, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4045)
+----------------------------------------
+Image: unnamed_-123.8910966_42.7067697_z18.png, Found 3 masks
+  Scores: [0.4898, 0.0893, 0.7995]
+  Max score: 0.7995, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-124.2519034_47.8124455_z18.png, Found 3 masks
+  Scores: [0.133, 0.1222, 0.4812]
+  Max score: 0.4812, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4812)
+----------------------------------------
+Image: unnamed_-134.2510511_57.660966_z18.png, Found 3 masks
+  Scores: [0.3353, 0.0016, 0.6845]
+  Max score: 0.6845, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-149.4299144_60.8729428_z18.png, Found 3 masks
+  Scores: [0.4393, 0.3598, 0.8228]
+  Max score: 0.8228, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Bernard_Creek_Rapids_-116.6131863_45.4023064_z18.png, Found 3 masks
+  Scores: [0.3688, 0.0917, 0.6864]
+  Max score: 0.6864, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Cache_Creek_Rapids_-116.8990359_45.9815422_z18.png, Found 3 masks
+  Scores: [0.7728, 0.0047, 0.8848]
+  Max score: 0.8848, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Coal_Riffle_-124.1914072_42.5009676_z18.png, Found 3 masks
+  Scores: [0.8053, 0.1084, 0.8825]
+  Max score: 0.8825, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Cochran_Rapids_-116.8848969_45.9583599_z18.png, Found 3 masks
+  Scores: [0.5869, 0.0163, 0.8821]
+  Max score: 0.8821, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Crooked_Riffle_-124.0887321_42.5592545_z18.png, Found 3 masks
+  Scores: [0.8238, 0.2056, 0.9327]
+  Max score: 0.9327, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Galice_Riffle_-123.5986809_42.5609471_z18.png, Found 3 masks
+  Scores: [0.5729, 0.1964, 0.8409]
+  Max score: 0.8409, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Gorilla_-120.5736927_47.5451481_z18.png, Found 3 masks
+  Scores: [0.5306, 0.0629, 0.8116]
+  Max score: 0.8116, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Kirby_Rapids_-116.4822657_45.5817464_z18.png, Found 3 masks
+  Scores: [0.545, 0.1084, 0.7376]
+  Max score: 0.7376, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Mash_Rapids_-81.0589922_38.21983_z18.png, Found 3 masks
+  Scores: [0.4077, 0.137, 0.6991]
+  Max score: 0.6991, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Pinball_-120.6370072_37.8549255_z18.png, Found 3 masks
+  Scores: [0.0357, 0.1252, 0.2814]
+  Max score: 0.2814, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2814)
+----------------------------------------
+Image: Upper_Pittsburg_Rapids_-116.4723481_45.625693_z18.png, Found 3 masks
+  Scores: [0.784, 0.0232, 0.8507]
+  Max score: 0.8507, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Pleasant_Valley_Rapids_-116.4836845_45.6421915_z18.png, Found 3 masks
+  Scores: [0.4896, 0.1297, 0.7948]
+  Max score: 0.7948, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Pleasant_Valley_Rapids_-116.4844276_45.640973_z18.png, Found 3 masks
+  Scores: [0.1426, 0.0532, 0.5263]
+  Max score: 0.5263, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Potter's_Falls_-84.5763876_36.0820929_z18.png, Found 3 masks
+  Scores: [0.209, 0.0647, 0.7386]
+  Max score: 0.7386, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Railroad_Rapids_-81.0259319_38.0112235_z18.png, Found 3 masks
+  Scores: [0.5587, 0.1755, 0.8406]
+  Max score: 0.8406, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Wigwam_Rapids_-67.7512915_44.8287466_z18.png, Found 3 masks
+  Scores: [0.0599, 0.4133, 0.6511]
+  Max score: 0.6511, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upset_-117.7063647_42.9499341_z18.png, Found 3 masks
+  Scores: [0.1484, 0.0554, 0.662]
+  Max score: 0.662, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upset_Rapids_-112.6943587_36.3555385_z18.png, Found 3 masks
+  Scores: [0.1135, 0.0892, 0.6044]
+  Max score: 0.6044, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Vail_Whitewater_Park_Rapid_-106.3754448_39.6411621_z18.png, Found 3 masks
+  Scores: [0.0069, 0.0573, 0.1139]
+  Max score: 0.1139, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.1139)
+----------------------------------------
+Image: Van_Creek_Rapids_-116.1380035_45.426573_z18.png, Found 3 masks
+  Scores: [0.5368, 0.0205, 0.8546]
+  Max score: 0.8546, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Van_Patton_Shoals_-82.1185517_34.760512_z18.png, Found 3 masks
+  Scores: [0.0356, 0.0478, 0.368]
+  Max score: 0.368, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.368)
+----------------------------------------
+Image: Veil_Cave_Rapids_-114.7229081_45.1245891_z18.png, Found 3 masks
+  Scores: [0.1252, 0.1237, 0.6694]
+  Max score: 0.6694, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Velvet_Falls_-115.2910973_44.5952268_z18.png, Found 3 masks
+  Scores: [0.0959, 0.1683, 0.4768]
+  Max score: 0.4768, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4768)
+----------------------------------------
+Image: Vinegar_Creek_Rapids_-115.9028399_45.4592659_z18.png, Found 3 masks
+  Scores: [0.6504, 0.0212, 0.8533]
+  Max score: 0.8533, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Virginia_Chute_-77.2370901_38.9780254_z18.png, Found 3 masks
+  Scores: [0.2171, 0.0294, 0.5081]
+  Max score: 0.5081, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wa-Poots_Rapids_-114.964731_46.1184216_z18.png, Found 3 masks
+  Scores: [0.2394, 0.0292, 0.5155]
+  Max score: 0.5155, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wake-up_Gorge_Rapids_-115.5219296_44.0703725_z18.png, Found 3 masks
+  Scores: [0.0661, 0.0905, 0.3734]
+  Max score: 0.3734, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3734)
+----------------------------------------
+Image: Wakeman_Riffle_-124.3395451_42.4734422_z18.png, Found 3 masks
+  Scores: [0.2488, 0.0326, 0.7228]
+  Max score: 0.7228, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walker's_Rips_-70.8991565_44.0025203_z18.png, Found 3 masks
+  Scores: [0.2128, 0.0667, 0.7288]
+  Max score: 0.7288, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walker_Riffle_-124.0625515_42.6015802_z18.png, Found 3 masks
+  Scores: [0.4054, 0.2869, 0.8672]
+  Max score: 0.8672, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wally's_Wallow_-115.5746012_42.254408_z18.png, Found 3 masks
+  Scores: [0.7492, 0.0154, 0.9469]
+  Max score: 0.9469, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walnut_Eddy_-122.6850927_45.2984538_z18.png, Found 3 masks
+  Scores: [0.8196, 0.0036, 0.9236]
+  Max score: 0.9236, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walnut_Eddy_-91.1287958_42.9992615_z18.png, Found 3 masks
+  Scores: [0.8218, 0.018, 0.9131]
+  Max score: 0.9131, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walthenberg_Rapids_-112.406629_36.2383811_z18.png, Found 3 masks
+  Scores: [0.4123, 0.1317, 0.7764]
+  Max score: 0.7764, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walthenberg_Rapids_-112.406634_36.2384471_z18.png, Found 3 masks
+  Scores: [0.4514, 0.1208, 0.778]
+  Max score: 0.778, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wangdoodle_Rapids_-115.536797_44.0710874_z18.png, Found 3 masks
+  Scores: [0.0148, 0.0413, 0.2129]
+  Max score: 0.2129, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2129)
+----------------------------------------
+Image: Wapshilla_Rapids_-116.7557198_45.9386976_z18.png, Found 3 masks
+  Scores: [0.1839, 0.0768, 0.6004]
+  Max score: 0.6004, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wards_Cove_Rapids_-113.7790796_35.9905689_z18.png, Found 3 masks
+  Scores: [0.6087, 0.0647, 0.7133]
+  Max score: 0.7133, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wards_Cove_Rapids_-113.7791153_35.9905436_z18.png, Found 3 masks
+  Scores: [0.5974, 0.0985, 0.7124]
+  Max score: 0.7124, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Warehouse_Riffle_-86.2284431_38.4090619_z18.png, Found 3 masks
+  Scores: [0.0281, 0.2669, 0.4149]
+  Max score: 0.4149, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4149)
+----------------------------------------
+Image: Warm_Springs_Rapids_-116.7004174_45.8210687_z18.png, Found 3 masks
+  Scores: [0.4336, 0.1405, 0.7657]
+  Max score: 0.7657, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washboard_Rapids_-123.7086405_42.6467715_z18.png, Found 3 masks
+  Scores: [0.4894, 0.4409, 0.8987]
+  Max score: 0.8987, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washer_Woman_Rapids_-114.7933467_45.904293_z18.png, Found 3 masks
+  Scores: [0.1947, 0.15, 0.7046]
+  Max score: 0.7046, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washing_Machine_Rapids_-84.6347342_36.4318202_z18.png, Found 3 masks
+  Scores: [0.0213, 0.2038, 0.7301]
+  Max score: 0.7301, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washout_Rapids_-120.8941501_45.5421452_z18.png, Found 3 masks
+  Scores: [0.0594, 0.124, 0.6528]
+  Max score: 0.6528, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Waterfall_Rapids_-113.7554675_35.9677913_z18.png, Found 3 masks
+  Scores: [0.0387, 0.1047, 0.418]
+  Max score: 0.418, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.418)
+----------------------------------------
+Image: Waterfall_Rapids_-113.7555032_35.967766_z18.png, Found 3 masks
+  Scores: [0.0468, 0.044, 0.3422]
+  Max score: 0.3422, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3422)
+----------------------------------------
+Image: Waterspout_Rapids_-116.5956969_45.4185277_z18.png, Found 3 masks
+  Scores: [0.3281, 0.1229, 0.6487]
+  Max score: 0.6487, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Watson_Riffle_-124.0352905_42.6424196_z18.png, Found 3 masks
+  Scores: [0.6127, 0.1417, 0.8528]
+  Max score: 0.8528, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Watson_Shoals_-83.073824_34.0266284_z18.png, Found 3 masks
+  Scores: [0.032, 0.4041, 0.5894]
+  Max score: 0.5894, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Weber_Rapids_-114.7274782_45.1564652_z18.png, Found 3 masks
+  Scores: [0.2259, 0.1191, 0.5965]
+  Max score: 0.5965, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wee_Riffle_-124.0745366_42.5570556_z18.png, Found 3 masks
+  Scores: [0.8641, 0.1931, 0.9654]
+  Max score: 0.9654, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Weir_Riffles_-91.603241_46.7360482_z18.png, Found 3 masks
+  Scores: [0.4387, 0.1143, 0.8792]
+  Max score: 0.8792, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wetspot_Rapids_-116.0639155_44.3426882_z18.png, Found 3 masks
+  Scores: [0.0602, 0.1212, 0.4693]
+  Max score: 0.4693, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4693)
+----------------------------------------
+Image: Whale_Tail_-82.348036_35.2802298_z18.png, Found 3 masks
+  Scores: [0.0294, 0.0044, 0.2039]
+  Max score: 0.2039, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2039)
+----------------------------------------
+Image: Whetstone_Falls_-68.6242147_45.8614314_z18.png, Found 3 masks
+  Scores: [0.0173, 0.0943, 0.3915]
+  Max score: 0.3915, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3915)
+----------------------------------------
+Image: Whiplash_Rapids_-115.3527156_45.4769763_z18.png, Found 3 masks
+  Scores: [0.3364, 0.047, 0.751]
+  Max score: 0.751, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whirlpool_Rapids_-89.5109649_45.5549571_z18.png, Found 3 masks
+  Scores: [0.1344, 0.0904, 0.6511]
+  Max score: 0.6511, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whistling_Bird_-117.7000539_43.134132_z18.png, Found 3 masks
+  Scores: [0.2184, 0.391, 0.7775]
+  Max score: 0.7775, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White's_Rapid_-109.448779_38.68421_z18.png, Found 3 masks
+  Scores: [0.5824, 0.0414, 0.8687]
+  Max score: 0.8687, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whitehorse_Rapids_-115.5342795_44.7851813_z18.png, Found 3 masks
+  Scores: [0.016, 0.1421, 0.2157]
+  Max score: 0.2157, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2157)
+----------------------------------------
+Image: Whitehorse_Rapids_-116.7117648_45.8264513_z18.png, Found 3 masks
+  Scores: [0.4733, 0.0501, 0.7426]
+  Max score: 0.7426, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whitehorse_Riffle_-123.4720083_42.438171_z18.png, Found 3 masks
+  Scores: [0.1895, 0.0887, 0.514]
+  Max score: 0.514, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whitewater_101_Rapids_-116.1221463_44.0802944_z18.png, Found 3 masks
+  Scores: [0.0848, 0.1489, 0.3792]
+  Max score: 0.3792, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3792)
+----------------------------------------
+Image: White_-88.6107802_44.9806621_z18.png, Found 3 masks
+  Scores: [0.0663, 0.2032, 0.6088]
+  Max score: 0.6088, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Cap_Rapids_-119.4247629_48.0637594_z18.png, Found 3 masks
+  Scores: [0.4946, 0.0151, 0.6807]
+  Max score: 0.6807, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Creek_Rapids_-114.841683_44.7908164_z18.png, Found 3 masks
+  Scores: [0.3535, 0.0651, 0.6687]
+  Max score: 0.6687, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Flash_Rapid_-111.7701479_34.3947507_z18.png, Found 3 masks
+  Scores: [0.6318, 0.5319, 0.8708]
+  Max score: 0.8708, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Horse_Rapids_-121.0785217_44.941656_z18.png, Found 3 masks
+  Scores: [0.2173, 0.0678, 0.4816]
+  Max score: 0.4816, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4816)
+----------------------------------------
+Image: White_Horse_Rapids_-77.719159_39.3223232_z18.png, Found 3 masks
+  Scores: [0.3471, 0.0767, 0.7533]
+  Max score: 0.7533, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Horse_Rips_-68.4184535_45.1768584_z18.png, Found 3 masks
+  Scores: [0.7163, 0.038, 0.8568]
+  Max score: 0.8568, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Island_Rapids_-105.1449791_46.8541746_z18.png, Found 3 masks
+  Scores: [0.8884, 0.0442, 0.9304]
+  Max score: 0.9304, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Widowmaker_-106.049324_38.6723236_z18.png, Found 3 masks
+  Scores: [0.1467, 0.0187, 0.4229]
+  Max score: 0.4229, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4229)
+----------------------------------------
+Image: Widowmaker_-117.3866943_42.7486937_z18.png, Found 3 masks
+  Scores: [0.32, 0.0405, 0.6989]
+  Max score: 0.6989, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Widow_Maker_Rapids_-84.6843868_36.086463_z18.png, Found 3 masks
+  Scores: [0.3528, 0.3128, 0.8197]
+  Max score: 0.8197, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wigwam_Riffles_-67.5103662_44.864552_z18.png, Found 3 masks
+  Scores: [0.5547, 0.1694, 0.8518]
+  Max score: 0.8518, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wildcat_Rapids_-123.6698799_42.655082_z18.png, Found 3 masks
+  Scores: [0.2435, 0.1647, 0.7945]
+  Max score: 0.7945, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wildcat_Rapids_-91.5974122_46.4866087_z18.png, Found 3 masks
+  Scores: [0.114, 0.1471, 0.5656]
+  Max score: 0.5656, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wilderness_Gateway_Rapids_-115.3089954_46.3436823_z18.png, Found 3 masks
+  Scores: [0.0257, 0.0582, 0.2268]
+  Max score: 0.2268, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2268)
+----------------------------------------
+Image: Wildhorse_Rapids_-116.8973856_44.8546025_z18.png, Found 3 masks
+  Scores: [0.792, 0.0268, 0.9203]
+  Max score: 0.9203, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Bull_Shoals_-83.6623958_35.9464764_z18.png, Found 3 masks
+  Scores: [0.8382, 0.0175, 0.922]
+  Max score: 0.922, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Goose_Rapids_-116.931259_46.0379317_z18.png, Found 3 masks
+  Scores: [0.6258, 0.0373, 0.7588]
+  Max score: 0.7588, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Horse_Rapids_-110.0259822_39.5919095_z18.png, Found 3 masks
+  Scores: [0.5568, 0.0621, 0.7936]
+  Max score: 0.7936, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Sheep_Rapids_-116.6598664_45.3332144_z18.png, Found 3 masks
+  Scores: [0.1957, 0.0082, 0.4183]
+  Max score: 0.4183, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4183)
+----------------------------------------
+Image: Wild_Sheep_Rapids_-116.6696304_45.3262697_z18.png, Found 3 masks
+  Scores: [0.254, 0.1711, 0.6421]
+  Max score: 0.6421, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willet_Eddy_-68.6353165_46.0689365_z18.png, Found 3 masks
+  Scores: [0.3451, 0.1797, 0.8111]
+  Max score: 0.8111, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Williamson_Rapids_-91.6053797_46.5211677_z18.png, Found 3 masks
+  Scores: [0.1282, 0.2825, 0.7986]
+  Max score: 0.7986, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: William_Miller_Riffle_-124.2638791_42.5011254_z18.png, Found 3 masks
+  Scores: [0.757, 0.0339, 0.8882]
+  Max score: 0.8882, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willies_Necktie_Rapids_-112.2631559_36.1456791_z18.png, Found 3 masks
+  Scores: [0.2453, 0.0834, 0.8366]
+  Max score: 0.8366, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willies_Necktie_Rapids_-112.2631609_36.1457451_z18.png, Found 3 masks
+  Scores: [0.1775, 0.0971, 0.8216]
+  Max score: 0.8216, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willow_Creek_Rapids_-116.5545866_45.4923842_z18.png, Found 3 masks
+  Scores: [0.571, 0.0708, 0.7292]
+  Max score: 0.7292, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willow_Rapids_-89.9643158_45.700236_z18.png, Found 3 masks
+  Scores: [0.0899, 0.0965, 0.4245]
+  Max score: 0.4245, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4245)
+----------------------------------------
+Image: Willow_Rapid_-120.6356511_37.8564383_z18.png, Found 3 masks
+  Scores: [0.023, 0.1245, 0.2156]
+  Max score: 0.2156, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2156)
+----------------------------------------
+Image: Will_Rice_Eddy_-87.7886359_35.9328409_z18.png, Found 3 masks
+  Scores: [0.4385, 0.0271, 0.6204]
+  Max score: 0.6204, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wilson_Rapids_-88.3367785_45.4441311_z18.png, Found 3 masks
+  Scores: [0.1058, 0.1622, 0.5434]
+  Max score: 0.5434, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Windy_Creek_Chute_-123.7227251_42.6526839_z18.png, Found 3 masks
+  Scores: [0.1467, 0.2623, 0.7282]
+  Max score: 0.7282, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Windy_Pitch_-69.0354696_45.8669207_z18.png, Found 3 masks
+  Scores: [0.0477, 0.0425, 0.3805]
+  Max score: 0.3805, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3805)
+----------------------------------------
+Image: Wingdam_Rips_-67.4232802_45.5475834_z18.png, Found 3 masks
+  Scores: [0.863, 0.5094, 0.9447]
+  Max score: 0.9447, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Winkle_Bar_Riffle_-123.8022727_42.7015824_z18.png, Found 3 masks
+  Scores: [0.4085, 0.0856, 0.8002]
+  Max score: 0.8002, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Winterbottom_Riffle_-123.2589456_42.4287305_z18.png, Found 3 masks
+  Scores: [0.7549, 0.0754, 0.8393]
+  Max score: 0.8393, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wintons_Ripples_-84.6799389_35.7584058_z18.png, Found 3 masks
+  Scores: [0.851, 0.0056, 0.9483]
+  Max score: 0.9483, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Witcher_Shoals_-83.0188859_34.0329456_z18.png, Found 3 masks
+  Scores: [0.5163, 0.4443, 0.908]
+  Max score: 0.908, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wofford_Shoals_-82.0851055_34.7440133_z18.png, Found 3 masks
+  Scores: [0.013, 0.109, 0.3551]
+  Max score: 0.3551, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3551)
+----------------------------------------
+Image: Wolf_Creek_Rapids_-115.1283199_46.0886688_z18.png, Found 3 masks
+  Scores: [0.0817, 0.0817, 0.651]
+  Max score: 0.651, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wolf_Creek_Rapids_-116.5818101_45.7707477_z18.png, Found 3 masks
+  Scores: [0.7409, 0.084, 0.8561]
+  Max score: 0.8561, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wolf_Rapids_-105.4311024_46.7630619_z18.png, Found 3 masks
+  Scores: [0.7481, 0.0376, 0.8604]
+  Max score: 0.8604, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Woodall_Shoals_Rapid_-83.31467_34.797576_z18.png, Found 3 masks
+  Scores: [0.1739, 0.0429, 0.5197]
+  Max score: 0.5197, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Woods_Ferry_Rapid_-81.0088802_38.205568_z18.png, Found 3 masks
+  Scores: [0.2391, 0.0883, 0.6471]
+  Max score: 0.6471, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wootens_Folly_Rapids_-84.7088323_36.0970182_z18.png, Found 3 masks
+  Scores: [0.0912, 0.0405, 0.4766]
+  Max score: 0.4766, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4766)
+----------------------------------------
+Image: Wright-Way_Drop_-116.306832_45.8658251_z18.png, Found 3 masks
+  Scores: [0.2139, 0.1282, 0.6714]
+  Max score: 0.6714, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Yankee_Bar_Rapids_-116.4921749_45.5732327_z18.png, Found 3 masks
+  Scores: [0.5798, 0.1044, 0.8185]
+  Max score: 0.8185, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Yellow_Bank_Rapid_-105.728347_36.4552999_z18.png, Found 3 masks
+  Scores: [0.1194, 0.164, 0.5166]
+  Max score: 0.5166, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Yellow_Bank_Rapid_-105.72871_36.4555314_z18.png, Found 3 masks
+  Scores: [0.3329, 0.0184, 0.6126]
+  Max score: 0.6126, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Zigzag_Rapids_-116.7208931_45.8258554_z18.png, Found 3 masks
+  Scores: [0.6195, 0.1701, 0.8749]
+  Max score: 0.8749, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Zoar_Gap_Rapids_-72.9556181_42.6549494_z18.png, Found 3 masks
+  Scores: [0.0386, 0.2256, 0.3559]
+  Max score: 0.3559, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3559)
+----------------------------------------
+Image: Zoom_Flume_-106.0510567_38.6984603_z18.png, Found 3 masks
+  Scores: [0.3071, 0.0465, 0.5729]
+  Max score: 0.5729, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Zwick's_Back_Ender_-82.345863_35.2793118_z18.png, Found 3 masks
+  Scores: [0.0193, 0.0772, 0.2681]
+  Max score: 0.2681, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2681)
+----------------------------------------
+Image: unnamed_-123.7744507_42.3375095_z18.png, Found 3 masks
+  Scores: [0.2735, 0.2573, 0.7886]
+  Max score: 0.7886, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7744899_42.3029044_z18.png, Found 3 masks
+  Scores: [0.0632, 0.1947, 0.5045]
+  Max score: 0.5045, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7754303_42.3027251_z18.png, Found 3 masks
+  Scores: [0.1328, 0.2851, 0.6153]
+  Max score: 0.6153, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7778011_42.3341427_z18.png, Found 3 masks
+  Scores: [0.1226, 0.4448, 0.7483]
+  Max score: 0.7483, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7792146_42.322957_z18.png, Found 3 masks
+  Scores: [0.1905, 0.0688, 0.5526]
+  Max score: 0.5526, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7804024_42.3331632_z18.png, Found 3 masks
+  Scores: [0.0909, 0.2321, 0.616]
+  Max score: 0.616, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7813906_42.3282865_z18.png, Found 3 masks
+  Scores: [0.2838, 0.0262, 0.5131]
+  Max score: 0.5131, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7816206_42.3481703_z18.png, Found 3 masks
+  Scores: [0.3295, 0.3411, 0.792]
+  Max score: 0.792, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.7817117_42.3484558_z18.png, Found 3 masks
+  Scores: [0.1629, 0.2082, 0.6158]
+  Max score: 0.6158, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.8256732_42.3773602_z18.png, Found 3 masks
+  Scores: [0.3833, 0.307, 0.8383]
+  Max score: 0.8383, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.8287872_42.3776851_z18.png, Found 3 masks
+  Scores: [0.1179, 0.1796, 0.5697]
+  Max score: 0.5697, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-123.8394785_42.3842809_z18.png, Found 3 masks
+  Scores: [0.2055, 0.1211, 0.4045]
+  Max score: 0.4045, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4045)
+----------------------------------------
+Image: unnamed_-123.8910966_42.7067697_z18.png, Found 3 masks
+  Scores: [0.4898, 0.0893, 0.7995]
+  Max score: 0.7995, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-124.2519034_47.8124455_z18.png, Found 3 masks
+  Scores: [0.133, 0.1222, 0.4812]
+  Max score: 0.4812, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4812)
+----------------------------------------
+Image: unnamed_-134.2510511_57.660966_z18.png, Found 3 masks
+  Scores: [0.3353, 0.0016, 0.6845]
+  Max score: 0.6845, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-149.4299144_60.8729428_z18.png, Found 3 masks
+  Scores: [0.4393, 0.3598, 0.8228]
+  Max score: 0.8228, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Bernard_Creek_Rapids_-116.6131863_45.4023064_z18.png, Found 3 masks
+  Scores: [0.3688, 0.0917, 0.6864]
+  Max score: 0.6864, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Cache_Creek_Rapids_-116.8990359_45.9815422_z18.png, Found 3 masks
+  Scores: [0.7728, 0.0047, 0.8848]
+  Max score: 0.8848, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Coal_Riffle_-124.1914072_42.5009676_z18.png, Found 3 masks
+  Scores: [0.8053, 0.1084, 0.8825]
+  Max score: 0.8825, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Cochran_Rapids_-116.8848969_45.9583599_z18.png, Found 3 masks
+  Scores: [0.5869, 0.0163, 0.8821]
+  Max score: 0.8821, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Crooked_Riffle_-124.0887321_42.5592545_z18.png, Found 3 masks
+  Scores: [0.8238, 0.2056, 0.9327]
+  Max score: 0.9327, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Galice_Riffle_-123.5986809_42.5609471_z18.png, Found 3 masks
+  Scores: [0.5729, 0.1964, 0.8409]
+  Max score: 0.8409, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Gorilla_-120.5736927_47.5451481_z18.png, Found 3 masks
+  Scores: [0.5306, 0.0629, 0.8116]
+  Max score: 0.8116, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Kirby_Rapids_-116.4822657_45.5817464_z18.png, Found 3 masks
+  Scores: [0.545, 0.1084, 0.7376]
+  Max score: 0.7376, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Mash_Rapids_-81.0589922_38.21983_z18.png, Found 3 masks
+  Scores: [0.4077, 0.137, 0.6991]
+  Max score: 0.6991, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Pinball_-120.6370072_37.8549255_z18.png, Found 3 masks
+  Scores: [0.0357, 0.1252, 0.2814]
+  Max score: 0.2814, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2814)
+----------------------------------------
+Image: Upper_Pittsburg_Rapids_-116.4723481_45.625693_z18.png, Found 3 masks
+  Scores: [0.784, 0.0232, 0.8507]
+  Max score: 0.8507, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Pleasant_Valley_Rapids_-116.4836845_45.6421915_z18.png, Found 3 masks
+  Scores: [0.4896, 0.1297, 0.7948]
+  Max score: 0.7948, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Pleasant_Valley_Rapids_-116.4844276_45.640973_z18.png, Found 3 masks
+  Scores: [0.1426, 0.0532, 0.5263]
+  Max score: 0.5263, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Potter's_Falls_-84.5763876_36.0820929_z18.png, Found 3 masks
+  Scores: [0.209, 0.0647, 0.7386]
+  Max score: 0.7386, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Railroad_Rapids_-81.0259319_38.0112235_z18.png, Found 3 masks
+  Scores: [0.5587, 0.1755, 0.8406]
+  Max score: 0.8406, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Wigwam_Rapids_-67.7512915_44.8287466_z18.png, Found 3 masks
+  Scores: [0.0599, 0.4133, 0.6511]
+  Max score: 0.6511, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upset_-117.7063647_42.9499341_z18.png, Found 3 masks
+  Scores: [0.1484, 0.0554, 0.662]
+  Max score: 0.662, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upset_Rapids_-112.6943587_36.3555385_z18.png, Found 3 masks
+  Scores: [0.1135, 0.0892, 0.6044]
+  Max score: 0.6044, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Vail_Whitewater_Park_Rapid_-106.3754448_39.6411621_z18.png, Found 3 masks
+  Scores: [0.0069, 0.0573, 0.1139]
+  Max score: 0.1139, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.1139)
+----------------------------------------
+Image: Van_Creek_Rapids_-116.1380035_45.426573_z18.png, Found 3 masks
+  Scores: [0.5368, 0.0205, 0.8546]
+  Max score: 0.8546, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Van_Patton_Shoals_-82.1185517_34.760512_z18.png, Found 3 masks
+  Scores: [0.0356, 0.0478, 0.368]
+  Max score: 0.368, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.368)
+----------------------------------------
+Image: Veil_Cave_Rapids_-114.7229081_45.1245891_z18.png, Found 3 masks
+  Scores: [0.1252, 0.1237, 0.6694]
+  Max score: 0.6694, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Velvet_Falls_-115.2910973_44.5952268_z18.png, Found 3 masks
+  Scores: [0.0959, 0.1683, 0.4768]
+  Max score: 0.4768, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4768)
+----------------------------------------
+Image: Vinegar_Creek_Rapids_-115.9028399_45.4592659_z18.png, Found 3 masks
+  Scores: [0.6504, 0.0212, 0.8533]
+  Max score: 0.8533, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Virginia_Chute_-77.2370901_38.9780254_z18.png, Found 3 masks
+  Scores: [0.2171, 0.0294, 0.5081]
+  Max score: 0.5081, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wa-Poots_Rapids_-114.964731_46.1184216_z18.png, Found 3 masks
+  Scores: [0.2394, 0.0292, 0.5155]
+  Max score: 0.5155, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wake-up_Gorge_Rapids_-115.5219296_44.0703725_z18.png, Found 3 masks
+  Scores: [0.0661, 0.0905, 0.3734]
+  Max score: 0.3734, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3734)
+----------------------------------------
+Image: Wakeman_Riffle_-124.3395451_42.4734422_z18.png, Found 3 masks
+  Scores: [0.2488, 0.0326, 0.7228]
+  Max score: 0.7228, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walker's_Rips_-70.8991565_44.0025203_z18.png, Found 3 masks
+  Scores: [0.2128, 0.0667, 0.7288]
+  Max score: 0.7288, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walker_Riffle_-124.0625515_42.6015802_z18.png, Found 3 masks
+  Scores: [0.4054, 0.2869, 0.8672]
+  Max score: 0.8672, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wally's_Wallow_-115.5746012_42.254408_z18.png, Found 3 masks
+  Scores: [0.7492, 0.0154, 0.9469]
+  Max score: 0.9469, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walnut_Eddy_-122.6850927_45.2984538_z18.png, Found 3 masks
+  Scores: [0.8196, 0.0036, 0.9236]
+  Max score: 0.9236, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walnut_Eddy_-91.1287958_42.9992615_z18.png, Found 3 masks
+  Scores: [0.8218, 0.018, 0.9131]
+  Max score: 0.9131, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walthenberg_Rapids_-112.406629_36.2383811_z18.png, Found 3 masks
+  Scores: [0.4123, 0.1317, 0.7764]
+  Max score: 0.7764, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Walthenberg_Rapids_-112.406634_36.2384471_z18.png, Found 3 masks
+  Scores: [0.4514, 0.1208, 0.778]
+  Max score: 0.778, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wangdoodle_Rapids_-115.536797_44.0710874_z18.png, Found 3 masks
+  Scores: [0.0148, 0.0413, 0.2129]
+  Max score: 0.2129, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2129)
+----------------------------------------
+Image: Wapshilla_Rapids_-116.7557198_45.9386976_z18.png, Found 3 masks
+  Scores: [0.1839, 0.0768, 0.6004]
+  Max score: 0.6004, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wards_Cove_Rapids_-113.7790796_35.9905689_z18.png, Found 3 masks
+  Scores: [0.6087, 0.0647, 0.7133]
+  Max score: 0.7133, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wards_Cove_Rapids_-113.7791153_35.9905436_z18.png, Found 3 masks
+  Scores: [0.5974, 0.0985, 0.7124]
+  Max score: 0.7124, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Warehouse_Riffle_-86.2284431_38.4090619_z18.png, Found 3 masks
+  Scores: [0.0281, 0.2669, 0.4149]
+  Max score: 0.4149, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4149)
+----------------------------------------
+Image: Warm_Springs_Rapids_-116.7004174_45.8210687_z18.png, Found 3 masks
+  Scores: [0.4336, 0.1405, 0.7657]
+  Max score: 0.7657, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washboard_Rapids_-123.7086405_42.6467715_z18.png, Found 3 masks
+  Scores: [0.4894, 0.4409, 0.8987]
+  Max score: 0.8987, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washer_Woman_Rapids_-114.7933467_45.904293_z18.png, Found 3 masks
+  Scores: [0.1947, 0.15, 0.7046]
+  Max score: 0.7046, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washing_Machine_Rapids_-84.6347342_36.4318202_z18.png, Found 3 masks
+  Scores: [0.0213, 0.2038, 0.7301]
+  Max score: 0.7301, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Washout_Rapids_-120.8941501_45.5421452_z18.png, Found 3 masks
+  Scores: [0.0594, 0.124, 0.6528]
+  Max score: 0.6528, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Waterfall_Rapids_-113.7554675_35.9677913_z18.png, Found 3 masks
+  Scores: [0.0387, 0.1047, 0.418]
+  Max score: 0.418, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.418)
+----------------------------------------
+Image: Waterfall_Rapids_-113.7555032_35.967766_z18.png, Found 3 masks
+  Scores: [0.0468, 0.044, 0.3422]
+  Max score: 0.3422, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3422)
+----------------------------------------
+Image: Waterspout_Rapids_-116.5956969_45.4185277_z18.png, Found 3 masks
+  Scores: [0.3281, 0.1229, 0.6487]
+  Max score: 0.6487, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Watson_Riffle_-124.0352905_42.6424196_z18.png, Found 3 masks
+  Scores: [0.6127, 0.1417, 0.8528]
+  Max score: 0.8528, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Watson_Shoals_-83.073824_34.0266284_z18.png, Found 3 masks
+  Scores: [0.032, 0.4041, 0.5894]
+  Max score: 0.5894, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Weber_Rapids_-114.7274782_45.1564652_z18.png, Found 3 masks
+  Scores: [0.2259, 0.1191, 0.5965]
+  Max score: 0.5965, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wee_Riffle_-124.0745366_42.5570556_z18.png, Found 3 masks
+  Scores: [0.8641, 0.1931, 0.9654]
+  Max score: 0.9654, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Weir_Riffles_-91.603241_46.7360482_z18.png, Found 3 masks
+  Scores: [0.4387, 0.1143, 0.8792]
+  Max score: 0.8792, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wetspot_Rapids_-116.0639155_44.3426882_z18.png, Found 3 masks
+  Scores: [0.0602, 0.1212, 0.4693]
+  Max score: 0.4693, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4693)
+----------------------------------------
+Image: Whale_Tail_-82.348036_35.2802298_z18.png, Found 3 masks
+  Scores: [0.0294, 0.0044, 0.2039]
+  Max score: 0.2039, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2039)
+----------------------------------------
+Image: Whetstone_Falls_-68.6242147_45.8614314_z18.png, Found 3 masks
+  Scores: [0.0173, 0.0943, 0.3915]
+  Max score: 0.3915, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3915)
+----------------------------------------
+Image: Whiplash_Rapids_-115.3527156_45.4769763_z18.png, Found 3 masks
+  Scores: [0.3364, 0.047, 0.751]
+  Max score: 0.751, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whirlpool_Rapids_-89.5109649_45.5549571_z18.png, Found 3 masks
+  Scores: [0.1344, 0.0904, 0.6511]
+  Max score: 0.6511, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whistling_Bird_-117.7000539_43.134132_z18.png, Found 3 masks
+  Scores: [0.2184, 0.391, 0.7775]
+  Max score: 0.7775, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White's_Rapid_-109.448779_38.68421_z18.png, Found 3 masks
+  Scores: [0.5824, 0.0414, 0.8687]
+  Max score: 0.8687, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whitehorse_Rapids_-115.5342795_44.7851813_z18.png, Found 3 masks
+  Scores: [0.016, 0.1421, 0.2157]
+  Max score: 0.2157, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2157)
+----------------------------------------
+Image: Whitehorse_Rapids_-116.7117648_45.8264513_z18.png, Found 3 masks
+  Scores: [0.4733, 0.0501, 0.7426]
+  Max score: 0.7426, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whitehorse_Riffle_-123.4720083_42.438171_z18.png, Found 3 masks
+  Scores: [0.1895, 0.0887, 0.514]
+  Max score: 0.514, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Whitewater_101_Rapids_-116.1221463_44.0802944_z18.png, Found 3 masks
+  Scores: [0.0848, 0.1489, 0.3792]
+  Max score: 0.3792, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3792)
+----------------------------------------
+Image: White_-88.6107802_44.9806621_z18.png, Found 3 masks
+  Scores: [0.0663, 0.2032, 0.6088]
+  Max score: 0.6088, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Cap_Rapids_-119.4247629_48.0637594_z18.png, Found 3 masks
+  Scores: [0.4946, 0.0151, 0.6807]
+  Max score: 0.6807, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Creek_Rapids_-114.841683_44.7908164_z18.png, Found 3 masks
+  Scores: [0.3535, 0.0651, 0.6687]
+  Max score: 0.6687, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Flash_Rapid_-111.7701479_34.3947507_z18.png, Found 3 masks
+  Scores: [0.6318, 0.5319, 0.8708]
+  Max score: 0.8708, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Horse_Rapids_-121.0785217_44.941656_z18.png, Found 3 masks
+  Scores: [0.2173, 0.0678, 0.4816]
+  Max score: 0.4816, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4816)
+----------------------------------------
+Image: White_Horse_Rapids_-77.719159_39.3223232_z18.png, Found 3 masks
+  Scores: [0.3471, 0.0767, 0.7533]
+  Max score: 0.7533, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Horse_Rips_-68.4184535_45.1768584_z18.png, Found 3 masks
+  Scores: [0.7163, 0.038, 0.8568]
+  Max score: 0.8568, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: White_Island_Rapids_-105.1449791_46.8541746_z18.png, Found 3 masks
+  Scores: [0.8884, 0.0442, 0.9304]
+  Max score: 0.9304, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Widowmaker_-106.049324_38.6723236_z18.png, Found 3 masks
+  Scores: [0.1467, 0.0187, 0.4229]
+  Max score: 0.4229, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4229)
+----------------------------------------
+Image: Widowmaker_-117.3866943_42.7486937_z18.png, Found 3 masks
+  Scores: [0.32, 0.0405, 0.6989]
+  Max score: 0.6989, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Widow_Maker_Rapids_-84.6843868_36.086463_z18.png, Found 3 masks
+  Scores: [0.3528, 0.3128, 0.8197]
+  Max score: 0.8197, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wigwam_Riffles_-67.5103662_44.864552_z18.png, Found 3 masks
+  Scores: [0.5547, 0.1694, 0.8518]
+  Max score: 0.8518, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wildcat_Rapids_-123.6698799_42.655082_z18.png, Found 3 masks
+  Scores: [0.2435, 0.1647, 0.7945]
+  Max score: 0.7945, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wildcat_Rapids_-91.5974122_46.4866087_z18.png, Found 3 masks
+  Scores: [0.114, 0.1471, 0.5656]
+  Max score: 0.5656, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wilderness_Gateway_Rapids_-115.3089954_46.3436823_z18.png, Found 3 masks
+  Scores: [0.0257, 0.0582, 0.2268]
+  Max score: 0.2268, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2268)
+----------------------------------------
+Image: Wildhorse_Rapids_-116.8973856_44.8546025_z18.png, Found 3 masks
+  Scores: [0.792, 0.0268, 0.9203]
+  Max score: 0.9203, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Bull_Shoals_-83.6623958_35.9464764_z18.png, Found 3 masks
+  Scores: [0.8382, 0.0175, 0.922]
+  Max score: 0.922, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Goose_Rapids_-116.931259_46.0379317_z18.png, Found 3 masks
+  Scores: [0.6258, 0.0373, 0.7588]
+  Max score: 0.7588, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Horse_Rapids_-110.0259822_39.5919095_z18.png, Found 3 masks
+  Scores: [0.5568, 0.0621, 0.7936]
+  Max score: 0.7936, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wild_Sheep_Rapids_-116.6598664_45.3332144_z18.png, Found 3 masks
+  Scores: [0.1957, 0.0082, 0.4183]
+  Max score: 0.4183, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4183)
+----------------------------------------
+Image: Wild_Sheep_Rapids_-116.6696304_45.3262697_z18.png, Found 3 masks
+  Scores: [0.254, 0.1711, 0.6421]
+  Max score: 0.6421, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willet_Eddy_-68.6353165_46.0689365_z18.png, Found 3 masks
+  Scores: [0.3451, 0.1797, 0.8111]
+  Max score: 0.8111, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Williamson_Rapids_-91.6053797_46.5211677_z18.png, Found 3 masks
+  Scores: [0.1282, 0.2825, 0.7986]
+  Max score: 0.7986, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: William_Miller_Riffle_-124.2638791_42.5011254_z18.png, Found 3 masks
+  Scores: [0.757, 0.0339, 0.8882]
+  Max score: 0.8882, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willies_Necktie_Rapids_-112.2631559_36.1456791_z18.png, Found 3 masks
+  Scores: [0.2453, 0.0834, 0.8366]
+  Max score: 0.8366, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willies_Necktie_Rapids_-112.2631609_36.1457451_z18.png, Found 3 masks
+  Scores: [0.1775, 0.0971, 0.8216]
+  Max score: 0.8216, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willow_Creek_Rapids_-116.5545866_45.4923842_z18.png, Found 3 masks
+  Scores: [0.571, 0.0708, 0.7292]
+  Max score: 0.7292, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Willow_Rapids_-89.9643158_45.700236_z18.png, Found 3 masks
+  Scores: [0.0899, 0.0965, 0.4245]
+  Max score: 0.4245, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4245)
+----------------------------------------
+Image: Willow_Rapid_-120.6356511_37.8564383_z18.png, Found 3 masks
+  Scores: [0.023, 0.1245, 0.2156]
+  Max score: 0.2156, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2156)
+----------------------------------------
+Image: Will_Rice_Eddy_-87.7886359_35.9328409_z18.png, Found 3 masks
+  Scores: [0.4385, 0.0271, 0.6204]
+  Max score: 0.6204, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wilson_Rapids_-88.3367785_45.4441311_z18.png, Found 3 masks
+  Scores: [0.1058, 0.1622, 0.5434]
+  Max score: 0.5434, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Windy_Creek_Chute_-123.7227251_42.6526839_z18.png, Found 3 masks
+  Scores: [0.1467, 0.2623, 0.7282]
+  Max score: 0.7282, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Windy_Pitch_-69.0354696_45.8669207_z18.png, Found 3 masks
+  Scores: [0.0477, 0.0425, 0.3805]
+  Max score: 0.3805, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3805)
+----------------------------------------
+Image: Wingdam_Rips_-67.4232802_45.5475834_z18.png, Found 3 masks
+  Scores: [0.863, 0.5094, 0.9447]
+  Max score: 0.9447, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Winkle_Bar_Riffle_-123.8022727_42.7015824_z18.png, Found 3 masks
+  Scores: [0.4085, 0.0856, 0.8002]
+  Max score: 0.8002, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Winterbottom_Riffle_-123.2589456_42.4287305_z18.png, Found 3 masks
+  Scores: [0.7549, 0.0754, 0.8393]
+  Max score: 0.8393, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wintons_Ripples_-84.6799389_35.7584058_z18.png, Found 3 masks
+  Scores: [0.851, 0.0056, 0.9483]
+  Max score: 0.9483, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Witcher_Shoals_-83.0188859_34.0329456_z18.png, Found 3 masks
+  Scores: [0.5163, 0.4443, 0.908]
+  Max score: 0.908, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wofford_Shoals_-82.0851055_34.7440133_z18.png, Found 3 masks
+  Scores: [0.013, 0.109, 0.3551]
+  Max score: 0.3551, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3551)
+----------------------------------------
+Image: Wolf_Creek_Rapids_-115.1283199_46.0886688_z18.png, Found 3 masks
+  Scores: [0.0817, 0.0817, 0.651]
+  Max score: 0.651, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wolf_Creek_Rapids_-116.5818101_45.7707477_z18.png, Found 3 masks
+  Scores: [0.7409, 0.084, 0.8561]
+  Max score: 0.8561, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wolf_Rapids_-105.4311024_46.7630619_z18.png, Found 3 masks
+  Scores: [0.7481, 0.0376, 0.8604]
+  Max score: 0.8604, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Woodall_Shoals_Rapid_-83.31467_34.797576_z18.png, Found 3 masks
+  Scores: [0.1739, 0.0429, 0.5197]
+  Max score: 0.5197, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Woods_Ferry_Rapid_-81.0088802_38.205568_z18.png, Found 3 masks
+  Scores: [0.2391, 0.0883, 0.6471]
+  Max score: 0.6471, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Wootens_Folly_Rapids_-84.7088323_36.0970182_z18.png, Found 3 masks
+  Scores: [0.0912, 0.0405, 0.4766]
+  Max score: 0.4766, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.4766)
+----------------------------------------
+Image: Wright-Way_Drop_-116.306832_45.8658251_z18.png, Found 3 masks
+  Scores: [0.2139, 0.1282, 0.6714]
+  Max score: 0.6714, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Yankee_Bar_Rapids_-116.4921749_45.5732327_z18.png, Found 3 masks
+  Scores: [0.5798, 0.1044, 0.8185]
+  Max score: 0.8185, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Yellow_Bank_Rapid_-105.728347_36.4552999_z18.png, Found 3 masks
+  Scores: [0.1194, 0.164, 0.5166]
+  Max score: 0.5166, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Yellow_Bank_Rapid_-105.72871_36.4555314_z18.png, Found 3 masks
+  Scores: [0.3329, 0.0184, 0.6126]
+  Max score: 0.6126, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Zigzag_Rapids_-116.7208931_45.8258554_z18.png, Found 3 masks
+  Scores: [0.6195, 0.1701, 0.8749]
+  Max score: 0.8749, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Zoar_Gap_Rapids_-72.9556181_42.6549494_z18.png, Found 3 masks
+  Scores: [0.0386, 0.2256, 0.3559]
+  Max score: 0.3559, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3559)
+----------------------------------------
+Image: Zoom_Flume_-106.0510567_38.6984603_z18.png, Found 3 masks
+  Scores: [0.3071, 0.0465, 0.5729]
+  Max score: 0.5729, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Zwick's_Back_Ender_-82.345863_35.2793118_z18.png, Found 3 masks
+  Scores: [0.0193, 0.0772, 0.2681]
+  Max score: 0.2681, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2681)
+----------------------------------------
+
+SUMMARY
+================================================================================
+Total images processed: 266
+Images with high-confidence masks: 212
+Images with low-confidence masks: 54
+Images with no masks: 0

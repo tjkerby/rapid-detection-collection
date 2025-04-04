@@ -74,8 +74,8 @@ python api/pull_images.py --json_file path/to/coordinates.csv --output_dir image
 The CSV file should have `lat` and `long` columns:
 
 ```
-lat,long,name
-44.07510219825334,-71.68399351583908,Pemigewasset River
+lat,long
+44.07510219825334,-71.68399351583908
 ```
 
 ### Example JSON Structure
@@ -118,10 +118,3 @@ rapid-detection-collection/
 └── .env                   # Environment variables
 ```
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the [LICENSE NAME] - see the LICENSE file for details.
