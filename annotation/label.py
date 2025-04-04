@@ -75,6 +75,7 @@ def display_image(my_image, label_type):
 
 def label(folders, label_type, model=None):
     
+    # TODO lat/lon should be strs
     df = pd.read_csv(folders["metadata"])
     
     for i in range(len(df)):
@@ -110,7 +111,7 @@ def label(folders, label_type, model=None):
 
         my_image = display_image(my_image, label_type)
 
-        today = np.floor(time.time()) # this is platform dependent? may want to find a different solution
+        today = np.floor(time.time() * 1000)
 
         if my_image.rapid_class >= 0:
             if label_type in ['rapid', 'mask_rapid']:

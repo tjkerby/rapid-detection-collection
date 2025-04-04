@@ -11,17 +11,18 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 #############################################################################
 # These may need to be changed 
 #############################################################################
-USER = '' 
+USER = 'fluh'
 
-METADATA  = '' # File Path METADATA in Box
-IMAGE_FOLDER = '' # Folder Path to IMAGES in Box
-NPY_FOLDER   = '' # Folder Path to MASKS in Box
+METADATA  = 'fluh.csv' # File Path METADATA in Box
+IMAGE_FOLDER = '../folder' # Folder Path to IMAGES in Box
+NPY_FOLDER   = '../folder' # Folder Path to MASKS in Box
 
-SAM2_CHECKPOINT_FOLDER = '' # Folder Path to CHECKPOINTS in Box
+SAM2_CHECKPOINT_FOLDER = '../checkpoints' # Folder Path to CHECKPOINTS in Box
 #############################################################################
 
 
 folders = {
+    'user' : USER,
     'metadata' : METADATA,
     'image_folder': IMAGE_FOLDER,
     'npy_folder'  : NPY_FOLDER
