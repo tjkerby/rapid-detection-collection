@@ -1,0 +1,2 @@
+runbest.py:
+python ./code/runbest.py --model_type resnet --model_path march31/best_resnet_model.pth --input_dir ./test_images --output_dir ./sorted_images --class_names class1 class2 --confidence_threshold 0.8  
