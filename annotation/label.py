@@ -1,33 +1,22 @@
-import re
 import cv2
-import json
 import time
 import numpy as np
+import pandas as pd
 from RapidsImage import RapidsImage as Image
 
-def is_valid_json(file, label_type):
+def is_valid_json(line, label_type):
     
     if label_type == 'mask':
-        return file['map'] == ''
+        return np.isnan(float(line['map']))
     
     elif label_type == 'rapid':
-        if 'class' in file:
-            file['rapid_class'] = file.pop('class')
-        if 'rapids_class' in file:
-            file['rapid_class'] = file.pop('rapids_class')
-        return file['rapid_class'] == ''
+        return np.isnan(float(line['rapid_class']))
     
     elif label_type == 'mask_rapid':
-        if 'class' in file:
-            file['rapid_class'] = file.pop('class')
-        if 'rapids_class' in file:
-            file['rapid_class'] = file.pop('rapids_class')
-        return file['map'] == '' and file['rapid_class'] == ''
+        return np.isnan(float(line['map'])) and np.isnan(float(line['rapid_class']))
     
     elif label_type == 'uhj':
-        if 'uhj_class' not in file:
-            file['uhj_class'] = ''
-        return (file['uhj_class'] == '') and (file['rapid_class'] == 1)
+        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) == 1)
         
 
 def display_image(my_image, label_type):
@@ -84,21 +73,21 @@ def display_image(my_image, label_type):
     return my_image
     
 
-def label(folders, files, label_type, model=None):
+def label(folders, label_type, model=None):
     
-    for file_name in files:
-        with open(file_name, 'r') as f:
-            file = json.load(f)
-
-        if not is_valid_json(file, label_type):
-            continue
-
+    df = pd.read_csv(folders["metadata"])
+    
+    for i in range(len(df)):
         
-        file['labeled_by_human'] = 1
+        line = df.loc[i][:]
+        if not is_valid_json(line, label_type):
+            continue
+        
+        line['labeled_by_human'] = 1
 
-        signature = re.split(r'[/\\]', file['image'])[-1].rsplit('.', 1)[0]
+        df.loc[i] = line
 
-        print(f'Image: {file["name"]}')
+        print(f'Image: {line["name"]}')
         print()
 
         if label_type in ['rapid', 'mask_rapid']:
@@ -110,7 +99,7 @@ def label(folders, files, label_type, model=None):
 
         try:
             my_image = Image(
-                image=cv2.imread(f'{folders["image_folder"]}/{signature}.png', 1),
+                image=cv2.imread(f'{folders["image_folder"]}/{line["image"]}.png', 1),
                 predictor=model,
                 has_textbox=(label_type!='mask'),
                 msg=msg
@@ -121,40 +110,39 @@ def label(folders, files, label_type, model=None):
 
         my_image = display_image(my_image, label_type)
 
-        today = time.strftime('%D_%T')
+        today = np.floor(time.time()) # this is platform dependent? may want to find a different solution
 
         if my_image.rapid_class >= 0:
             if label_type in ['rapid', 'mask_rapid']:
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
-                file['rapid_labeled_on'] = today
-                file['rapid_class'] = my_image.rapid_class
+                line['rapid_labeled_on'] = today
+                line['rapid_class'] = my_image.rapid_class
 
                 if my_image.rapid_class == 0:
-                    file['uhj_labeled_on'] = today
-                    file['uhj_class'] = 0
+                    line['uhj_labeled_on'] = today
+                    line['uhj_class'] = 0
             
             elif label_type == 'uhj':
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}UHJs.')
-                file['uhj_labeled_on'] = today
-                file['uhj_class'] = my_image.rapid_class
+                line['uhj_labeled_on'] = today
+                line['uhj_class'] = my_image.rapid_class
 
         if label_type in ['mask', 'mask_rapid']:
-            file['mask_created_on'] = today
+            line['mask_created_on'] = today
             save_npy = input('Would you like to save your masks for this image? [y/n] ')
             if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
-                npy_file_name = f'{signature}.npy'
                 np.save(
-                    f'{folders["npy_folder"]}/{npy_file_name}',
+                    f'{folders["npy_folder"]}/{f'{line["image"]}.npy'}',
                     my_image.masks, 
                 )
-                file['map'] = npy_file_name
+                line['map'] = 1
             else:
-                file['map'] = None
+                line['map'] = 0
         
-        with open(f'{folders["json_folder"]}/{signature}.json', 'w') as f:
-            json.dump(file, f, indent=4)
+        df.loc[i] = line
+        df.to_csv(folders["metadata"], index=False)
 
-        again = input('Would you like to continue? [y/n] ') if len(files) > 0 else 'n'
+        again = input('Would you like to continue? [y/n] ') if i < len(df) - 1 else 'n'
         if again.lower() == 'n' or again.lower() == 'no':
             return
         print()

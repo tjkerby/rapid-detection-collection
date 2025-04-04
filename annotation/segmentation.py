@@ -1,6 +1,5 @@
 import torch
 import numpy as np
-from glob import glob
 
 from label import label
 from select_device import select_device
@@ -9,17 +8,17 @@ from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 
-################################################################
+#############################################################################
 # These may need to be changed 
-################################################################
-USER = 'fluh'
+#############################################################################
+USER = 'fluh' 
 
-METADATA  = 'fluh.csv' # Folder Path in Box
-IMAGE_FOLDER = '../folder' # Folder Path in Box
-NPY_FOLDER   = '../folder' # Folder Path in Box
+METADATA  = 'fluh.csv' # File Path METADATA in Box
+IMAGE_FOLDER = '../folder' # Folder Path to IMAGES in Box
+NPY_FOLDER   = '../folder' # Folder Path to MASKS in Box
 
-SAM2_CHECKPOINT_FOLDER = '../checkpoints' # Folder Path in Box
-################################################################
+SAM2_CHECKPOINT_FOLDER = '../checkpoints' # Folder Path to CHECKPOINTS in Box
+#############################################################################
 
 
 folders = {
@@ -64,7 +63,7 @@ def print_uhj_instuctions():
     print()
 
 
-def option_menu(option, files):
+def option_menu(option):
     option = option.strip()
 
     if option == '1':
@@ -73,12 +72,12 @@ def option_menu(option, files):
         
         print_mask_instructions()
 
-        label(folders, files, 'mask', model)
+        label(folders, 'mask', model)
 
     elif option == '2':
         print_rapid_instuctions()
 
-        label(folders, files, 'rapid')
+        label(folders, 'rapid')
 
     elif option == '3':
         model = load_model()
@@ -87,25 +86,23 @@ def option_menu(option, files):
         print_rapid_instuctions() 
         print_mask_instructions()
 
-        label(folders, files, 'mask_rapid', model)
+        label(folders, 'mask_rapid', model)
     
     elif option == '4':
         print_uhj_instuctions()
 
-        label(folders, files, 'uhj')
+        label(folders, 'uhj')
 
     elif option == '5':
         pass
         
     else:
         option = input('Enter a number: [1, 2, 3, 4] ')
-        option_menu(option, files)
+        option_menu(option)
 
 
 if __name__=='__main__':
     np.random.seed(3)
-
-    files = glob(f'{folders["json_folder"]}/*.json')
 
     print('1. Create masks')
     print('2. Label rapids')
@@ -116,4 +113,4 @@ if __name__=='__main__':
 
     option = input('Which option do you choose? ')
     print()
-    option_menu(option, files)
+    option_menu(option)

@@ -175,3 +175,5 @@ cython_debug/
 # metadata files
 *.json
 *.csv
+*.db
+
