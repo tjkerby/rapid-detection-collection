@@ -11,13 +11,13 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 #############################################################################
 # These may need to be changed 
 #############################################################################
-USER = 'fluh'
+USER = ''
 
-METADATA  = 'fluh.csv' # File Path METADATA in Box
-IMAGE_FOLDER = '../folder' # Folder Path to IMAGES in Box
-NPY_FOLDER   = '../folder' # Folder Path to MASKS in Box
+METADATA  = '' # File Path METADATA in Box
+IMAGE_FOLDER = '' # Folder Path to IMAGES in Box
+NPY_FOLDER   = '' # Folder Path to MASKS in Box
 
-SAM2_CHECKPOINT_FOLDER = '../checkpoints' # Folder Path to CHECKPOINTS in Box
+SAM2_CHECKPOINT_FOLDER = '' # Folder Path to CHECKPOINTS in Box
 #############################################################################
 
 
