@@ -17,7 +17,7 @@ def is_valid_json(line, label_type):
         return np.isnan(float(line['mask'])) and np.isnan(float(line['rapid_class']))
     
     elif label_type == 'uhj':
-        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) == 1)
+        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) != 0)
         
 
 def display_image(my_image, label_type):
