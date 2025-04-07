@@ -6,6 +6,7 @@ from torchvision import transforms
 from PIL import Image
 import shutil
 from pathlib import Path
+import time
 from cnn_models import RiverClassifier
 
 def load_model(model_type, model_path, num_classes):
@@ -69,6 +70,8 @@ def process_images(model, device, input_dir, output_dir, class_names, confidence
     return processed_count
 
 def main():
+    start_time = time.time()
+    
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Run trained model to sort images based on prediction confidence')
     parser.add_argument('--model_type', type=str, required=True, 
@@ -98,8 +101,10 @@ def main():
     count = process_images(model, device, args.input_dir, args.output_dir, 
                          args.class_names, args.confidence_threshold)
     
+    elapsed_time = time.time() - start_time
     print(f"Sorted {count} images into {len(args.class_names)} class folders")
     print(f"Images with confidence below {args.confidence_threshold} were placed in 'low_confidence' folder")
+    print(f"Total time taken: {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
     main()
