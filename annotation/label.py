@@ -17,7 +17,7 @@ def is_valid_json(line, label_type):
         return np.isnan(float(line['mask'])) and np.isnan(float(line['rapid_class']))
     
     elif label_type == 'uhj':
-        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) != 0)
+        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) == 1)
         
 
 def display_image(my_image, label_type):
@@ -165,7 +165,7 @@ def label(folders, label_type, model=None):
             save_npy = input('Would you like to save your masks for this image? [y/n] ')
             if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
                 np.save(
-                    f'{folders["npy_folder"]}/{f'{line["image"]}.npy'}',
+                    f'{folders["npy_folder"]}/{line["image"]}.npy',
                     my_image.masks, 
                 )
                 line['mask'] = 1
