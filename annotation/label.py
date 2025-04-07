@@ -1,33 +1,23 @@
-import re
 import cv2
-import json
-import time
+import datetime
 import numpy as np
+import pandas as pd
 from RapidsImage import RapidsImage as Image
 
-def is_valid_json(file, label_type):
+
+def is_valid_json(line, label_type):
     
     if label_type == 'mask':
-        return file['map'] == ''
+        return np.isnan(float(line['mask']))
     
     elif label_type == 'rapid':
-        if 'class' in file:
-            file['rapid_class'] = file.pop('class')
-        if 'rapids_class' in file:
-            file['rapid_class'] = file.pop('rapids_class')
-        return file['rapid_class'] == ''
+        return np.isnan(float(line['rapid_class']))
     
     elif label_type == 'mask_rapid':
-        if 'class' in file:
-            file['rapid_class'] = file.pop('class')
-        if 'rapids_class' in file:
-            file['rapid_class'] = file.pop('rapids_class')
-        return file['map'] == '' and file['rapid_class'] == ''
+        return np.isnan(float(line['mask'])) and np.isnan(float(line['rapid_class']))
     
     elif label_type == 'uhj':
-        if 'uhj_class' not in file:
-            file['uhj_class'] = ''
-        return (file['uhj_class'] == '') and (file['rapid_class'] == 1)
+        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) != 0)
         
 
 def display_image(my_image, label_type):
@@ -82,23 +72,46 @@ def display_image(my_image, label_type):
     
     cv2.destroyAllWindows()
     return my_image
+
+
+# returns unix time
+def get_time():
+    t0 = datetime.datetime(1970, 1, 1).astimezone(datetime.UTC)
+    t = datetime.datetime.now(datetime.UTC) - t0 + datetime.timedelta(hours=t0.hour)
+    return str(int(t.total_seconds()))
     
 
-def label(folders, files, label_type, model=None):
+def label(folders, label_type, model=None):
     
-    for file_name in files:
-        with open(file_name, 'r') as f:
-            file = json.load(f)
-
-        if not is_valid_json(file, label_type):
-            continue
-
+    df = pd.read_csv(folders["metadata"], dtype={
+        'image': str,
+        'name': str,
+        'latitude': str,
+        'longitude': str,
+        'zoom': float,
+        'api_timestamp': float,
+        'mask': float,
+        'river_class': float,
+        'rapid_class': float,
+        'uhj_class': float,
+        'mask_labeled_by': str,
+        'river_labeled_by': str,
+        'rapid_labeled_by': str,
+        'uhj_labeled_by': str,
+        'mask_timestamp': str,
+        'river_timestamp': str,
+        'rapid_timestamp': str,
+        'uhj_timestamp': str,
+        'assignment': str
+    })
+    
+    for i in range(len(df)):
         
-        file['labeled_by_human'] = 1
-
-        signature = re.split(r'[/\\]', file['image'])[-1].rsplit('.', 1)[0]
-
-        print(f'Image: {file["name"]}')
+        line = df.loc[i][:]
+        if not is_valid_json(line, label_type):
+            continue
+        
+        print(f'Image: {line["name"]}')
         print()
 
         if label_type in ['rapid', 'mask_rapid']:
@@ -110,7 +123,7 @@ def label(folders, files, label_type, model=None):
 
         try:
             my_image = Image(
-                image=cv2.imread(f'{folders["image_folder"]}/{signature}.png', 1),
+                image=cv2.imread(f'{folders["image_folder"]}/{line["image"]}.png', 1),
                 predictor=model,
                 has_textbox=(label_type!='mask'),
                 msg=msg
@@ -121,40 +134,48 @@ def label(folders, files, label_type, model=None):
 
         my_image = display_image(my_image, label_type)
 
-        today = time.strftime('%D_%T')
+        today = get_time()
 
         if my_image.rapid_class >= 0:
             if label_type in ['rapid', 'mask_rapid']:
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
-                file['rapid_labeled_on'] = today
-                file['rapid_class'] = my_image.rapid_class
+                line['rapid_labeled_by'] = folders["user"]
+                line['rapid_timestamp'] = today
+                line['rapid_class'] = my_image.rapid_class
 
                 if my_image.rapid_class == 0:
-                    file['uhj_labeled_on'] = today
-                    file['uhj_class'] = 0
+                    line['uhj_labeled_by'] = folders["user"]
+                    line['uhj_timestamp'] = today
+                    line['uhj_class'] = 0
             
             elif label_type == 'uhj':
                 print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}UHJs.')
-                file['uhj_labeled_on'] = today
-                file['uhj_class'] = my_image.rapid_class
+                line['uhj_labeled_by'] = folders["user"]
+                line['uhj_timestamp'] = today
+                line['uhj_class'] = my_image.rapid_class
 
         if label_type in ['mask', 'mask_rapid']:
-            file['mask_created_on'] = today
+            line['river_labeled_by'] = folders['user']
+            line['river_timestamp'] = today 
+            line['river_class'] = 0 if np.sum(my_image.masks) == 0 else 1
+
+            line['mask_labeled_by'] = folders["user"]
+            line['mask_timestamp'] = today
+
             save_npy = input('Would you like to save your masks for this image? [y/n] ')
             if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
-                npy_file_name = f'{signature}.npy'
                 np.save(
-                    f'{folders["npy_folder"]}/{npy_file_name}',
+                    f'{folders["npy_folder"]}/{f'{line["image"]}.npy'}',
                     my_image.masks, 
                 )
-                file['map'] = npy_file_name
+                line['mask'] = 1
             else:
-                file['map'] = None
-        
-        with open(f'{folders["json_folder"]}/{signature}.json', 'w') as f:
-            json.dump(file, f, indent=4)
+                line['mask'] = 0
 
-        again = input('Would you like to continue? [y/n] ') if len(files) > 0 else 'n'
+        df.loc[i] = line
+        df.to_csv(folders["metadata"], index=False)
+
+        again = input('Would you like to continue? [y/n] ') if i < len(df) - 1 else 'n'
         if again.lower() == 'n' or again.lower() == 'no':
             return
         print()
