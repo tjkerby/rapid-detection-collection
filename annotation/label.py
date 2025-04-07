@@ -1,5 +1,6 @@
 import cv2
-import datetime
+# import datetime
+import time
 import numpy as np
 import pandas as pd
 from RapidsImage import RapidsImage as Image
@@ -134,7 +135,7 @@ def label(folders, label_type, model=None):
 
         my_image = display_image(my_image, label_type)
 
-        today = get_time()
+        today = time.time()
 
         if my_image.rapid_class >= 0:
             if label_type in ['rapid', 'mask_rapid']:
