@@ -8,20 +8,64 @@ import shutil
 from pathlib import Path
 import time
 from cnn_models import RiverClassifier
+from torch.utils.data import Dataset, DataLoader
+
+def print_gpu_info():
+    # if torch.cuda.is_available():
+    #     print(f"GPU Device: {torch.cuda.get_device_name(0)}")
+    #     print(f"Total GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1024**2:.2f} MB")
+    #     print(f"Current Memory Usage: {torch.cuda.memory_allocated() / 1024**2:.2f} MB")
+    #     print(f"Cached Memory: {torch.cuda.memory_reserved() / 1024**2:.2f} MB")
+    pass
 
 def load_model(model_type, model_path, num_classes):
     """
     Load a trained model based on the specified model type
     """
+    if not torch.cuda.is_available():
+        print("CUDA is not available! Using CPU instead.")
+        device = torch.device('cpu')
+    else:
+        device = torch.device('cuda')
+        print("CUDA is available! Using GPU.")
+        print_gpu_info()
+
     classifier = RiverClassifier(num_classes=num_classes, model_type=model_type)
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    classifier.model.load_state_dict(torch.load(model_path, map_location=device))
+    classifier.model = classifier.model.to(device)  # Explicitly move model to GPU
+    
+    state_dict = torch.load(model_path, map_location=device)
+    classifier.model.load_state_dict(state_dict)
     classifier.model.eval()
+    
+    # Verify model is on GPU
+    print(f"Model is on CUDA: {next(classifier.model.parameters()).is_cuda}")
+    print_gpu_info()
+    
     return classifier.model, device
 
-def process_images(model, device, input_dir, output_dir, class_names, confidence_threshold=0.7):
+class ImageDataset(Dataset):
+    def __init__(self, image_paths, transform=None):
+        self.image_paths = image_paths
+        self.transform = transform
+        
+    def __len__(self):
+        return len(self.image_paths)
+    
+    def __getitem__(self, idx):
+        img_path = self.image_paths[idx]
+        image = Image.open(img_path).convert('RGB')
+        if self.transform:
+            image = self.transform(image)
+        return image, str(img_path)  # Convert Path to string here
+
+def clear_gpu_memory():
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
+
+def process_images(model, device, input_dir, output_dir, class_names, confidence_threshold=0.7, batch_size=8, num_workers=4):
     """
-    Process images from input directory and sort them based on prediction confidence
+    Process images from input directory and sort them based on prediction confidence using batch processing
     """
     # Create transform for inference
     transform = transforms.Compose([
@@ -36,35 +80,71 @@ def process_images(model, device, input_dir, output_dir, class_names, confidence
         os.makedirs(os.path.join(output_dir, class_name), exist_ok=True)
     os.makedirs(os.path.join(output_dir, "low_confidence"), exist_ok=True)
     
-    # Process each image
-    processed_count = 0
+    # Collect all valid image paths
+    image_paths = []
+    valid_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']
     for img_path in Path(input_dir).glob("**/*"):
-        if img_path.suffix.lower() in ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']:
-            try:
-                img = Image.open(img_path).convert('RGB')
-                img_tensor = transform(img).unsqueeze(0).to(device)
+        if img_path.suffix.lower() in valid_extensions:
+            image_paths.append(img_path)
+    
+    # Create dataset and dataloader
+    dataset = ImageDataset(image_paths, transform)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=False)  # Disabled pin_memory
+    
+    # Process batches
+    processed_count = 0
+    total_images = len(image_paths)
+    print(f"Found {total_images} images to process in batches of {batch_size}")
+    
+    for batch_images, batch_paths in dataloader:
+        try:
+            clear_gpu_memory()  # Clear GPU memory before each batch
+            
+            # Move batch to device
+            batch_images = batch_images.to(device)
+            
+            # Perform inference
+            with torch.no_grad():
+                outputs = model(batch_images)
+                probabilities = F.softmax(outputs, dim=1)
+                confidences, predicted_classes = torch.max(probabilities, dim=1)
                 
-                with torch.no_grad():
-                    outputs = model(img_tensor)
-                    probabilities = F.softmax(outputs, dim=1)[0]
-                    confidence, predicted_class = torch.max(probabilities, 0)
-                    
-                    # Determine destination folder based on confidence
-                    if confidence >= confidence_threshold:
-                        dest_folder = os.path.join(output_dir, class_names[predicted_class])
-                    else:
-                        dest_folder = os.path.join(output_dir, "low_confidence")
+                # Move results back to CPU and free GPU memory
+                confidences = confidences.cpu().numpy()
+                predicted_classes = predicted_classes.cpu().numpy()
+                
+                # Clear intermediate tensors
+                del outputs, probabilities
+                batch_images = batch_images.cpu()
+                del batch_images
+                clear_gpu_memory()
+            
+            # Process each result in the batch
+            for i in range(len(batch_paths)):
+                img_path = Path(batch_paths[i])  # Convert string back to Path object
+                confidence = confidences[i]
+                predicted_class = predicted_classes[i]
+                
+                # Determine destination folder based on confidence
+                if confidence >= confidence_threshold:
+                    dest_folder = os.path.join(output_dir, class_names[predicted_class])
+                else:
+                    dest_folder = os.path.join(output_dir, "low_confidence")
                 
                 # Copy the image to destination folder
                 dest_file = os.path.join(dest_folder, f"{img_path.stem}_conf{confidence:.2f}{img_path.suffix}")
                 shutil.copy2(img_path, dest_file)
+            
+            processed_count += len(batch_paths)
+            if processed_count % 50 == 0 or processed_count == total_images:
+                print(f"Processed {processed_count}/{total_images} images...")
+                print_gpu_info()
                 
-                processed_count += 1
-                if processed_count % 10 == 0:
-                    print(f"Processed {processed_count} images...")
-                    
-            except Exception as e:
-                print(f"Error processing {img_path}: {str(e)}")
+        except Exception as e:
+            print(f"Error processing batch: {str(e)}")
+            # Try to recover by clearing memory
+            clear_gpu_memory()
+            continue
     
     print(f"Finished processing {processed_count} images.")
     return processed_count
@@ -87,6 +167,10 @@ def main():
                         help='Confidence threshold for class assignment (default: 0.7)')
     parser.add_argument('--class_names', type=str, nargs='+', required=True,
                         help='Names of the classes in the model')
+    parser.add_argument('--batch_size', type=int, default=16,  # Reduced default batch size
+                        help='Batch size for processing images (default: 16)')
+    parser.add_argument('--num_workers', type=int, default=4,
+                        help='Number of worker threads for data loading (default: 4)')
     
     args = parser.parse_args()
     
@@ -99,7 +183,8 @@ def main():
     print(f"Processing images from {args.input_dir}")
     print(f"Confidence threshold: {args.confidence_threshold}")
     count = process_images(model, device, args.input_dir, args.output_dir, 
-                         args.class_names, args.confidence_threshold)
+                         args.class_names, args.confidence_threshold,
+                         args.batch_size, args.num_workers)
     
     elapsed_time = time.time() - start_time
     print(f"Sorted {count} images into {len(args.class_names)} class folders")
