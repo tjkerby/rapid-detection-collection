@@ -21,6 +21,7 @@ def is_valid_json(line, label_type):
         return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) == 1)
         
 
+# TODO fix window size
 def display_image(my_image, label_type):
     
     cv2.namedWindow(winname='image') 

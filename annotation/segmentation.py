@@ -12,7 +12,6 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 # These may need to be changed 
 #############################################################################
 USER = ''
-
 METADATA  = '' # File Path METADATA in Box
 IMAGE_FOLDER = '' # Folder Path to IMAGES in Box
 NPY_FOLDER   = '' # Folder Path to MASKS in Box
