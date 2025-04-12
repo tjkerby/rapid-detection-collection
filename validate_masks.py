@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from PIL import Image
+from matplotlib import pyplot as plt
 
 from helper_functions import show_masks
 
@@ -19,4 +20,7 @@ for i in range(rows):
     mask = np.load(dat['mask_new'].iloc[i])
     score = [dat['score_new'].iloc[i]]
 
+    plt.imshow(img)
+    plt.axis('off')
+    plt.show()
     show_masks(img, mask, score)
