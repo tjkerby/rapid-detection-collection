@@ -1,0 +1,9 @@
+{
+    "name": "Bulls_Eye",
+    "longitude": -117.717651,
+    "latitude": 42.9505832,
+    "zoom": 18,
+    "image": "images/Bulls_Eye_-117.717651_42.9505832_z18.png",
+    "class": "",
+    "map": "masks/Bulls_Eye_-117.717651_42.9505832_z18.npy"
+}

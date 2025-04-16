@@ -1,0 +1,9 @@
+{
+    "name": "Bad_Jose_Rapids",
+    "longitude": -116.1089586,
+    "latitude": 44.2047211,
+    "zoom": 18,
+    "image": "images/Bad_Jose_Rapids_-116.1089586_44.2047211_z18.png",
+    "class": "",
+    "map": "masks/Bad_Jose_Rapids_-116.1089586_44.2047211_z18.npy"
+}

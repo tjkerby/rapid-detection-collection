@@ -1,0 +1,9 @@
+{
+    "name": "Picassic_River",
+    "longitude": -70.948148,
+    "latitude": 43.0825222,
+    "zoom": 19,
+    "image": "images/Piscassic_River_-70.948148_43.0825222_z19.png",
+    "class": "",
+    "map": "masks/Piscassic_River_-70.948148_43.0825222_z19.npy"
+}    
