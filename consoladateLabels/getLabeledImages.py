@@ -1,70 +1,86 @@
 import os
-import json
 import shutil
-def get_entries_in_directory(directory_path):
+import pandas as pd
 
-    
-    # Hardcoded directory path
-    directory_path = "C:\\Users\\kaden\\Box\\STAT5810\\rapids\\data\\masks"  # Change this to your actual directory path
-    
+def setup_directories():
+    """Create all necessary output directories"""
+    directories = ["./rapids", "./norapids", "./RapidsMask", "./noRapidsMask"]
+    for dir in directories:
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+
+def process_entry(row, base_paths):
+    """Process a single entry from the CSV"""
     try:
-        # Get all entries in the directory
-        entries = os.listdir(directory_path)
-        return entries
+        # Skip if no rapids_class
+        if pd.isna(row['rapid_class']):
+            return
+        
+        image_name = row['image']  # Just use the image column
+        rapids_class = int(row['rapid_class'])
+        has_mask = int(row['mask']) if 'mask' in row else 0
+        
+        # Determine destination folders based on rapids_class
+        img_dest_folder = "./rapids" if rapids_class == 1 else "./norapids"
+        mask_dest_folder = "./RapidsMask" if rapids_class == 1 else "./noRapidsMask"
+        
+        # Process image
+        source_image = os.path.join(base_paths['images'], f"{image_name}.png")
+        dest_image = os.path.join(img_dest_folder, f"{image_name}.png")
+        
+        if os.path.exists(source_image):
+            shutil.copy2(source_image, dest_image)
+            print(f"Copied {image_name}.png to {img_dest_folder}")
+        else:
+            print(f"Warning: Source image {source_image} not found")
+        
+        # Process mask if it exists
+        if has_mask == 1:
+            source_mask = os.path.join(base_paths['masks'], f"{image_name}.npy")
+            dest_mask = os.path.join(mask_dest_folder, f"{image_name}.npy")
+            
+            if os.path.exists(source_mask):
+                shutil.copy2(source_mask, dest_mask)
+                print(f"Copied {image_name}.npy to {mask_dest_folder}")
+            else:
+                print(f"Warning: Source mask {source_mask} not found")
+                
+    except Exception as e:
+        print(f"Error processing {image_name}: {str(e)}")
+
+def main():
+    # Base paths
+    base_paths = {
+        'images': "C:/Users/kaden/Box/STAT5810/rapids/data/images",
+        'masks': "C:/Users/kaden/Box/STAT5810/rapids/data/masks"
+    }
+    
+    # Create output directories
+    setup_directories()
+    
+    # Read CSV file
+    try:
+        csv_path = "C:/Users/kaden/Box/STAT5810/rapids/data/meta_csv/meta.csv"
+        df = pd.read_csv(csv_path)
+        
+        # Verify required columns - removed 'name'
+        required_columns = ['image', 'rapid_class']
+        if not all(col in df.columns for col in required_columns):
+            print(f"Error: CSV must contain columns: {required_columns}")
+            return
+        
+        # Process each row
+        for _, row in df.iterrows():
+            process_entry(row, base_paths)
+            
+        print("Processing complete!")
+        
     except FileNotFoundError:
-        print(f"Error: Directory '{directory_path}' not found.")
-        return []
-    except PermissionError:
-        print(f"Error: Permission denied to access '{directory_path}'.")
-        return []
+        print(f"Error: CSV file not found")
+    except pd.errors.EmptyDataError:
+        print(f"Error: CSV file is empty")
+    except Exception as e:
+        print(f"Error: {str(e)}")
 
 if __name__ == "__main__":
-    entries = get_entries_in_directory(None)  # None since we're using the hardcoded path
-    strippedEntries = [entry.split('.npy')[0] for entry in entries]
-    
-    # Create output directories if they don't exist
-    if not os.path.exists("./rapids"):
-        os.makedirs("./rapids")
-    if not os.path.exists("./norapids"):
-        os.makedirs("./norapids")
-    
-    for entry in strippedEntries:
-        try:
-            # Correctly open the json file for this entry
-            json_file_path = os.path.join("C:\\Users\\kaden\\Box\\STAT5810\\rapids\\data\\jsons", f"{entry}.json")
-            with open(json_file_path, 'r') as jsonFile:
-                jsonDict = json.load(jsonFile)
-                
-                # Get the source image path
-                source_image_path = os.path.join("C:\\Users\\kaden\\Box\\STAT5810\\rapids\\data\\images", f"{entry}.png")
-                
-                if jsonDict["rapid_class"] == 1:
-                    # Get the destination path for rapids
-                    dest_image_path = os.path.join("./rapids", f"{entry}.png")
-                    
-                    # Copy the file if it exists
-                    if os.path.exists(source_image_path):
-                        shutil.copy2(source_image_path, dest_image_path)
-                        print(f"Copied {entry}.png to ./rapids folder")
-                    else:
-                        print(f"Warning: Source image {source_image_path} not found")
-                    
-                elif jsonDict["rapid_class"] == 0:
-                    # Get the destination path for norapids
-                    dest_image_path = os.path.join("./norapids", f"{entry}.png")
-                    
-                    # Copy the file if it exists
-                    if os.path.exists(source_image_path):
-                        shutil.copy2(source_image_path, dest_image_path)
-                        print(f"Copied {entry}.png to ./norapids folder")
-                    else:
-                        print(f"Warning: Source image {source_image_path} not found")
-        except FileNotFoundError:
-            print(f"Warning: JSON file for {entry} not found")
-        except PermissionError:
-            print(f"Error: Permission denied when trying to access JSON file for {entry}")
-        except json.JSONDecodeError:
-            print(f"Error: Invalid JSON format in file for {entry}")
-        except Exception as e:
-            print(f"Error processing {entry}: {str(e)}")
-
+    main()
