@@ -27,7 +27,14 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
+api/image_jsons/*
+*.pth
+*.tfevents.*
+# *.py  # Commenting out or removing this line to track Python files
+*.pts
+*.pt
+*908.*
+*.npy
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
@@ -171,6 +178,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-
-# SAM2 model state dictionaries
-*.pt
+.pt
+# metadata files
+*.json
+*.csv
+*.db

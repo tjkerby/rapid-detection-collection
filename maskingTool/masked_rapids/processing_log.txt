@@ -1,0 +1,339 @@
+Processing 66 images with threshold 0.5
+================================================================================
+Image: 100344_-80.64957533819722_38.295822548400395_z18.png, Found 3 masks
+  Scores: [0.3726, 0.0308, 0.6085]
+  Max score: 0.6085, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 117536_-116.47257265465163_45.625212843069484_z18.png, Found 3 masks
+  Scores: [0.821, 0.0609, 0.8391]
+  Max score: 0.8391, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 17774_-98.39326463104761_30.285151919658084_z18.png, Found 3 masks
+  Scores: [0.0312, 0.0644, 0.2492]
+  Max score: 0.2492, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2492)
+----------------------------------------
+Image: 18714_-74.19852830193601_43.827213078638096_z18.png, Found 3 masks
+  Scores: [0.5326, 0.0802, 0.7908]
+  Max score: 0.7908, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 18976_-95.67698328859714_31.348251404674606_z18.png, Found 3 masks
+  Scores: [0.0613, 0.1591, 0.2682]
+  Max score: 0.2682, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2682)
+----------------------------------------
+Image: 21116_-81.42027662345369_34.45319593743088_z18.png, Found 3 masks
+  Scores: [0.8575, 0.0729, 0.914]
+  Max score: 0.914, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 24627_-109.38077844194413_38.72084106260586_z18.png, Found 3 masks
+  Scores: [0.6339, 0.1249, 0.8278]
+  Max score: 0.8278, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 26174_-110.07607017069127_37.24591144885359_z18.png, Found 3 masks
+  Scores: [0.441, 0.1463, 0.6211]
+  Max score: 0.6211, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 33596_-74.0636739861389_43.79973478773068_z18.png, Found 3 masks
+  Scores: [0.6859, 0.1295, 0.9169]
+  Max score: 0.9169, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 38788_-76.91438913122472_40.33431862286319_z18.png, Found 3 masks
+  Scores: [0.438, 0.0125, 0.72]
+  Max score: 0.72, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 56335_-81.00792171358869_37.539303586175954_z18.png, Found 3 masks
+  Scores: [0.3864, 0.2592, 0.8028]
+  Max score: 0.8028, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 5984_-80.64044196860355_38.28959910167804_z18.png, Found 3 masks
+  Scores: [0.1167, 0.1273, 0.3417]
+  Max score: 0.3417, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3417)
+----------------------------------------
+Image: 60972_-111.05915777713473_47.582991785911815_z18.png, Found 3 masks
+  Scores: [0.7849, 0.0185, 0.8117]
+  Max score: 0.8117, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 9296_-82.77168704152092_35.866442855235_z18.png, Found 3 masks
+  Scores: [0.5071, 0.015, 0.6507]
+  Max score: 0.6507, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Abercrombie_Rapids_-144.5697508_60.7218787_z18.png, Found 3 masks
+  Scores: [0.7486, 0.0066, 0.9197]
+  Max score: 0.9197, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Big_Falls_-90.6406974_45.4074701_z18.png, Found 3 masks
+  Scores: [0.1379, 0.0298, 0.6807]
+  Max score: 0.6807, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Big_Fish_Riffle_-124.2125352_42.4924582_z18.png, Found 3 masks
+  Scores: [0.8207, 0.1298, 0.9458]
+  Max score: 0.9458, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Billy_Creek_Rapids_-116.6490846_45.9956787_z18.png, Found 3 masks
+  Scores: [0.3921, 0.0541, 0.847]
+  Max score: 0.847, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Bridge_Rapids_-117.0066342_46.0702887_z18.png, Found 3 masks
+  Scores: [0.0264, 0.1775, 0.5232]
+  Max score: 0.5232, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Bull_Run_Rapids_-120.8634782_45.4476788_z18.png, Found 3 masks
+  Scores: [0.4535, 0.1877, 0.724]
+  Max score: 0.724, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Calf_Canyon_Rapids_-110.0434824_39.5299657_z18.png, Found 3 masks
+  Scores: [0.8445, 0.0684, 0.9356]
+  Max score: 0.9356, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Diagonal_Ledges_Rapid_-81.0515427_38.2152927_z18.png, Found 3 masks
+  Scores: [0.2589, 0.0537, 0.6185]
+  Max score: 0.6185, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Egelhoffs_Rapid_-100.1360501_42.8175735_z18.png, Found 3 masks
+  Scores: [0.4471, 0.5431, 0.7402]
+  Max score: 0.7402, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-114.7341558_44.95657542_z19.png, Found 3 masks
+  Scores: [0.5054, 0.0345, 0.6326]
+  Max score: 0.6326, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-115.0240954_44.73994132_z19.png, Found 3 masks
+  Scores: [0.3655, 0.0644, 0.773]
+  Max score: 0.773, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-115.142805_44.70948111_z19.png, Found 3 masks
+  Scores: [0.4948, 0.0533, 0.8147]
+  Max score: 0.8147, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-115.8095432_45.21044051_z19.png, Found 3 masks
+  Scores: [0.0469, 0.0968, 0.3213]
+  Max score: 0.3213, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3213)
+----------------------------------------
+Image: Slate_Slide_Riffle_-123.6959844_42.6455643_z18.png, Found 3 masks
+  Scores: [0.0791, 0.2503, 0.7589]
+  Max score: 0.7589, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-114.9465958_47.5052092_z18.png, Found 3 masks
+  Scores: [0.288, 0.055, 0.7108]
+  Max score: 0.7108, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-119.7217847_38.9169622_z18.png, Found 3 masks
+  Scores: [0.0723, 0.0599, 0.3294]
+  Max score: 0.3294, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3294)
+----------------------------------------
+Image: unnamed_-92.076537_48.1837814_z18.png, Found 3 masks
+  Scores: [0.2008, 0.027, 0.3757]
+  Max score: 0.3757, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3757)
+----------------------------------------
+Image: unnamed_-94.4764116_44.2921121_z18.png, Found 3 masks
+  Scores: [0.2559, 0.0777, 0.622]
+  Max score: 0.622, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Railroad_Rapids_-81.0259319_38.0112235_z18.png, Found 3 masks
+  Scores: [0.5587, 0.1755, 0.8406]
+  Max score: 0.8406, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 100344_-80.64957533819722_38.295822548400395_z18.png, Found 3 masks
+  Scores: [0.3726, 0.0308, 0.6085]
+  Max score: 0.6085, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 117536_-116.47257265465163_45.625212843069484_z18.png, Found 3 masks
+  Scores: [0.821, 0.0609, 0.8391]
+  Max score: 0.8391, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 17774_-98.39326463104761_30.285151919658084_z18.png, Found 3 masks
+  Scores: [0.0312, 0.0644, 0.2492]
+  Max score: 0.2492, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2492)
+----------------------------------------
+Image: 18714_-74.19852830193601_43.827213078638096_z18.png, Found 3 masks
+  Scores: [0.5326, 0.0802, 0.7908]
+  Max score: 0.7908, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 18976_-95.67698328859714_31.348251404674606_z18.png, Found 3 masks
+  Scores: [0.0613, 0.1591, 0.2682]
+  Max score: 0.2682, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.2682)
+----------------------------------------
+Image: 21116_-81.42027662345369_34.45319593743088_z18.png, Found 3 masks
+  Scores: [0.8575, 0.0729, 0.914]
+  Max score: 0.914, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 24627_-109.38077844194413_38.72084106260586_z18.png, Found 3 masks
+  Scores: [0.6339, 0.1249, 0.8278]
+  Max score: 0.8278, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 26174_-110.07607017069127_37.24591144885359_z18.png, Found 3 masks
+  Scores: [0.441, 0.1463, 0.6211]
+  Max score: 0.6211, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 33596_-74.0636739861389_43.79973478773068_z18.png, Found 3 masks
+  Scores: [0.6859, 0.1295, 0.9169]
+  Max score: 0.9169, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 38788_-76.91438913122472_40.33431862286319_z18.png, Found 3 masks
+  Scores: [0.438, 0.0125, 0.72]
+  Max score: 0.72, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 56335_-81.00792171358869_37.539303586175954_z18.png, Found 3 masks
+  Scores: [0.3864, 0.2592, 0.8028]
+  Max score: 0.8028, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 5984_-80.64044196860355_38.28959910167804_z18.png, Found 3 masks
+  Scores: [0.1167, 0.1273, 0.3417]
+  Max score: 0.3417, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3417)
+----------------------------------------
+Image: 60972_-111.05915777713473_47.582991785911815_z18.png, Found 3 masks
+  Scores: [0.7849, 0.0185, 0.8117]
+  Max score: 0.8117, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: 9296_-82.77168704152092_35.866442855235_z18.png, Found 3 masks
+  Scores: [0.5071, 0.015, 0.6507]
+  Max score: 0.6507, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Abercrombie_Rapids_-144.5697508_60.7218787_z18.png, Found 3 masks
+  Scores: [0.7486, 0.0066, 0.9197]
+  Max score: 0.9197, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Big_Falls_-90.6406974_45.4074701_z18.png, Found 3 masks
+  Scores: [0.1379, 0.0298, 0.6807]
+  Max score: 0.6807, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Big_Fish_Riffle_-124.2125352_42.4924582_z18.png, Found 3 masks
+  Scores: [0.8207, 0.1298, 0.9458]
+  Max score: 0.9458, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Billy_Creek_Rapids_-116.6490846_45.9956787_z18.png, Found 3 masks
+  Scores: [0.3921, 0.0541, 0.847]
+  Max score: 0.847, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Bridge_Rapids_-117.0066342_46.0702887_z18.png, Found 3 masks
+  Scores: [0.0264, 0.1775, 0.5232]
+  Max score: 0.5232, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Bull_Run_Rapids_-120.8634782_45.4476788_z18.png, Found 3 masks
+  Scores: [0.4535, 0.1877, 0.724]
+  Max score: 0.724, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Calf_Canyon_Rapids_-110.0434824_39.5299657_z18.png, Found 3 masks
+  Scores: [0.8445, 0.0684, 0.9356]
+  Max score: 0.9356, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Diagonal_Ledges_Rapid_-81.0515427_38.2152927_z18.png, Found 3 masks
+  Scores: [0.2589, 0.0537, 0.6185]
+  Max score: 0.6185, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Egelhoffs_Rapid_-100.1360501_42.8175735_z18.png, Found 3 masks
+  Scores: [0.4471, 0.5431, 0.7402]
+  Max score: 0.7402, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-114.7341558_44.95657542_z19.png, Found 3 masks
+  Scores: [0.5054, 0.0345, 0.6326]
+  Max score: 0.6326, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-115.0240954_44.73994132_z19.png, Found 3 masks
+  Scores: [0.3655, 0.0644, 0.773]
+  Max score: 0.773, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-115.142805_44.70948111_z19.png, Found 3 masks
+  Scores: [0.4948, 0.0533, 0.8147]
+  Max score: 0.8147, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Salmon_Watershed_3km_pts_-115.8095432_45.21044051_z19.png, Found 3 masks
+  Scores: [0.0469, 0.0968, 0.3213]
+  Max score: 0.3213, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3213)
+----------------------------------------
+Image: Slate_Slide_Riffle_-123.6959844_42.6455643_z18.png, Found 3 masks
+  Scores: [0.0791, 0.2503, 0.7589]
+  Max score: 0.7589, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-114.9465958_47.5052092_z18.png, Found 3 masks
+  Scores: [0.288, 0.055, 0.7108]
+  Max score: 0.7108, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: unnamed_-119.7217847_38.9169622_z18.png, Found 3 masks
+  Scores: [0.0723, 0.0599, 0.3294]
+  Max score: 0.3294, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3294)
+----------------------------------------
+Image: unnamed_-92.076537_48.1837814_z18.png, Found 3 masks
+  Scores: [0.2008, 0.027, 0.3757]
+  Max score: 0.3757, Threshold: 0.5
+  [WARNING] Saved low-confidence mask (best score: 0.3757)
+----------------------------------------
+Image: unnamed_-94.4764116_44.2921121_z18.png, Found 3 masks
+  Scores: [0.2559, 0.0777, 0.622]
+  Max score: 0.622, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+Image: Upper_Railroad_Rapids_-81.0259319_38.0112235_z18.png, Found 3 masks
+  Scores: [0.5587, 0.1755, 0.8406]
+  Max score: 0.8406, Threshold: 0.5
+  [SUCCESS] Saved high-confidence mask and masked image
+----------------------------------------
+
+SUMMARY
+================================================================================
+Total images processed: 66
+Images with high-confidence masks: 54
+Images with low-confidence masks: 12
+Images with no masks: 0
