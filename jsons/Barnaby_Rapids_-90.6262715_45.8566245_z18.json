@@ -1,0 +1,9 @@
+{
+    "name": "Barnaby_Rapids",
+    "longitude": -90.6262715,
+    "latitude": 45.8566245,
+    "zoom": 18,
+    "image": "images/Barnaby_Rapids_-90.6262715_45.8566245_z18.png",
+    "class": "",
+    "map": "masks/Barnaby_Rapids_-90.6262715_45.8566245_z18.npy"
+}
