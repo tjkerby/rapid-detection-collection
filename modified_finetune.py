@@ -15,26 +15,57 @@ from torch.utils.data import Dataset, DataLoader
 import torch.multiprocessing as mp
 import shutil
 
-rootPath = Path('C:/Users/kaden/Box/STAT5810/rapids/data')
-if torch.cuda.is_available():
-    device = torch.device("cuda")
-else:
-    device = torch.device("cpu")
-print(f"using device: {device}")
+def setup_device():
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+        torch.autocast("cuda", dtype=torch.bfloat16).__enter__()
+        if torch.cuda.get_device_properties(0).major >= 8:
+            torch.backends.cuda.matmul.allow_tf32 = True
+            torch.backends.cudnn.allow_tf32 = True
+    else:
+        device = torch.device("cpu")
+    print(f"using device: {device}")
+    return device
 
-if device.type == "cuda":
-    torch.autocast("cuda", dtype=torch.bfloat16).__enter__()
-    if torch.cuda.get_device_properties(0).major >= 8:
-        torch.backends.cuda.matmul.allow_tf32 = True
-        torch.backends.cudnn.allow_tf32 = True
+def setup_directories():
+    rootPath = Path('C:/Users/kaden/Box/STAT5810/rapids/data')
+    CACHE_DIR = Path('cache')
+    CACHE_DIR.mkdir(exist_ok=True)
+    (CACHE_DIR / 'images').mkdir(exist_ok=True)
+    (CACHE_DIR / 'masks').mkdir(exist_ok=True)
+    return rootPath, CACHE_DIR
 
-# Add cache directory setup
-CACHE_DIR = Path('cache')
-CACHE_DIR.mkdir(exist_ok=True)
-(CACHE_DIR / 'images').mkdir(exist_ok=True)
-(CACHE_DIR / 'masks').mkdir(exist_ok=True)
+def load_data(rootPath):
+    image_dir = rootPath / 'images'
+    mask_dir = rootPath / 'masks'
+    
+    # Get all mask files and verify corresponding images exist
+    mask_files = [f.stem for f in mask_dir.glob('*.npy')]
+    data = [f for f in mask_files if (image_dir / f"{f}.png").exists()]
+    
+    print(f"Total masks found: {len(mask_files)}")
+    print(f"Total valid pairs (mask + image): {len(data)}")
+    
+    # Split the data
+    indices = range(len(data))
+    train_indices, test_indices = train_test_split(indices, test_size=0.2, random_state=42)
+    train_data = [data[i] for i in train_indices]
+    test_data = [data[i] for i in test_indices]
+    
+    print(f"Training samples: {len(train_data)}")
+    print(f"Testing samples: {len(test_data)}")
+    return train_data, test_data
 
-def read_batch(data, index):
+def setup_model(device):
+    sam2_checkpoint = "maskingTool/checkpoints/sam2.1_hiera_tiny.pt"
+    model_cfg = "configs/sam2.1/sam2.1_hiera_t.yaml"
+    sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
+    predictor = SAM2ImagePredictor(sam2_model)
+    predictor.model.sam_mask_decoder.train(True)
+    predictor.model.sam_prompt_encoder.train(True)
+    return sam2_model, predictor
+
+def read_batch(data, index, rootPath, CACHE_DIR):
     # Sanitize filename by replacing problematic characters
     safe_filename = data[index].replace(':', '_').replace(' ', '_')
     cache_image_path = CACHE_DIR / "images" / f"{safe_filename}.png"
@@ -71,15 +102,6 @@ def read_batch(data, index):
         print(f"Error loading {image_path}: {e}")
         return None, None
 
-mask_dir = rootPath / 'masks'
-data = [f.stem for f in mask_dir.glob('*.npy')]
-
-# Split the data into training and testing sets
-indices = range(len(data))
-train_indices, test_indices = train_test_split(indices, test_size=0.2, random_state=42)
-train_data = [data[i] for i in train_indices]
-test_data = [data[i] for i in test_indices]
-
 # Add error handling for batch loading
 def safe_read_batch(data, index):
     img, mask = read_batch(data, index)
@@ -92,27 +114,18 @@ def safe_read_batch(data, index):
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
-sam2_checkpoint = "maskingTool/checkpoints/sam2.1_hiera_tiny.pt"
-model_cfg = "configs/sam2.1/sam2.1_hiera_t.yaml"
-
-sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
-
-predictor = SAM2ImagePredictor(sam2_model)
-
-predictor.model.sam_mask_decoder.train(True)
-predictor.model.sam_prompt_encoder.train(True)
-
 class RiverDataset(Dataset):
-    def __init__(self, data_list):
+    def __init__(self, data_list, rootPath, CACHE_DIR):
         self.data_list = data_list
+        self.rootPath = rootPath
+        self.CACHE_DIR = CACHE_DIR
         
     def __len__(self):
         return len(self.data_list)
         
     def __getitem__(self, idx):
-        img, mask = read_batch(self.data_list, idx)
+        img, mask = read_batch(self.data_list, idx, self.rootPath, self.CACHE_DIR)
         if img is None or mask is None:
-            # Return a flag indicating bad data
             return None
         return img, mask
 
@@ -125,16 +138,7 @@ def collate_fn(batch):
     imgs, masks = list(zip(*batch))
     return list(imgs), list(masks)
 
-batch_size = 16  # Adjust based on your GPU memory
-num_workers = 4  # Adjust based on your CPU cores
-
-train_dataset = RiverDataset(train_data)
-train_loader = DataLoader(train_dataset, batch_size=batch_size, 
-                         shuffle=True, num_workers=num_workers,
-                         collate_fn=collate_fn,
-                         pin_memory=True)
-
-def train_model(sam2_model, predictor, train_loader, test_data, device, num_epochs=10):
+def train_model(sam2_model, predictor, train_loader, test_data, device, rootPath, CACHE_DIR, num_epochs=10):
     optimizer = optim.Adam(params=sam2_model.parameters(), lr=1e-4)
     scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3, verbose=True)
     best_loss = float('inf')
@@ -207,7 +211,7 @@ def train_model(sam2_model, predictor, train_loader, test_data, device, num_epoc
         val_loss = 0
         with torch.no_grad():
             for j in range(len(test_data)):
-                img, mask = read_batch(test_data, j)
+                img, mask = read_batch(test_data, j, rootPath, CACHE_DIR)
                 predictor.set_image(img)
                 pred_masks, scores, logits = predictor.predict(
                     point_coords = input_point,
@@ -234,11 +238,13 @@ def train_model(sam2_model, predictor, train_loader, test_data, device, num_epoc
         # Learning rate scheduling
         scheduler.step(avg_val_loss)
         
-        # Early stopping
+        # Early stopping and model saving
         if avg_val_loss < best_loss:
             best_loss = avg_val_loss
-            torch.save(sam2_model.state_dict(), f"sam2_model_finetuned_best.pt")
+            # Save only one model file with best validation loss
+            torch.save(sam2_model.state_dict(), f"sam2_model_finetuned_april_16.pt")
             patience_counter = 0
+            print(f"New best model saved! Val Loss: {avg_val_loss:.4f}")
         else:
             patience_counter += 1
             
@@ -248,13 +254,34 @@ def train_model(sam2_model, predictor, train_loader, test_data, device, num_epoc
             
         print(f"Epoch {epoch+1}: Train Loss = {avg_epoch_loss:.4f}, Val Loss = {avg_val_loss:.4f}")
 
-    # Load best model before final save
-    sam2_model.load_state_dict(torch.load("sam2_model_finetuned_best.pt"))
-    torch.save(sam2_model.state_dict(), f"sam2_model_finetuned_final.pt")
+    # No need to load/save at end since we're already keeping the best model
+    print(f"Training complete! Best validation loss: {best_loss:.4f}")
 
 def main():
-    train_model(sam2_model, predictor, train_loader, test_data, device)
+    device = setup_device()
+    rootPath, CACHE_DIR = setup_directories()
+    train_data, test_data = load_data(rootPath)
+    sam2_model, predictor = setup_model(device)
+    
+    train_dataset = RiverDataset(train_data, rootPath, CACHE_DIR)
+    batch_size = 32
+    num_workers = 8
+    
+    # Print batch information
+    num_batches = len(train_data) // batch_size + (1 if len(train_data) % batch_size != 0 else 0)
+    print(f"\nDataset info:")
+    print(f"Total training samples: {len(train_data)}")
+    print(f"Batch size: {batch_size}")
+    print(f"Number of batches per epoch: {num_batches}")
+    
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, 
+                            shuffle=True, num_workers=num_workers,
+                            collate_fn=collate_fn,
+                            pin_memory=True)
+    
+    # Set higher number of epochs for small dataset, early stopping will prevent overfitting
+    train_model(sam2_model, predictor, train_loader, test_data, device, rootPath, CACHE_DIR, num_epochs=75)
 
 if __name__ == '__main__':
-    mp.freeze_support()  # For Windows support
+    mp.freeze_support()
     main()
