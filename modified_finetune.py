@@ -66,7 +66,7 @@ class MaskDataset(Dataset):  # Change from data.Dataset to Dataset
 def collate_fn(batch):
     return batch  # keep (PIL, np.ndarray) pairs in a list
 
-batch_size = 4
+batch_size = 16
 train_loader = DataLoader(  # Change from data.DataLoader to DataLoader
     MaskDataset(train_data),
     batch_size=batch_size,
@@ -96,12 +96,14 @@ predictor.model.sam_prompt_encoder.train(True)
 
 optimizer = optim.Adam(params=sam2_model.parameters(), lr=1e-4)
 loss_fn = nn.CrossEntropyLoss()
+# epsilon = 0                        # clamp/IOU epsilon
+
 epsilon = 1e-6                         # clamp/IOU epsilon
 # Allow the model to predict with no input points
 input_point = np.empty((0, 2)) 
 input_label = np.empty((0,), dtype=int)
 
-num_epochs = 3
+num_epochs = 50
 for epoch in range(num_epochs):
     sam2_model.train()
     for batch in train_loader:
@@ -167,6 +169,8 @@ for epoch in range(num_epochs):
                 prd_mask = prd_mask.clamp(epsilon, 1 - epsilon)
                 seg_loss = (-gt_mask * torch.log(prd_mask) 
                             - (1 - gt_mask) * torch.log(1 - prd_mask)).mean()
+                if seg_loss.isnan():
+                    print(f"Seg loss is NaN")
 
                 # Calculate the loss for the score
                 inter = (gt_mask * (prd_mask > 0.5)).sum((0,1))
@@ -174,7 +178,7 @@ for epoch in range(num_epochs):
                 iou = (inter + epsilon) / (denom + epsilon)
                 score_loss = torch.abs(prd_scores[:, 0] - iou).mean()
                 if score_loss.isnan():
-                    print(f"Score loss is NaN at index {j}")
+                    print(f"Score loss is NaN")
                 # Combine the two losses, segmentation loss has a much higher weight
                 loss = seg_loss + score_loss * 0.05
                 test_losses.append(loss.item())
@@ -182,6 +186,5 @@ for epoch in range(num_epochs):
         f"Epoch {epoch}: Train Loss {batch_loss.item():.4f}, "
         f"Test Loss {np.mean(test_losses):.4f}"
     )
-
-# Save the model
-torch.save(sam2_model.state_dict(), f"sam2_model_finetuned_april_18.pt")
+    # Save after each epoch
+    torch.save(sam2_model.state_dict(), f"sam2_model_finetuned_epoch_april_18_2.pt")
