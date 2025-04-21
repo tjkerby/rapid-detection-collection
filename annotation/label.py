@@ -18,7 +18,7 @@ def is_valid_json(line, label_type):
         return np.isnan(float(line['mask'])) and np.isnan(float(line['rapid_class']))
     
     elif label_type == 'uhj':
-        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) == 1)
+        return np.isnan(float(line['uhj_class'])) and (float(line['rapid_class']) != 0)
         
 
 # TODO fix window size
@@ -47,7 +47,7 @@ def display_image(my_image, label_type):
         while True:
             cv2.imshow('image', my_image.image_mask)
             key = cv2.waitKey(1) 
-            if key == ord('0') or key == ord('1'):
+            if key == ord('0') or key == ord('1') or key == ord('2'):
                 my_image.rapid_class = int(key - ord('0'))
                 break
     
@@ -56,7 +56,7 @@ def display_image(my_image, label_type):
             cv2.imshow('image', my_image.image_mask)
             key = cv2.waitKey(1) 
 
-            if key == ord('0') or key == ord('1'):
+            if key == ord('0') or key == ord('1') or key == ord('2'):
                 my_image.rapid_class = int(key - ord('0'))
 
                 my_image.set_textmsg(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}rapids.')
@@ -75,13 +75,6 @@ def display_image(my_image, label_type):
     cv2.destroyAllWindows()
     return my_image
 
-
-# returns unix time
-def get_time():
-    t0 = datetime.datetime(1970, 1, 1).astimezone(datetime.UTC)
-    t = datetime.datetime.now(datetime.UTC) - t0 + datetime.timedelta(hours=t0.hour)
-    return str(int(t.total_seconds()))
-    
 
 def label(folders, label_type, model=None):
     
@@ -119,7 +112,7 @@ def label(folders, label_type, model=None):
         if label_type in ['rapid', 'mask_rapid']:
             msg = 'Does this image contain rapids? [0/1]'
         elif label_type == 'uhj':
-            msg = 'Does this image contain UHJs? [0/1]'
+            msg = 'Does this image contain UHJs? 0 for no, 1 for maybe, 2 for yes'
         else:
             msg = ''
 
@@ -151,7 +144,7 @@ def label(folders, label_type, model=None):
                     line['uhj_class'] = 0
             
             elif label_type == 'uhj':
-                print(f'Image has been classified as having {"no " if my_image.rapid_class == 0 else ""}UHJs.')
+                print(f'Image has been classified as {"having no" if my_image.rapid_class == 0 else ("having" if my_image.rapid_class == 2 else "maybe having")} UHJs.')
                 line['uhj_labeled_by'] = folders["user"]
                 line['uhj_timestamp'] = today
                 line['uhj_class'] = my_image.rapid_class
