@@ -13,7 +13,7 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 ### How to indclude metadata
 # 
-# 1. Create a new file called .user.json in the /segmentation folder
+# 1. Create a new file called .user.json in the annotation folder
 # 2. Copy everything between the triple quotes into .user.json
 # 3. Change each data field to match your data accordingly
 #
