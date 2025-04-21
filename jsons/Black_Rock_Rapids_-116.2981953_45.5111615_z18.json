@@ -1,0 +1,9 @@
+{
+    "name": "Black_Rock_Rapids",
+    "longitude": -116.2981953,
+    "latitude": 45.5111615,
+    "zoom": 18,
+    "image": "images/Black_Rock_Rapids_-116.2981953_45.5111615_z18.png",
+    "class": "",
+    "map": "masks/Black_Rock_Rapids_-116.2981953_45.5111615_z18.npy"
+}

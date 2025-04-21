@@ -1,0 +1,9 @@
+{
+    "name": "Boulder_Nest_Rapids",
+    "longitude": -116.4995893,
+    "latitude": 42.167853,
+    "zoom": 18,
+    "image": "images/Boulder_Nest_Rapids_-116.4995893_42.167853_z18.png",
+    "class": "",
+    "map": "masks/Boulder_Nest_Rapids_-116.4995893_42.167853_z18.npy"
+}
