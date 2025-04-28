@@ -1,6 +1,8 @@
 import torch
 import numpy as np
 
+import json
+
 from label import label
 from select_device import select_device
 
@@ -8,32 +10,39 @@ from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 
-#############################################################################
-# These may need to be changed 
-#############################################################################
-USER = ''
-METADATA  = '' # File Path METADATA in Box
-IMAGE_FOLDER = '' # Folder Path to IMAGES in Box
-NPY_FOLDER   = '' # Folder Path to MASKS in Box
 
-SAM2_CHECKPOINT_FOLDER = '' # Folder Path to CHECKPOINTS in Box
-#############################################################################
-
-
-folders = {
-    'user' : USER,
-    'metadata' : METADATA,
-    'image_folder': IMAGE_FOLDER,
-    'npy_folder'  : NPY_FOLDER
+### How to indclude metadata
+# 
+# 1. Create a new file called .user.json in the annotation folder
+# 2. Copy everything between the triple quotes into .user.json
+# 3. Change each data field to match your data accordingly
+#
+'''
+{
+    "user": "your name",
+    "metadata": "path/to/csv/file",
+    "image_folder": "path/to/image/folder",
+    "npy_folder": "path/to/masks/folder",
+    "SAM2_CHECKPOINT_FOLDER": "path/to/checkpoints"
 }
+'''
+#
+###
 
+
+
+METADATA = ".user.json" # path to .user.json
+
+with open('.user.json', 'r') as file:
+    folders = json.load(file)
 
 def load_model():
     device = select_device()
     model_cfg = 'configs/sam2.1/sam2.1_hiera_t.yaml'
-    sam2_model = build_sam2(model_cfg, F'{SAM2_CHECKPOINT_FOLDER}/sam2.1_hiera_tiny.pt', device=device)
+    sam2_model = build_sam2(model_cfg, f'{folders["SAM2_CHECKPOINT_FOLDER"]}/sam2.1_hiera_tiny.pt', device=device)
     model = SAM2ImagePredictor(sam2_model)
-    model.model.load_state_dict(torch.load(F'{SAM2_CHECKPOINT_FOLDER}/sam2_model_finetuned_2.pt'))
+    # model.model.load_state_dict(torch.load(f'{folders["SAM2_CHECKPOINT_FOLDER"]}/sam2_model_finetuned_2.pt'))
+    model.model.load_state_dict(torch.load(f'{folders["SAM2_CHECKPOINT_FOLDER"]}/sam2_model_finetuned_epoch_3.pt'))
     return model
 
 
