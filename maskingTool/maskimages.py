@@ -15,7 +15,8 @@ def parse_args():
     parser.add_argument('--input_dir', type=str, required=True, help='Directory containing input images')
     parser.add_argument('--output_dir', type=str, required=True, help='Directory to save output masks')
     parser.add_argument('--checkpoint_dir', type=str, default='../checkpoints', help='Directory containing SAM2 model checkpoints')
-    parser.add_argument('--threshold', type=float, default=0.5, help='Confidence threshold for segmentation')
+    parser.add_argument('--threshold', type=float, default=0.1, help='Confidence threshold for segmentation')  # Lower default threshold
+    parser.add_argument('--debug', action='store_true', help='Enable debug logging')
     return parser.parse_args()
 
 def main(cfg: DictConfig):
@@ -23,7 +24,8 @@ def main(cfg: DictConfig):
     input_dir = cfg.get('input_dir', 'input')
     output_dir = cfg.get('output_dir', 'output')
     checkpoint_dir = cfg.get('checkpoint_dir', '../checkpoints')
-    threshold = cfg.get('threshold', 0.5)
+    threshold = cfg.get('threshold', 0.1)  # Lower default threshold
+    debug = cfg.get('debug', False)
     
     # Print configuration
     print(OmegaConf.to_yaml(cfg))
@@ -52,9 +54,23 @@ def load_model(checkpoint_dir):
     model_cfg = '/configs/sam2.1/sam2.1_hiera_t.yaml'
     sam2_model = build_sam2(model_cfg, f'{checkpoint_dir}/sam2.1_hiera_tiny.pt', device=device)
     model = SAM2ImagePredictor(sam2_model)
-    model.model.load_state_dict(torch.load(f'{checkpoint_dir}/sam2_model_finetuned_2.pt'))
-    # model.model.load_state_dict(torch.load(f'{checkpoint_dir}/sam2_model_finetuned_epoch_3.pt'))
-
+    
+    # Load finetuned weights and verify
+    checkpoint = torch.load(f'{checkpoint_dir}/sam2_model_finetuned_april_17.pt')
+    model.model.load_state_dict(checkpoint)
+    
+    # Verify model is in eval mode and validate predictions
+    model.model.eval()
+    
+    # Validate model outputs
+    print("\nValidating model predictions...")
+    test_image = np.zeros((64, 64, 3), dtype=np.uint8)  # Small test image
+    model.set_image(test_image)
+    masks, scores, _ = model.predict()
+    print(f"Test prediction scores range: {scores.min():.4f} to {scores.max():.4f}")
+    if scores.max() < 0.1:
+        print("WARNING: Model producing very low confidence scores!")
+    
     return model
 
 def create_directory(directory):
@@ -62,7 +78,7 @@ def create_directory(directory):
         os.makedirs(directory)
         print(f"Created directory: {directory}")
 
-def process_images(input_dir, output_dir, model, threshold=0.5):
+def process_images(input_dir, output_dir, model, threshold=0.1):  # Lower default threshold
     # Get all image files
     image_files = []
     for ext in ['*.jpg', '*.jpeg', '*.png', '*.bmp']:
@@ -106,6 +122,14 @@ def process_images(input_dir, output_dir, model, threshold=0.5):
             
             # Generate mask using automatic segmentation (no points)
             masks, scores, _ = model.predict()
+            
+            # Debug information about predictions
+            # if len(masks) > 0:
+            #     print(f"\nDebug - {filename}:")
+            #     print(f"  Score distribution: min={scores.min():.4f}, max={scores.max():.4f}, mean={scores.mean():.4f}")
+            #     print(f"  Number of masks above various thresholds:")
+            #     for t in [0.1, 0.2, 0.3, 0.4, 0.5]:
+            #         print(f"    > {t}: {(scores > t).sum()}")
             
             # Log mask information
             log_file.write(f"Image: {filename}, Found {len(masks)} masks\n")
@@ -178,7 +202,8 @@ if __name__ == "__main__":
         'input_dir': args.input_dir,
         'output_dir': args.output_dir,
         'checkpoint_dir': args.checkpoint_dir,
-        'threshold': args.threshold
+        'threshold': args.threshold,
+        'debug': args.debug
     }
     
     # Convert to DictConfig for compatibility

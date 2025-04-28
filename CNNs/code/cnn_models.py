@@ -112,7 +112,10 @@ class RiverClassifier:
             param.requires_grad = False
         num_features = resnet.fc.in_features
         resnet.fc = nn.Sequential(
-            nn.Linear(num_features, 512),
+            nn.Linear(num_features, 1024),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+            nn.Linear(1024, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
             nn.Linear(512, num_classes)
@@ -124,7 +127,10 @@ class RiverClassifier:
             param.requires_grad = False
         num_features = resnet.fc.in_features
         resnet.fc = nn.Sequential(
-            nn.Linear(num_features, 512),
+            nn.Linear(num_features, 1024),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+            nn.Linear(1024, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
             nn.Linear(512, num_classes)
@@ -138,7 +144,10 @@ class RiverClassifier:
         num_features = efficientnet.classifier[1].in_features
         efficientnet.classifier = nn.Sequential(
             nn.Dropout(0.5),
-            nn.Linear(num_features, 512),
+            nn.Linear(num_features, 1024),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+            nn.Linear(1024, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
             nn.Linear(512, num_classes)
@@ -151,17 +160,22 @@ class RiverClassifier:
         num_features = efficientnet.classifier[1].in_features
         efficientnet.classifier = nn.Sequential(
             nn.Dropout(0.5),
-            nn.Linear(num_features, 512),
+            nn.Linear(num_features, 1024),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+            nn.Linear(1024, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
             nn.Linear(512, num_classes)
         )
         return efficientnet
 
-    def train(self, train_loader, val_loader, epochs=50, early_stop_patience=7):
+    def train(self, train_loader, val_loader, epochs=50, early_stop_patience=15):
         best_val_loss = float('inf')
         early_stop_counter = 0
         train_losses, val_losses, val_accuracies = [], [], []
+        best_model_path = f'best_{self.model_type}_model.pth'
+        completed_epochs = 0
 
         for epoch in range(epochs):
             self.model.train()
@@ -196,16 +210,20 @@ class RiverClassifier:
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
                 early_stop_counter = 0
-                torch.save(self.model.state_dict(), f'best_{self.model_type}_model.pth')
+                torch.save(self.model.state_dict(), best_model_path)
             else:
                 early_stop_counter += 1
                 if early_stop_counter >= early_stop_patience:
                     print("Early stopping triggered.")
-                    # break
+                    completed_epochs = epoch + 1
+                    break
+            completed_epochs = epoch + 1
 
-        # Save the training plot after training or early stopping
-        # torch.save(self.model.state_dict(), f'finished_{self.model_type}_model.pth')
-        self._save_training_plot(train_losses, val_losses, val_accuracies, epochs)
+        self.model.load_state_dict(torch.load(best_model_path))
+        self._save_training_plot(train_losses[:completed_epochs], 
+                               val_losses[:completed_epochs], 
+                               val_accuracies[:completed_epochs], 
+                               completed_epochs)
 
 
     def _save_training_plot(self, train_losses, val_losses, val_accuracies, epochs):
@@ -294,18 +312,15 @@ def prepare_datasets(data_dir, image_size=1280, batch_size=8, random_state=42):
 def main():
     data_dir = './dataset'  # Replace with your data directory
     train_loader, val_loader, test_loader, class_names = prepare_datasets(data_dir)
-    for model in [ 'simple','resnet', 'efficientnet', 'resnetpre', 'efficientnetpre']:
-    # for model in [ 'resnetpre', 'efficientnetpre']:
-    # for model in ['efficientnetpre']:
+    # for model in ['resnetpre', 'efficientnetpre']:
+    for model in ['efficientnetpre']:
+
         print(f"Training {model} model")
         print("=====================================")
         classifier = RiverClassifier(num_classes=len(class_names), model_type=model)
-        classifier.train(train_loader, val_loader, epochs=20)
+        classifier.train(train_loader, val_loader, epochs=100)
+        # Model is already loaded with best weights after training
         classifier.evaluate(test_loader, class_names)
-    # classifier = TrashClassifier(num_classes=len(class_names), model_type='efficientnet')
-    # classifier.train(train_loader, val_loader, epochs=20)
-    # classifier.evaluate(test_loader, class_names)
-
 
 if __name__ == '__main__':
     main()
