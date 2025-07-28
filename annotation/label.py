@@ -87,25 +87,8 @@ def display_image(my_image, label_type):
 def label(folders, label_type, model=None):
     
     df = pd.read_csv(folders["metadata"], dtype={
-        'image': str,
-        'name': str,
         'latitude': str,
         'longitude': str,
-        'zoom': float,
-        'api_timestamp': float,
-        'mask': float,
-        'river_class': float,
-        'rapid_class': float,
-        'uhj_class': float,
-        'mask_labeled_by': str,
-        'river_labeled_by': str,
-        'rapid_labeled_by': str,
-        'uhj_labeled_by': str,
-        'mask_timestamp': str,
-        'river_timestamp': str,
-        'rapid_timestamp': str,
-        'uhj_timestamp': str,
-        'assignment': str
     })
     
     for i in range(len(df)):
@@ -164,7 +147,7 @@ def label(folders, label_type, model=None):
 
             line['mask_labeled_by'] = folders["user"]
             line['mask_timestamp'] = today
-
+    
             save_npy = input('Would you like to save your masks for this image? [y/n] ')
             if save_npy.lower() == 'y' or save_npy.lower() == 'yes':
                 np.save(
