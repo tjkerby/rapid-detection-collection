@@ -109,7 +109,7 @@ def label(folders, label_type, model=None):
 
         try:
             my_image = Image(
-                image=cv2.imread(f'{folders["image_folder"]}/{line["image"]}.png', 1),
+                image=cv2.imread(f'{folders["image_folder"]}/{line["image0"]}.png', 1),
                 predictor=model,
                 has_textbox=(label_type!='mask'),
                 msg=msg
