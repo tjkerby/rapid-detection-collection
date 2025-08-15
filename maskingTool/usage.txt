@@ -1,1 +1,0 @@
-python .\maskimages.py --input_dir "./toMask" --output_dir "./masked" --checkpoint_dir "checkpoints"

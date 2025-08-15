@@ -1,3 +1,46 @@
+"""
+Automated River Segmentation Mask Generator
+
+This script automatically generates predicted segmentation masks of rivers for a batch of images
+using a fine-tuned SAM2 (Segment Anything Model 2) model. It processes all images in a specified
+directory and outputs binary masks highlighting detected river features.
+
+Key Features:
+- Batch processing of images (supports JPG, JPEG, PNG, BMP formats)
+- Automated river detection using fine-tuned SAM2 model
+- Confidence-based filtering with adjustable threshold
+- Organized output structure with separate folders for different confidence levels
+- Detailed logging of processing results and statistics
+- GPU acceleration when available
+
+Usage:
+    python maskimages.py --input_dir /path/to/images --output_dir /path/to/output [options]
+
+Required Arguments:
+    --input_dir    Directory containing input images to process
+    --output_dir   Directory where output masks and results will be saved
+
+Optional Arguments:
+    --checkpoint_dir   Directory containing SAM2 model checkpoints (default: ../checkpoints)
+    --threshold        Confidence threshold for mask acceptance (default: 0.1)
+    --debug           Enable debug logging
+
+Output Structure:
+    output_dir/
+    ├── masks/              # High-confidence binary masks (.npy files)
+    ├── masked_images/      # Original images with river regions highlighted (.png files)
+    ├── low_confidence/     # Masks below threshold for manual review
+    └── processing_log.txt  # Detailed processing log with statistics
+
+The script uses a fine-tuned SAM2 model specifically trained for river detection and applies
+automatic segmentation without requiring manual point prompts. Results are filtered by
+confidence score to ensure quality while preserving lower-confidence predictions for review.
+
+Dependencies:
+    - torch, numpy, opencv-python, tqdm, omegaconf
+    - SAM2 model components (sam2.build_sam, sam2.sam2_image_predictor)
+"""
+
 import torch
 import numpy as np
 import os
