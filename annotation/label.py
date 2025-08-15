@@ -1,3 +1,56 @@
+"""
+Manual Image Annotation Tool for River Rapids and Segmentation
+
+This script provides an interactive annotation interface for manually labeling river images
+with segmentation masks and rapid classifications. It serves as the core labeling engine
+for creating ground truth data for river feature detection and rapid identification.
+
+Key Features:
+- Interactive image display with mouse-based mask annotation
+- Rapid classification (presence/absence of rapids)
+- UHJ (Upstream Hydraulic Jump) classification for standing waves
+- Combined mask and rapid labeling workflow
+- Progress tracking and resumable annotation sessions
+- Automatic metadata and timestamp logging
+
+Annotation Types:
+1. 'mask': Create segmentation masks for river boundaries
+   - Left click: Add positive points (river areas)
+   - Right click: Add negative points (non-river areas)
+   - 't': Mark entire image as river
+   - 'f': Mark entire image as non-river
+   - 'z': Remove last point
+   - 'q': Save and continue
+
+2. 'rapid': Classify presence of rapids
+   - '0': No rapids present
+   - '1': Rapids present
+
+3. 'uhj': Classify standing waves/hydraulic jumps
+   - '0': No UHJs present
+   - '1': UHJs present
+   - '5': Maybe/uncertain
+
+4. 'mask_rapid': Combined segmentation and rapid classification
+
+Input Requirements:
+- CSV metadata file with image information
+- Image folder containing PNG images
+- User configuration for output paths
+
+Output:
+- Updated CSV with labels, timestamps, and annotator info
+- Binary mask files (.npy format) for segmentation annotations
+- Validation prompts for quality control
+
+The script integrates with SAM2 model predictions to assist with segmentation
+and maintains detailed provenance information for all annotations.
+
+Dependencies:
+    - cv2, numpy, pandas, time
+    - RapidsImage class for image handling and visualization
+"""
+
 import cv2
 # import datetime
 import time

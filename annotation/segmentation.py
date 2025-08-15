@@ -1,3 +1,60 @@
+"""
+River Segmentation and Rapids Annotation Interface
+
+This script provides the main entry point for manual annotation of river images,
+offering multiple annotation workflows for creating training data for river
+segmentation and rapid detection models.
+
+The script combines interactive segmentation using SAM2 (Segment Anything Model 2)
+with manual classification of river features, providing a comprehensive annotation
+platform for building high-quality datasets.
+
+Annotation Workflows:
+1. Create Masks Only - Generate segmentation masks for river boundaries
+2. Label Rapids Only - Classify images for presence/absence of rapids
+3. Combined Workflow - Both segmentation and rapid classification
+4. Label Standing Waves - Classify UHJs (Upstream Hydraulic Jumps)
+
+Setup Requirements:
+Before running, create a '.user.json' file in the project root with:
+{
+    "user": "annotator_name",
+    "metadata": "path/to/metadata.csv",
+    "image_folder": "path/to/images/",
+    "npy_folder": "path/to/output/masks/",
+    "SAM2_CHECKPOINT_FOLDER": "path/to/sam2/checkpoints/"
+}
+
+Key Features:
+- Menu-driven interface for selecting annotation tasks
+- Integration with fine-tuned SAM2 model for segmentation assistance
+- Automatic progress saving and resumable sessions
+- Quality control prompts for annotation validation
+- Comprehensive metadata tracking with timestamps
+
+Model Integration:
+- Loads fine-tuned SAM2 model for river segmentation
+- Uses interactive point prompts for mask refinement
+- Supports both automated and manual annotation modes
+- GPU acceleration when available
+
+Controls and Instructions:
+- Mask Creation: Interactive point-based annotation with SAM2
+- Rapid Classification: Keyboard-based binary classification
+- UHJ Classification: Three-way classification (yes/no/maybe)
+- Quality Control: Manual review and validation prompts
+
+Output:
+- Updated CSV metadata with labels and timestamps
+- Binary mask files (.npy) for segmentation annotations
+- Detailed annotation provenance information
+
+Dependencies:
+    - torch, numpy, json
+    - SAM2 components (build_sam, sam2_image_predictor)
+    - Custom modules: label, select_device
+"""
+
 import torch
 import numpy as np
 

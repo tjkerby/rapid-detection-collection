@@ -1,3 +1,48 @@
+"""
+Device Selection and Optimization for PyTorch Models
+
+This utility module handles automatic device selection and optimization configuration
+for PyTorch models, specifically optimized for SAM2 (Segment Anything Model 2)
+inference and training workflows.
+
+The module automatically detects available hardware and configures appropriate
+settings for optimal performance across different computing environments.
+
+Key Features:
+- Automatic CUDA/CPU device detection
+- GPU memory optimization for SAM2 models
+- Platform-specific performance tuning
+- MPS (Apple Silicon) compatibility warnings
+- Automatic precision and backend optimization
+
+Device Support:
+- CUDA (NVIDIA GPUs): Full optimization with mixed precision
+- CPU: Fallback with standard precision
+- MPS (Apple Silicon): Preliminary support with warnings
+
+Optimizations Applied:
+- CUDA: Enables bfloat16 autocast for memory efficiency
+- Ampere GPUs: Enables TensorFloat-32 for faster training
+- CUDNN: Optimized convolution algorithms
+- Automatic device capability detection
+
+Usage:
+    device = select_device()
+    model.to(device)
+
+The function automatically applies the optimal settings and returns
+the selected device for model deployment.
+
+Performance Notes:
+- CUDA devices get automatic mixed precision
+- Ampere architecture (RTX 30xx+) gets TF32 acceleration
+- MPS devices may have numerical differences vs CUDA
+- CPU execution uses standard float32 precision
+
+Dependencies:
+    - torch
+"""
+
 import torch
 
 def select_device():

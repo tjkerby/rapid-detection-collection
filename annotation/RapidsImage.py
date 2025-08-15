@@ -1,3 +1,51 @@
+"""
+RapidsImage Class - Interactive Image Annotation and Visualization
+
+This module defines the RapidsImage class, which handles interactive image display,
+mouse-based annotation, and real-time mask visualization for river segmentation
+and rapid classification tasks.
+
+The class serves as the core image handling component for the manual annotation
+workflow, providing an intuitive interface for creating precise segmentation
+masks and classifying river features.
+
+Key Features:
+- Interactive point-based annotation with SAM2 model integration
+- Real-time mask visualization with color overlays
+- Mouse event handling for positive/negative point placement
+- Dynamic text overlay for classification prompts
+- Undo functionality for annotation corrections
+- Support for both segmentation and classification workflows
+
+Mouse Controls:
+- Left Click: Add positive point (include this area in mask)
+- Right Click: Add negative point (exclude this area from mask)
+
+Visual Feedback:
+- Green circles: Positive annotation points
+- Red circles: Negative annotation points
+- Orange overlay: Predicted segmentation mask
+- Text box: Classification prompts and instructions
+
+Integration:
+- Works with SAM2 predictor models for automated segmentation
+- Supports multiple annotation modes (mask-only, rapid-only, combined)
+- Maintains annotation state for undo/redo operations
+- Handles real-time mask updates based on user input
+
+Usage:
+    image = RapidsImage(
+        image=cv2_image,
+        predictor=sam2_predictor,
+        has_textbox=True,
+        msg="Classification prompt"
+    )
+
+Dependencies:
+    - cv2, numpy
+    - SAM2 predictor (optional, for automated segmentation assistance)
+"""
+
 import cv2
 import numpy as np
 
