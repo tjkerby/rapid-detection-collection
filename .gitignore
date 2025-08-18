@@ -183,3 +183,4 @@ cython_debug/
 *.json
 *.csv
 *.db
+.Rproj.user
