@@ -1,41 +1,49 @@
 # Import libraries
 import os
 import tarfile
-from contextlib import nullcontext
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Tuple
 
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
-from torch.amp import GradScaler, autocast
 import torchvision.transforms as transforms
 
-import numpy as np
 import pandas as pd
 from PIL import Image
 
-# Import timm and set cache
-os.environ['HF_HOME'] = '/content/hf_cache'
-from classifier.py import RiverClassifier
+# Set timm cache
+os.environ['HF_HOME'] = os.path.join(Path.home(), "hf_cache")
+from classifier import RiverClassifier
 
-results_dir = "model_performance/"
-label_csv_path = "rapids_labels_al_gt_masked.csv"
-rapids_images_path = "rapids_label_images_final.tar"
+# Set the paths below to their respective locations
+# Configuration --------------------------
+# Path to tar file containing labeled rapids images
+image_dir = os.path.join(Path.home(), "rapids", "rapids_label_dataset.tar")
+# Directory where output CSV will be written
+artifact_dir = os.path.join(Path.home(), "rapids", "model_performance")
+# Path to CSV containing rapid class labels
+label_csv_path = os.path.join(Path.home(), "rapids", "rapids_labels.csv")
+# File name used for output files
+model_log_name = "resnetv2_08_19"
+# Model name
+model_name = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
 
-train_version = "masked_al"
+# train_subset determines which data augmentations are used to train the model. 
+# "masked": Retain the ground truth masks in the training dataset
+# "al": Retaub the images labeled through active learning in the training dataset
+# "masked_al": Retain both the ground truth masks and the images labeled through
+# active learning in the training dataset
+# else: Retain neither of the above augmentations
+train_subset= "base"
 
 class RapidsDataset(Dataset):
+    # tar_path: Path to tar file with river images
+    # keys: List of file names matching river images in the tar 
+    # file to be included in the Dataset
+    # labels: List or array of rapid class labels aligned with keys
+    # transform: Optional torchvision transforms to apply to images
     def __init__(self, tar_path, keys, labels, transform=None):
-        """
-        tar_path: path to your tar file with images
-        keys: list of filenames in the tar matching your CSV keys (with extensions)
-        labels: list or array of labels aligned with keys
-        transform: optional torchvision transforms to apply to images
-        """
+
         self.tar_path = tar_path
         self.keys = keys
         self.labels = labels
@@ -77,7 +85,6 @@ class OptimConfig:
     weight_decay: float
     scheduler_patience: int
     scheduler_factor: float
-    # scheduler variable
 
 # Read CSV containing labels
 rapids_df = pd.read_csv(label_csv_path)
@@ -91,20 +98,17 @@ split_field = "rapid_split"
 # through active learning, or the initial dataset with both of the
 # above augmentations
 
-if (train_version == "masked"):
+if (train_subset == "masked"):
     # Remove active learning images
     rapids_df = rapids_df[(rapids_df["al"] == 0)]
 
-    # Keep masked images in the training dataset
-    rapids_df = rapids_df[(rapids_df["masked"] == 0) | ((rapids_df["masked"] == 1) & (rapids_df[split_field] == "train"))]
-
-elif (train_version == "al"):
+elif (train_subset == "al"):
     # Keep active learning but remove masked images
     rapids_df = rapids_df[(rapids_df["masked"] == 0)]
 
-elif (train_version == "masked_al"):
-    # Keep masked images in the training dataset
-    rapids_df = rapids_df[(rapids_df["masked"] == 0) | ((rapids_df["masked"] == 1) & (rapids_df[split_field] == "train"))]
+elif (train_subset == "masked_al"):
+    # Keep both masked and active learning images in the training dataset; remove nothing
+    pass
 
 else:
     # Remove both active learning images and masked images
@@ -126,18 +130,19 @@ train_labels = rapids_df[label_field].iloc[train_idxs].to_numpy()
 val_labels = rapids_df[label_field].iloc[val_idxs].to_numpy()
 test_labels = rapids_df[label_field].iloc[test_idxs].to_numpy()
 
-# Specify model type and get image size
-model_name = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
-
 classifier_config = ModelConfig(model_name=model_name,
                                 hidden_layers=(1024, 512),
                                 dropout=0.5,
                                 num_classes=2)
 
 # Initiate, train, and evaluate model
-classifier = RiverClassifier(classifier_config, model_log_name="resnetv2_al")
+classifier = RiverClassifier(classifier_config, artifact_dir, model_log_name)
 
-image_size = 480 # list(classifier.model.backbone.default_cfg.get("input_size"))[1]
+# We use an image size of 480 instead of the default image size of 224, 
+# since a larger image size appears to give a performance boost.
+image_size = 480 
+# The default image size can be used by uncommenting the line below
+# image_size = list(classifier.model.backbone.default_cfg.get("input_size"))[1]
 transform_mean = list(classifier.model.backbone.default_cfg.get("mean"))
 transform_std = list(classifier.model.backbone.default_cfg.get("std"))
 
@@ -157,16 +162,17 @@ transform = transforms.Compose([
 ])
 
 # Create Datasets and DataLoaders
-train_dataset = RapidsDataset(rapids_images_path, train_keys, train_labels, train_transform)
+train_dataset = RapidsDataset(image_dir, train_keys, train_labels, train_transform)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=2, pin_memory=True)
 
-val_dataset = RapidsDataset(rapids_images_path, val_keys, val_labels, transform)
+val_dataset = RapidsDataset(image_dir, val_keys, val_labels, transform)
 val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=2, pin_memory=True)
 
-test_dataset = RapidsDataset(rapids_images_path, test_keys, test_labels, transform)
+test_dataset = RapidsDataset(image_dir, test_keys, test_labels, transform)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=2, pin_memory=True)
 
 # ResNetv2
+# This needs to be commented out or modified if a different pretrained model architecture is used
 # Unfreeze only the final stage of the backbone and final norm
 for param in classifier.model.backbone.stages[3].parameters():
     param.requires_grad = True
@@ -178,28 +184,16 @@ for param in classifier.model.classifier.parameters():
     param.requires_grad = True
 
 # Initialize the optimizer
-optim_config = OptimConfig(backbone_lr = 1e-5, classifier_lr = 1e-3, weight_decay = 1e-5, scheduler_patience = 15, scheduler_factor = 0.1)
+optim_config = OptimConfig(backbone_lr = 5e-5, classifier_lr = 1e-3, weight_decay = 1e-5, scheduler_patience = 5, scheduler_factor = 0.1)
 classifier.initialize_optimizer(optim_config)
 
+classifier.print_device()
 # Train the classifier model
-classifier.train(train_loader, val_loader, epochs=5, early_stop_patience=10)
+# classifier.train(train_loader, val_loader, epochs=50, early_stop_patience=10)
+
+import torch
+model_path = os.path.join(Path.home(), "rapids", "model_performance", "best_resnetv2_08_19_model.pth")
+classifier.model.load_state_dict(torch.load(model_path, map_location=classifier.device))
 
 # Evaluate the model on the test data
 classifier.evaluate(test_loader)
-
-rapids_df_2 = pd.read_csv(label_csv_path)
-
-rapids_df_2 = rapids_df_2[(rapids_df_2["masked"] == 1) & (rapids_df_2[split_field] == "test")]
-
-rapids_df_2 = rapids_df_2.reset_index(drop=True)
-
-masked_test_idxs = rapids_df_2.index[rapids_df_2[split_field] == "test"].to_numpy()
-
-masked_test_keys = rapids_df_2[key_field].iloc[masked_test_idxs].to_numpy()
-
-masked_test_labels = rapids_df_2[label_field].iloc[masked_test_idxs].to_numpy()
-
-masked_test_dataset = RapidsDataset(rapids_images_path, masked_test_keys, masked_test_labels, transform)
-masked_test_loader = DataLoader(masked_test_dataset, batch_size=32, shuffle=False, num_workers=2, pin_memory=True)
-
-classifier.evaluate(masked_test_loader)

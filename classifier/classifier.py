@@ -1,12 +1,14 @@
+import csv
+import os 
+from contextlib import nullcontext
+from dataclasses import dataclass
+
 import torch 
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
 from torch.amp import GradScaler, autocast
 
-from dataclasses import dataclass
-results_dir = ""
 import matplotlib.pyplot as plt
 
 import timm
@@ -14,10 +16,12 @@ import timm
 # Class containing the classifier model, optimizer, and training and evaluation methods
 class RiverClassifier:
     # model_config: A ModelConfig dataclass containing the hyperparameters for the classifier
+    # artifacts_dir: Path to a directory to store model outputs
     # model_log_name: The file name used for saving results and model weights
-    def __init__(self, model_config, model_log_name):
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    def __init__(self, model_config, artifacts_dir, model_log_name):
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_config = model_config
+        self.artifacts_dir = artifacts_dir
         self.model_log_name = model_log_name
         self.model = RiverClassifier.get_model(model_name=model_config.model_name,
                                                hidden_layers=model_config.hidden_layers,
@@ -45,7 +49,7 @@ class RiverClassifier:
 
         def forward(self, x):
             # Use forward_features if it exists; else fallback to forward
-            if hasattr(self.backbone, 'forward_features'):
+            if hasattr(self.backbone, "forward_features"):
                 x = self.backbone.forward_features(x)
             else:
                 x = self.backbone(x)
@@ -67,7 +71,7 @@ class RiverClassifier:
     # num_classes: Number of classes, i.e. output neurons.
     # use_dropout_last: Should a dropout layer be used after the final hidden layer
     @staticmethod
-    def make_classifier_head(in_features, hidden_layers, dropout, num_classes, use_dropout_last=True):
+    def make_classifier_head(in_features, hidden_layers, dropout, num_classes):
         layers = []
         last_dim = in_features
         for i, h in enumerate(hidden_layers):
@@ -76,7 +80,7 @@ class RiverClassifier:
 
             last_dim = h
 
-        if dropout > 0 and use_dropout_last:
+        if dropout > 0:
             layers.append(nn.Dropout(dropout))
 
         layers.append(nn.Linear(last_dim, num_classes))
@@ -88,7 +92,8 @@ class RiverClassifier:
     # hidden_layers: Number of hidden layers in the classifier head
     # dropout: Value between 0 and 1 for dropout layers
     # num_classes: Number of classes, i.e. output neurons.
-    # freeze_backbone:
+    # freeze_backbone: Should the pretrained parameters have requires_grad disabled by default
+    # (i.e. unless specific blocks are unfrozen later to fine-tune the final stages of the model)
     @staticmethod
     def get_model(model_name, hidden_layers, dropout, num_classes, freeze_backbone=True):
         backbone = timm.create_model(model_name, pretrained=True)
@@ -100,25 +105,24 @@ class RiverClassifier:
         # Determine input features for classifier head
         # Various timm models have slightly different naming conventions for
         # the model features
-        if hasattr(backbone, 'head') and hasattr(backbone.head, 'in_features'):
+        if hasattr(backbone, "head") and hasattr(backbone.head, "in_features"):
             in_features = backbone.head.in_features
             # backbone.head = nn.Identity()
-        if hasattr(backbone, 'fc') and hasattr(backbone.fc, 'in_features'):
+        if hasattr(backbone, "fc") and hasattr(backbone.fc, "in_features"):
             in_features = backbone.head.in_features
             # backbone.fc = nn.Identity()
-        elif hasattr(backbone, 'classifier') and hasattr(backbone.classifier, 'in_features'):
+        elif hasattr(backbone, "classifier") and hasattr(backbone.classifier, "in_features"):
             in_features = backbone.classifier.in_features
             # backbone.classifier = nn.Identity()
         else:
-            in_features = getattr(backbone, 'num_features', None)
+            in_features = getattr(backbone, "num_features", None)
 
         # Build shared classifier head
         classifier_head = RiverClassifier.make_classifier_head(
             in_features=in_features,
             hidden_layers=hidden_layers,
             dropout=dropout,
-            num_classes=num_classes,
-            use_dropout_last=True
+            num_classes=num_classes
         )
 
         return RiverClassifier.RiverModel(backbone, classifier_head)
@@ -159,7 +163,7 @@ class RiverClassifier:
     # early_stop_patience: Number of epochs for early stopping
     # save_model: Should the model be saved at the best validation loss (True)
     # or save at the final epoch (False)
-    def train(self, train_loader, val_loader, epochs=50, early_stop_patience=15, save_model=True):
+    def train(self, train_loader, val_loader, epochs, early_stop_patience, save_best_model=True):
         # Initialize best validation F1 score to 0
         # If validation loss is being used for early stopping, this should be set
         # to the maximum float value.
@@ -167,12 +171,13 @@ class RiverClassifier:
         early_stop_counter = 0
         # Lists of training and validation metrics per epoch, used for plots
         train_losses, val_losses, val_accuracies, val_f1s = [], [], [], []
-        best_model_path = "".join([results_dir, "best_", self.model_log_name, "_model.pth"])
+        best_model_path = os.path.join(self.artifacts_dir, "".join(["best_", self.model_log_name, "_model.pth"]))
         completed_epochs = 0
 
         print("#--------------------------------------------------------------")
         print("Training Model: %s" %(self.model_config.model_name))
 
+        # Training loop
         for epoch in range(epochs):
             self.model.train()
             train_loss = 0.0
@@ -180,10 +185,12 @@ class RiverClassifier:
                 images, labels = images.to(self.device), labels.to(self.device)
                 self.optimizer.zero_grad()
 
-                with autocast(device_type="cuda"):
+                autocast_ctx = autocast(device_type="cuda") if self.device == "cuda" else nullcontext()
+                with autocast_ctx:
                     outputs = self.model(images)
 
                     loss = self.criterion(outputs, labels)
+
                 self.scaler.scale(loss).backward()
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
@@ -204,6 +211,7 @@ class RiverClassifier:
 
             completed_epochs = epoch + 1
 
+            # Logic for early stopping using the validation F1 score
             if val_metrics.f1 > best_val_metric:
                 best_val_metric = val_metrics.f1
                 early_stop_counter = 0
@@ -214,65 +222,73 @@ class RiverClassifier:
                     print("Early stopping triggered.")
                     break
 
-        self.model.load_state_dict(best_model_state)
-        torch.save(best_model_state, best_model_path)
-        RiverClassifier._save_training_plot(train_losses[:completed_epochs],
-                                 val_losses[:completed_epochs],
-                                 val_accuracies[:completed_epochs],
-                                 val_f1s[:completed_epochs],
-                                 completed_epochs, self.model_log_name)
+        # Load the best model state for evaluation and save to a .pth file
+        if (save_best_model):
+            self.model.load_state_dict(best_model_state)
+            torch.save(best_model_state, best_model_path)
+        else:
+            torch.save(self.model.state_dict(), best_model_path)
+        self._save_training_plot(train_losses, val_losses, val_accuracies, val_f1s, completed_epochs)
 
-    @staticmethod
-    def _save_training_plot(train_losses, val_losses, val_accuracies, val_f1s, epochs, model_log_name):
+    # Method to save line plots for training and validation metrics vs epoch
+    def _save_training_plot(self, train_losses, val_losses, val_accuracies, val_f1s, epochs):
         epochs_range = range(1, epochs + 1)
         plt.figure(figsize=(10, 5))
-        plt.plot(epochs_range, train_losses, label='Train Loss')
+        plt.plot(epochs_range, train_losses[:epochs], label='Train Loss')
         plt.xlabel('Epochs')
         plt.ylabel('Value')
         plt.title('Training Loss')
         plt.legend()
-        plt.savefig("".join([results_dir, model_log_name, "_training_plot_train.png"]))
+        plt.savefig(os.path.join(self.artifacts_dir, "".join([self.model_log_name, "_training_plot_train.png"])))
         plt.close()
 
         plt.figure(figsize=(10, 5))
-        plt.plot(epochs_range, val_losses, label='Validation Loss')
+        plt.plot(epochs_range, val_losses[:epochs], label='Validation Loss')
         plt.xlabel('Epochs')
         plt.ylabel('Value')
         plt.title('Validation Loss')
         plt.legend()
-        plt.savefig("".join([results_dir, model_log_name, "_training_plot_validation.png"]))
+        plt.savefig(os.path.join(self.artifacts_dir, "".join([self.model_log_name, "_training_plot_validation.png"])))
         plt.close()
 
         plt.figure(figsize=(10, 5))
-        plt.plot(epochs_range, val_accuracies, label='Validation Accuracy')
+        plt.plot(epochs_range, val_accuracies[:epochs], label='Validation Accuracy')
         plt.xlabel('Epochs')
         plt.ylabel('Value')
         plt.title('Accuracy')
         plt.legend()
-        plt.savefig("".join([results_dir, model_log_name, "_training_plot_accuracy.png"]))
+        plt.savefig(os.path.join(self.artifacts_dir, "".join([self.model_log_name, "_training_plot_accuracy.png"])))
         plt.close()
 
         plt.figure(figsize=(10, 5))
-        plt.plot(epochs_range, val_f1s, label='Validation F1')
+        plt.plot(epochs_range, val_f1s[:epochs], label='Validation F1')
         plt.xlabel('Epochs')
         plt.ylabel('Value')
         plt.title('F1')
         plt.legend()
-        plt.savefig("".join([results_dir, model_log_name, "_training_plot_f1.png"]))
+        plt.savefig(os.path.join(self.artifacts_dir, "".join([self.model_log_name, "_training_plot_f1.png"])))
         plt.close()
 
+    # Method for evaluating the performance of the model on the test or validation data. 
+    # loader: A DataLoader of river images returning image, label, and key
+    # Returns: an EvalMetrics dataclass with the information necessary to generate a
+    # confusion matrix 
     def _evaluate(self, loader):
         self.model.eval()
         all_preds = []
         all_labels = []
         eval_loss = 0
-        # val_loss, correct, total = 0.0, 0, 0
         with torch.no_grad():
             for images, labels, _ in loader:
                 images, labels = images.to(self.device), labels.to(self.device)
-                outputs = self.model(images)
 
-                eval_loss += self.criterion(outputs, labels).item()
+                autocast_ctx = autocast(device_type="cuda") if self.device == "cuda" else nullcontext()
+                with autocast_ctx:
+                    outputs = self.model(images)
+
+                    loss = self.criterion(outputs, labels)
+
+                eval_loss += loss.item() # self.criterion(outputs, labels).item()
                 _, preds = torch.max(outputs, 1)
 
                 all_preds.append(preds.cpu())
@@ -293,13 +309,44 @@ class RiverClassifier:
 
         return RiverClassifier.EvalMetrics(TP, FP, TN, FN, precision, recall, f1, accuracy, eval_loss / len(loader))
 
-    def evaluate(self, loader):
+    # Method to provide an exposed wrapper around the protected _evaluate method and save the metrics to a CSV
+    # loader: A DataLoader of river images returning image, label, and key
+    # save: Should the returned metrics be written to a CSV. Use save=False to avoid overwriting existing results
+    def evaluate(self, loader, save=True):
         em = self._evaluate(loader)
 
-        results_path = "".join([results_dir, self.model_log_name, ".csv"])
-        f = open(results_path, "w", newline="")
-        f.write("TP,FP,TN,FN,precision,recall,f1,accuracy\n")
-        f.write("%d,%d,%d,%d,%f,%f,%f,%f\n" %(em.TP, em.FP, em.TN, em.FN, em.precision, em.recall, em.f1, em.accuracy))
-        f.close()
+        if (save):
+            results_path = os.path.join(self.artifacts_dir, self.model_log_name) + ".csv"
+            f = open(results_path, "w", newline="")
+            f.write("TP,FP,TN,FN,precision,recall,f1,accuracy\n")
+            f.write("%d,%d,%d,%d,%f,%f,%f,%f\n" %(em.TP, em.FP, em.TN, em.FN, em.precision, em.recall, em.f1, em.accuracy))
+            f.close()
 
-        print("Test Loss: %.4f, Test Accuracy: %.2f, Test F1: %.2f" %(em.eval_loss, em.accuracy, em.f1))
+        print("Test Loss: %.4f, Test Accuracy: %.4f, Test F1: %.4f, Test Precision: %.4f, Test Recall: %.4f" 
+              %(em.eval_loss, em.accuracy, em.f1, em.precision, em.recall))
+
+    # Method to predict the probability of the presence of a rapid in a collection of river images.  
+    # Writes a CSV containing the image key and the predicted probability. This method is used in
+    # rapids_predict.py to perform inference on a large collection of unlabeled river images. 
+    # loader: A DataLoader of river images returning image, label, and key. Label is required to
+    # maintain compatibility with the Dataset class used to train the model, but is not used in 
+    # making or writing the predictions. The DataLoader used in rapids_predict.py is configured
+    # to return None for each label, which is then discarded.
+    def predict(self, loader):
+        csv_path = os.path.join(self.artifacts_dir, self.model_log_name) + "preds.csv"
+        with open(csv_path, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["key", "predicted_prob"])
+            print("Writing predictions to", csv_path)
+
+            autocast_ctx = torch.amp.autocast(device_type="cuda") if self.device == "cuda" else nullcontext()
+            with torch.no_grad(), autocast_ctx:
+                for images, _, keys in loader:
+                    images = images.to(self.device)
+
+                    outputs = self.model(images)
+                    probs = torch.nn.functional.softmax(outputs, dim=1)[:, 1].cpu().numpy()
+
+                    for key, prob in zip(keys, probs):
+                        writer.writerow([key, float(prob)])
+                    f.flush()

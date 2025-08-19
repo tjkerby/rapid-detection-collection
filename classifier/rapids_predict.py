@@ -1,39 +1,42 @@
 import os
-import csv
-from contextlib import nullcontext
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Tuple
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 from torchvision import transforms
 from torch.utils.data import DataLoader
 import webdataset as wds
 
-# Configuration --------------------------
-MODEL_TYPE = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
-IMAGE_SIZE = 480
-MODEL_PATH = str(Path.home() / "rapids" / "best_resnetv2_07_08_full_model.pth")
-IMAGE_DIR = str(Path.home() / "nbrim_images")
-OUTPUT_CSV_PATH = str(Path.home() / "rapids" / "predictions_07_08.csv")
-BATCH_SIZE = 32
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-MODEL_LOG_NAME = ""
-
-# Import timm and set cache
+# Set timm cache
 os.environ['HF_HOME'] = os.path.join(Path.home(), "hf_cache")
-from classifier.py import RiverClassifier
+from classifier import RiverClassifier
+
+# Set the paths below to their respective locations
+# Configuration --------------------------
+# Path to model weights
+model_path = os.path.join(Path.home(), "rapids", "best_resnetv2_pre_model.pth")
+# Path to directory containing one or more tar files with river images
+image_dir = os.path.join(Path.home(), "nbrim_images")
+# Directory where output CSV will be written
+artifact_dir = os.path.join(Path.home(), "rapids")
+# File name of CSV to write predictions
+model_log_name = "predictions_pre_model"
+
+model_type = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
+image_size = 480
+batch_size = 32
 
 # Class to apply image normalization and resizing transforms
+# Return None for label to ensure compatability with RiverClassifier predict method
 class PreprocessSample:
     def __init__(self, transform):
         self.transform = transform
 
     def __call__(self, sample):
         image = self.transform(sample["jpg"])
+        label = None
         key = sample["__key__"]
-        return image, key
+        return image, label, key
 
 # Dataclass for model architecture hyperparameters
 @dataclass
@@ -45,17 +48,17 @@ class ModelConfig:
 
 def main():
     # Initialize the classifier
-    classifier_config = ModelConfig(model_name=MODEL_TYPE,
+    classifier_config = ModelConfig(model_name=model_type,
                                     hidden_layers=(1024, 512),
                                     dropout=0.5,
                                     num_classes=2)
-    classifier = RiverClassifier(classifier_config, MODEL_LOG_NAME)
+    classifier = RiverClassifier(classifier_config, artifact_dir, model_log_name)
     
     # Load the model weights
-    classifier.model.load_state_dict(torch.load(MODEL_PATH, map_location=classifier.DEVICE))
+    classifier.model.load_state_dict(torch.load(model_path, map_location=classifier.device))
 
     classifier.model.eval()
-    classifier.model.to(DEVICE)
+    classifier.model.to(classifier.device)
 
     # Get image normalization values from the model  configuration
     # (provided for all timm models)
@@ -64,7 +67,7 @@ def main():
   
     # Define image transform
     transform = transforms.Compose([
-        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+        transforms.Resize((image_size, image_size)),
         transforms.ToTensor(),
         transforms.Normalize(mean=transform_mean, std=transform_std)
         ])
@@ -72,7 +75,7 @@ def main():
     # Set up WebDataset. This allows us to stream the images from all of the provided tar files
     # and is ideal since we only need to view each image once and we do not need to enforce
     # a train-test split for inference
-    tar_files = ["".join(["file:", IMAGE_DIR, "/", f]) for f in os.listdir(IMAGE_DIR)]
+    tar_files = ["".join(["file:", image_dir, "/", f]) for f in os.listdir(image_dir)]
 
     preprocess_sample = PreprocessSample(transform)
 
@@ -80,29 +83,14 @@ def main():
         wds.WebDataset(tar_files, shardshuffle=False, empty_check=False)
         .decode("pil")
         .map(preprocess_sample)
-        .batched(BATCH_SIZE, partial=True)
+        .batched(batch_size, partial=True)
     )
 
     # Wrap the WebDataset in a PyTorch DataLoader
-    predict_loader = DataLoader(dataset, batch_size=None, num_workers=0)
+    predict_loader = DataLoader(dataset, batch_size=None, num_workers=2)
 
-    # Prepare a CSV to store the results and make predictions
-    with open(OUTPUT_CSV_PATH, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["key", "predicted_prob"])
-        print("Writing predictions to", OUTPUT_CSV_PATH)
-
-        autocast_ctx = torch.amp.autocast(device_type="cuda") if torch.cuda.is_available() else nullcontext()
-        with torch.no_grad(), autocast_ctx:
-            for images, keys in predict_loader:
-                images = images.to(DEVICE)
-
-                outputs = classifier.model(images)
-                probs = torch.nn.functional.softmax(outputs, dim=1)[:, 1].cpu().numpy()
-
-                for key, prob in zip(keys, probs):
-                    writer.writerow([key, float(prob)])
-                f.flush()
-
+    # Call predict method to predict on all images in predict_loader
+    classifier.predict(predict_loader)
+    
 if __name__ == '__main__':
     main()
