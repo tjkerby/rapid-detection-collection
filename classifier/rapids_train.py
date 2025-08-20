@@ -24,7 +24,7 @@ artifact_dir = os.path.join(Path.home(), "rapids", "model_performance")
 # Path to CSV containing rapid class labels
 label_csv_path = os.path.join(Path.home(), "rapids", "rapids_labels.csv")
 # File name used for output files
-model_log_name = "resnetv2_08_19"
+model_log_name = "resnetv2_152"
 # Model name
 model_name = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
 
@@ -34,7 +34,7 @@ model_name = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
 # "masked_al": Retain both the ground truth masks and the images labeled through
 # active learning in the training dataset
 # else: Retain neither of the above augmentations
-train_subset= "base"
+train_subset = "base"
 
 class RapidsDataset(Dataset):
     # tar_path: Path to tar file with river images
@@ -150,6 +150,7 @@ transform_std = list(classifier.model.backbone.default_cfg.get("std"))
 train_transform = transforms.Compose([
     transforms.Resize((image_size, image_size)),
     transforms.RandomHorizontalFlip(),
+    transforms.RandomVerticalFlip(),
     transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
     transforms.ToTensor(),
     transforms.Normalize(mean=transform_mean, std=transform_std)
@@ -189,11 +190,10 @@ classifier.initialize_optimizer(optim_config)
 
 classifier.print_device()
 # Train the classifier model
-# classifier.train(train_loader, val_loader, epochs=50, early_stop_patience=10)
-
-import torch
-model_path = os.path.join(Path.home(), "rapids", "model_performance", "best_resnetv2_08_19_model.pth")
-classifier.model.load_state_dict(torch.load(model_path, map_location=classifier.device))
+classifier.train(train_loader, val_loader, epochs=50, early_stop_patience=10)
 
 # Evaluate the model on the test data
 classifier.evaluate(test_loader)
+
+# Get predicted probabilities for the test data to calculate AUC
+classifier.predict(test_loader)

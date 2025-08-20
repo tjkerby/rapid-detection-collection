@@ -333,7 +333,7 @@ class RiverClassifier:
     # making or writing the predictions. The DataLoader used in rapids_predict.py is configured
     # to return None for each label, which is then discarded.
     def predict(self, loader):
-        csv_path = os.path.join(self.artifacts_dir, self.model_log_name) + "preds.csv"
+        csv_path = os.path.join(self.artifacts_dir, self.model_log_name) + "_preds.csv"
         with open(csv_path, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["key", "predicted_prob"])
