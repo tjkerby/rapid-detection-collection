@@ -2,40 +2,6 @@
 
 A set of tools for downloading and classifying satellite imagery of river rapids
 
-## Classifier
-
-Directories and files:
-classifier
-   - classifier.py: A Python file containing a RiverClassifier model class definition, with methods for initializing, training, and evaluating a rapids classification model.
-   - rapids_train.py: A Python file with code to process the rapids image dataset and a driver script to train the rapids classification model. 
-   - rapids_predict.py: A Python file with a driver script to perform large-scale rapids detection on river images.
-
-The Python code for training the rapids classification models was run using the uv package manager by Astral (https://docs.astral.sh/uv/). Once uv is installed, run the following commands in the terminal to setup a Python environment with all packages required to run the model training code.
-
-1. Change the working directory to the classifier folder in the rapid-detection-collection code archive.
-
-2. Initialize a uv virtual environment: uv venv --python 3.12.3
-
-3. Activate the virtual environment: 
-   - Windows: source .venv/Scripts/activate
-   - Mac/Linux: source .venv/bin/activate
-
-4. Install required dependencies: uv pip install -r requirements.txt
-
-5. Before training the rapids classifier, edit the file paths in rapids_train.py with the local machine paths for the rapids image dataset, the rapids class labels, and an output file directory. Select a model log name to identify the output files, including model weights, validation metric plots, and test dataset metrics. 
-
-6. Then, run the training script: uv run rapids_train.py
-
-To perform rapids detection on the unlabeled images provided in the dataset, run the following additional steps.
-
-7. Download the flowlines_{00-04}.tar and alaska.tar files from the CIRRUS data release and place them all in a single directory.
-
-8. Edit the file paths in rapids_predict.py with the local machine paths for the directory with the above tar files, the weights for a trained rapids classifier, and an output file directory. Select a model log name to identify the CSV containing the rapid predictions.
-
-9. Run the prediction script using: uv run rapids_predict.py
-
-The resulting CSV contains the predicted probability of the presence of rapids in each image.
-
 ## API
 
 Directories and files: 
@@ -79,3 +45,47 @@ To obtain a Google Maps API key:
 4. Create credentials for an API key
 
 Once an API key has been created, a secret can be obtained from the Keys & Credentials section of the Maps Platform page (https://console.cloud.google.com/google/maps-apis).
+
+## Annotation
+
+Fill in brief description of process
+
+## Masking Tool
+
+Fill in brief description of process
+
+## Classifier
+
+Directories and files:
+classifier
+   - classifier.py: A Python file containing a RiverClassifier model class definition, with methods for initializing, training, and evaluating a rapids classification model.
+   - rapids_train.py: A Python file with code to process the rapids image dataset and a driver script to train the rapids classification model. 
+   - rapids_predict.py: A Python file with a driver script to perform large-scale rapids detection on river images.
+
+The Python code for training the rapids classification models was run using the uv package manager by Astral (https://docs.astral.sh/uv/). Once uv is installed, run the following commands in the terminal to setup a Python environment with all packages required to run the model training code.
+
+1. Change the working directory to the classifier folder in the rapid-detection-collection code archive.
+
+2. Initialize a uv virtual environment: uv venv --python 3.12.3
+
+3. Activate the virtual environment: 
+   - Windows: source .venv/Scripts/activate
+   - Mac/Linux: source .venv/bin/activate
+
+4. Install required dependencies: uv pip install -r requirements.txt
+
+5. Before training the rapids classifier, edit the file paths in rapids_train.py with the local machine paths for the rapids image dataset, the rapids class labels, and an output file directory. Select a model log name to identify the output files, including model weights, validation metric plots, and test dataset metrics. 
+
+6. Then, run the training script: uv run rapids_train.py
+
+To perform rapids detection on the unlabeled images provided in the dataset, run the following additional steps.
+
+7. Download the flowlines_{00-04}.tar and alaska.tar files from the CIRRUS data release and place them all in a single directory.
+
+8. Edit the file paths in rapids_predict.py with the local machine paths for the directory with the above tar files, the weights for a trained rapids classifier, and an output file directory. Select a model log name to identify the CSV containing the rapid predictions.
+
+9. Run the prediction script using: uv run rapids_predict.py
+
+The resulting CSV contains the predicted probability of the presence of rapids in each image.
+
+

@@ -1,0 +1,19 @@
+Folder,File,Description
+annotation,RapidsImage.py,
+annotation,label.py,
+annotation,segmentation.py,
+annotation,select_device.py,
+api/rapids.api,rapids.api.Rproj,
+api/rapids.api/code,kml_helpers.R,
+api/rapids.api/code,kml_to_csv.R,
+api/rapids.api/code,par_script.R,
+api/rapids.api/code,pull_maps_image.R,
+api/rapids.api/code,sign.R,
+classifier,classifier.py,
+classifier,rapids_predict.py,
+classifier,rapids_train.py,
+classifier,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in classifier folder
+maskingTool,finetuning.ipynb,Jupyter Notebook that takes METAs SAM2 model and finetunes it to predict masks for rivers and exclude their banks
+maskingTool,maskimages.py,
+maskingTool,predict_new.ipynb,Jupyter Notebook that loads in the model trained in finetuning.ipynb and evaluates it on individual images and on the dataset as a whole
+maskingTool,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in maskingTool folder
