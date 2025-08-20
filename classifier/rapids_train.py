@@ -20,11 +20,11 @@ from classifier import RiverClassifier
 # Path to tar file containing labeled rapids images
 image_dir = os.path.join(Path.home(), "rapids", "rapids_label_dataset.tar")
 # Directory where output CSV will be written
-artifact_dir = os.path.join(Path.home(), "rapids", "model_performance")
+artifact_dir = os.path.join(Path.home(), "rapids", "model_performance_08_20")
 # Path to CSV containing rapid class labels
 label_csv_path = os.path.join(Path.home(), "rapids", "rapids_labels.csv")
 # File name used for output files
-model_log_name = "resnetv2_152"
+model_log_name = "resnetv2_152_base"
 # Model name
 model_name = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
 
