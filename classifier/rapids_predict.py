@@ -14,13 +14,13 @@ from classifier import RiverClassifier
 # Set the paths below to their respective locations
 # Configuration --------------------------
 # Path to model weights
-model_path = os.path.join(Path.home(), "rapids", "best_resnetv2_pre_model.pth")
+model_path = os.path.join(Path.home(), "rapids", "model_performance", "best_resnetv2_152_model.pth")
 # Path to directory containing one or more tar files with river images
-image_dir = os.path.join(Path.home(), "nbrim_images")
+image_dir = os.path.join(Path.home(), "rapids", "images")
 # Directory where output CSV will be written
-artifact_dir = os.path.join(Path.home(), "rapids")
+artifact_dir = os.path.join(Path.home(), "rapids", "model_predictions")
 # File name of CSV to write predictions
-model_log_name = "predictions_pre_model"
+model_log_name = "resnetv2_152_model"
 
 model_type = "resnetv2_152x2_bit.goog_teacher_in21k_ft_in1k"
 image_size = 480

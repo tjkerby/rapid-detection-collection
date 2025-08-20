@@ -86,114 +86,118 @@ class OptimConfig:
     scheduler_patience: int
     scheduler_factor: float
 
-# Read CSV containing labels
-rapids_df = pd.read_csv(label_csv_path)
-key_field = "image"
-label_field = "rapid_class"
-split_field = "rapid_split"
+def main():
+    # Read CSV containing labels
+    rapids_df = pd.read_csv(label_csv_path)
+    key_field = "image"
+    label_field = "rapid_class"
+    split_field = "rapid_split"
 
-# The model can be trained on the initial dataset, the
-# initial dataset with the addition of masked images for a subset of the
-# training data, the initial dataset with the addition of labels added
-# through active learning, or the initial dataset with both of the
-# above augmentations
+    # The model can be trained on the initial dataset, the
+    # initial dataset with the addition of masked images for a subset of the
+    # training data, the initial dataset with the addition of labels added
+    # through active learning, or the initial dataset with both of the
+    # above augmentations
 
-if (train_subset == "masked"):
-    # Remove active learning images
-    rapids_df = rapids_df[(rapids_df["al"] == 0)]
+    if (train_subset == "masked"):
+        # Remove active learning images
+        rapids_df = rapids_df[(rapids_df["al"] == 0)]
 
-elif (train_subset == "al"):
-    # Keep active learning but remove masked images
-    rapids_df = rapids_df[(rapids_df["masked"] == 0)]
+    elif (train_subset == "al"):
+        # Keep active learning but remove masked images
+        rapids_df = rapids_df[(rapids_df["masked"] == 0)]
 
-elif (train_subset == "masked_al"):
-    # Keep both masked and active learning images in the training dataset; remove nothing
-    pass
+    elif (train_subset == "masked_al"):
+        # Keep both masked and active learning images in the training dataset; remove nothing
+        pass
 
-else:
-    # Remove both active learning images and masked images
-    rapids_df = rapids_df[(rapids_df["al"] == 0)]
-    rapids_df = rapids_df[(rapids_df["masked"] == 0)]
+    else:
+        # Remove both active learning images and masked images
+        rapids_df = rapids_df[(rapids_df["al"] == 0)]
+        rapids_df = rapids_df[(rapids_df["masked"] == 0)]
 
-rapids_df = rapids_df.reset_index(drop=True)
+    rapids_df = rapids_df.reset_index(drop=True)
 
-# Get train, validation, and test dataset indexes and labels
-train_idxs = rapids_df.index[rapids_df[split_field] == "train"].to_numpy()
-val_idxs = rapids_df.index[rapids_df[split_field] == "val"].to_numpy()
-test_idxs = rapids_df.index[rapids_df[split_field] == "test"].to_numpy()
+    # Get train, validation, and test dataset indexes and labels
+    train_idxs = rapids_df.index[rapids_df[split_field] == "train"].to_numpy()
+    val_idxs = rapids_df.index[rapids_df[split_field] == "val"].to_numpy()
+    test_idxs = rapids_df.index[rapids_df[split_field] == "test"].to_numpy()
 
-train_keys = rapids_df[key_field].iloc[train_idxs].to_numpy()
-val_keys = rapids_df[key_field].iloc[val_idxs].to_numpy()
-test_keys = rapids_df[key_field].iloc[test_idxs].to_numpy()
+    train_keys = rapids_df[key_field].iloc[train_idxs].to_numpy()
+    val_keys = rapids_df[key_field].iloc[val_idxs].to_numpy()
+    test_keys = rapids_df[key_field].iloc[test_idxs].to_numpy()
 
-train_labels = rapids_df[label_field].iloc[train_idxs].to_numpy()
-val_labels = rapids_df[label_field].iloc[val_idxs].to_numpy()
-test_labels = rapids_df[label_field].iloc[test_idxs].to_numpy()
+    train_labels = rapids_df[label_field].iloc[train_idxs].to_numpy()
+    val_labels = rapids_df[label_field].iloc[val_idxs].to_numpy()
+    test_labels = rapids_df[label_field].iloc[test_idxs].to_numpy()
 
-classifier_config = ModelConfig(model_name=model_name,
-                                hidden_layers=(1024, 512),
-                                dropout=0.5,
-                                num_classes=2)
+    classifier_config = ModelConfig(model_name=model_name,
+                                    hidden_layers=(1024, 512),
+                                    dropout=0.5,
+                                    num_classes=2)
 
-# Initiate, train, and evaluate model
-classifier = RiverClassifier(classifier_config, artifact_dir, model_log_name)
+    # Initiate, train, and evaluate model
+    classifier = RiverClassifier(classifier_config, artifact_dir, model_log_name)
 
-# We use an image size of 480 instead of the default image size of 224, 
-# since a larger image size appears to give a performance boost.
-image_size = 480 
-# The default image size can be used by uncommenting the line below
-# image_size = list(classifier.model.backbone.default_cfg.get("input_size"))[1]
-transform_mean = list(classifier.model.backbone.default_cfg.get("mean"))
-transform_std = list(classifier.model.backbone.default_cfg.get("std"))
+    # We use an image size of 480 instead of the default image size of 224, 
+    # since a larger image size appears to give a performance boost.
+    image_size = 480 
+    # The default image size can be used by uncommenting the line below
+    # image_size = list(classifier.model.backbone.default_cfg.get("input_size"))[1]
+    transform_mean = list(classifier.model.backbone.default_cfg.get("mean"))
+    transform_std = list(classifier.model.backbone.default_cfg.get("std"))
 
-# Define transform now that we have the image size
-train_transform = transforms.Compose([
-    transforms.Resize((image_size, image_size)),
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomVerticalFlip(),
-    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=transform_mean, std=transform_std)
-])
+    # Define transform now that we have the image size
+    train_transform = transforms.Compose([
+        transforms.Resize((image_size, image_size)),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomVerticalFlip(),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=transform_mean, std=transform_std)
+    ])
 
-transform = transforms.Compose([
-    transforms.Resize((image_size, image_size)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=transform_mean, std=transform_std)
-])
+    transform = transforms.Compose([
+        transforms.Resize((image_size, image_size)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=transform_mean, std=transform_std)
+    ])
 
-# Create Datasets and DataLoaders
-train_dataset = RapidsDataset(image_dir, train_keys, train_labels, train_transform)
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=2, pin_memory=True)
+    # Create Datasets and DataLoaders
+    train_dataset = RapidsDataset(image_dir, train_keys, train_labels, train_transform)
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=2, pin_memory=True)
 
-val_dataset = RapidsDataset(image_dir, val_keys, val_labels, transform)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=2, pin_memory=True)
+    val_dataset = RapidsDataset(image_dir, val_keys, val_labels, transform)
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=2, pin_memory=True)
 
-test_dataset = RapidsDataset(image_dir, test_keys, test_labels, transform)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=2, pin_memory=True)
+    test_dataset = RapidsDataset(image_dir, test_keys, test_labels, transform)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=2, pin_memory=True)
 
-# ResNetv2
-# This needs to be commented out or modified if a different pretrained model architecture is used
-# Unfreeze only the final stage of the backbone and final norm
-for param in classifier.model.backbone.stages[3].parameters():
-    param.requires_grad = True
-for param in classifier.model.backbone.norm.parameters():
-    param.requires_grad = True
+    # ResNetv2
+    # This needs to be commented out or modified if a different pretrained model architecture is used
+    # Unfreeze only the final stage of the backbone and final norm
+    for param in classifier.model.backbone.stages[3].parameters():
+        param.requires_grad = True
+    for param in classifier.model.backbone.norm.parameters():
+        param.requires_grad = True
 
-# (Optional) Confirm classifier is trainable
-for param in classifier.model.classifier.parameters():
-    param.requires_grad = True
+    # (Optional) Confirm classifier is trainable
+    for param in classifier.model.classifier.parameters():
+        param.requires_grad = True
 
-# Initialize the optimizer
-optim_config = OptimConfig(backbone_lr = 5e-5, classifier_lr = 1e-3, weight_decay = 1e-5, scheduler_patience = 5, scheduler_factor = 0.1)
-classifier.initialize_optimizer(optim_config)
+    # Initialize the optimizer
+    optim_config = OptimConfig(backbone_lr = 5e-5, classifier_lr = 1e-3, weight_decay = 1e-5, scheduler_patience = 5, scheduler_factor = 0.1)
+    classifier.initialize_optimizer(optim_config)
 
-classifier.print_device()
-# Train the classifier model
-classifier.train(train_loader, val_loader, epochs=50, early_stop_patience=10)
+    classifier.print_device()
+    # Train the classifier model
+    classifier.train(train_loader, val_loader, epochs=50, early_stop_patience=10)
 
-# Evaluate the model on the test data
-classifier.evaluate(test_loader)
+    # Evaluate the model on the test data
+    classifier.evaluate(test_loader)
 
-# Get predicted probabilities for the test data to calculate AUC
-classifier.predict(test_loader)
+    # Get predicted probabilities for the test data to calculate AUC
+    # classifier.predict(test_loader)
+
+if __name__ == '__main__':
+    main()
