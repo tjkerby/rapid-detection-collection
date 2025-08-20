@@ -24,10 +24,6 @@ flowline_pts <- readr::read_csv(flowline_pts_csv_path)
 sel_flowline_pts <- flowline_pts |>
   dplyr::select(title, latitude, longitude)
 
-sel_flowline_pts <- tibble::tibble(title = "test", 
-                                   latitude = 36.4340523957619, 
-                                   longitude = -111.858333747867)
-
 # These should be specified in a .env file using following key names
 api_key <- Sys.getenv("GOOGLE_MAPS_API_KEY")
 secret <- Sys.getenv("GOOGLE_MAPS_API_SECRET")
@@ -73,20 +69,11 @@ for (i in seq_along(sel_flowline_pts_split)) {
 # End parallel R processes
 future::plan(future::sequential())
 #-------------------------------------------------------------------------------
-# Collate batch metadata CSV files
+# Collate batch metadata CSV files (optional)
 all_batch_meta <- vroom::vroom(list.files(csv_dir, full.names = TRUE)) |>
   dplyr::mutate(mask = NA_integer_, 
                 river_class = NA_integer_,
                 rapid_class = NA_integer_, 
                 uhj_class = NA_integer_,
-                mask_labeled_by = NA_integer_, 
-                river_labeled_by = NA_integer_,
-                rapid_labeled_by = NA_integer_,
-                uhj_labeled_by = NA_integer_,
-                mask_timestamp = NA_integer_,
-                river_timestamp = NA_integer_,
-                rapid_timestamp =NA_integer_,
-                uhj_timestamp = NA_integer_,
-                asssignment = NA_character_,
                 huc2 = NA_character_, 
                 huc4 = NA_character_)
