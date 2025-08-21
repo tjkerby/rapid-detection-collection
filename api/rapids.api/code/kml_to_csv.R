@@ -2,18 +2,23 @@
 # National Hydrography Dataset (NHD) and OpenStreetMap (OSM) known rapids
 # locations databases using the xml2 package
 
+# Before running this script, download the following files from the CIRRUS data
+# release and place them in the project root directory 
+# - NHDArea_rapids_slope.kml
+# - OSMrapidsAll.kml
+
 source("code/kml_helpers.R")
 #-------------------------------------------------------------------------------
 # NHD
 # Use custom function to get a single representative coordinate from each
 # rapids feature
-nhd_df <- kml_to_csv("kmls/NHDArea_rapids_slope.kml") |>
+nhd_df <- kml_to_csv("NHDArea_rapids_slope.kml") |>
   dplyr::mutate(name = paste0("nhd", name))
 
 #-------------------------------------------------------------------------------
 # OSM
 # Read OSM KML file
-doc_osm <- xml2::read_xml("kmls/OSMrapidsAll.kml")
+doc_osm <- xml2::read_xml("OSMrapidsAll.kml")
 
 ns_osm <- xml2::xml_ns(doc_osm)
 

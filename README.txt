@@ -14,9 +14,6 @@ api
          - sign.R: An R file containing a function implementing API key signatures using a cryptographic hashing algorithm. 
          - kml_to_csv.R: An R script used to extract coordinates for the locations in the known rapids datasets using the xml2 package.
          - kml_helpers.csv: An R file containing helper functions for processing the known rapids datasets.
-      - kmls
-         - NHDArea_rapids_slope.kml: A Keyhole Markup Language (KML) file containing spatial features for known rapids locations from the National Hydrography Dataset (NHD).
-         - OSMrapidsAll.kml: A KML file containing spatial features for known rapids locations from OpenStreetMap (OSM).
 
 To retrieve additional images from the API, follow these steps. 
 
