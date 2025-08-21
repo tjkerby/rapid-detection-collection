@@ -20,7 +20,7 @@ from classifier import RiverClassifier
 # Path to tar file containing labeled rapids images
 image_dir = os.path.join(Path.home(), "rapids", "rapids_label_dataset.tar")
 # Directory where output CSV will be written
-artifact_dir = os.path.join(Path.home(), "rapids", "model_performance_08_20")
+artifact_dir = os.path.join(Path.home(), "rapids", "model_performance")
 # Path to CSV containing rapid class labels
 label_csv_path = os.path.join(Path.home(), "rapids", "rapids_labels.csv")
 # File name used for output files
