@@ -1,8 +1,8 @@
 Folder,File,Description
-annotation,RapidsImage.py,
-annotation,label.py,
-annotation,segmentation.py,
-annotation,select_device.py,
+annotation,RapidsImage.py,Defines a class that handles interactive image display, mouse-based annotation, and real-time mask visualization for river segmentation and rapid classification tasks.
+annotation,label.py,Provides an interactive annotation interface for manually labeling river images with segmentation masks and rapid classifications, serving as the core labeling engine for creating ground truth data.
+annotation,segmentation.py,Provides the main entry point for manual annotation workflows, combining SAM2 model integration with multiple annotation modes (masks, rapids, standing waves) through a menu-driven interface.
+annotation,select_device.py,Handles automatic device selection and optimization configuration for PyTorch models, specifically optimized for SAM2 inference with CUDA/CPU detection and performance tuning.
 api/rapids.api,rapids.api.Rproj,
 api/rapids.api/code,kml_helpers.R,
 api/rapids.api/code,kml_to_csv.R,
@@ -14,6 +14,6 @@ classifier,rapids_predict.py,
 classifier,rapids_train.py,
 classifier,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in classifier folder
 maskingTool,finetuning.ipynb,Jupyter Notebook that takes METAs SAM2 model and finetunes it to predict masks for rivers and exclude their banks
-maskingTool,maskimages.py,
+maskingTool,maskimages.py,Automatically generates predicted segmentation masks of rivers for a batch of images using a fine-tuned SAM2 model, processing entire directories and outputting binary masks with confidence-based filtering and organized results structure.
 maskingTool,predict_new.ipynb,Jupyter Notebook that loads in the model trained in finetuning.ipynb and evaluates it on individual images and on the dataset as a whole
 maskingTool,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in maskingTool folder
