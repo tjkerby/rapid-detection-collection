@@ -62,6 +62,7 @@ osm_df <- osm_df |>
   dplyr::mutate(name = dplyr::case_when(
     name == "29th-Street-Rapid" ~ "Twenty-Ninth-Street-Rapid",
     name == "45-Dam-Rapids" ~ "Fourty-Five-Dam-Rapids",
+    stingr::str_detect(name, "^q") ~ stringr::str_replace(name, "^q", "Q"),
     .default = name
   )) |>
   dplyr::filter(!(name == "Rapids"))
