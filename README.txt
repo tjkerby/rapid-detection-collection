@@ -48,11 +48,87 @@ Once an API key has been created, a secret can be obtained from the Keys & Crede
 
 ## Annotation
 
-Fill in brief description of process
+The annotation directory provides an interactive manual annotation system for creating ground truth data for river feature detection and rapid identification. The system combines segmentation mask creation with rapid classification workflows using SAM2 model integration.
 
-## Masking Tool
+Directories and files:
+annotation
+   - label.py: The core labeling engine providing an interactive annotation interface for manually labeling river images with segmentation masks and rapid classifications, supporting multiple annotation modes (mask-only, rapid-only, combined, and UHJ classification).
+   - RapidsImage.py: A class that handles interactive image display, mouse-based annotation, and real-time mask visualization with SAM2 model integration for point-based segmentation assistance.
+   - segmentation.py: The main entry point providing a menu-driven interface for selecting annotation workflows, combining SAM2 model integration with multiple annotation modes and comprehensive metadata tracking.
+   - select_device.py: A utility module for automatic device selection and optimization configuration for PyTorch models, specifically optimized for SAM2 inference with CUDA/CPU detection and performance tuning.
 
-Fill in brief description of process
+Key Features:
+- Interactive point-based annotation with SAM2 model assistance
+- Multiple annotation workflows: segmentation masks, rapid classification, standing wave detection
+- Real-time mask visualization with color overlays and mouse controls
+- Progress tracking and resumable annotation sessions
+- Automatic metadata and timestamp logging with quality control prompts
+
+Setup Requirements:
+Before running, create a '.user.json' file in the project root with:
+```
+{
+    "user": "annotator_name",
+    "metadata": "path/to/metadata.csv",
+    "image_folder": "path/to/images/",
+    "npy_folder": "path/to/output/masks/",
+    "SAM2_CHECKPOINT_FOLDER": "path/to/sam2/checkpoints/"
+}
+```
+
+To start the annotation process:
+1. Navigate to the annotation directory
+2. Run: `python segmentation.py`
+3. Select your desired annotation workflow from the menu-driven interface
+
+Annotation Controls:
+- Left Click: Add positive points (include in segmentation)
+- Right Click: Add negative points (exclude from segmentation)
+- 't': Mark entire image as river
+- 'f': Mark entire image as non-river
+- 'z': Remove last point
+- 'q': Save and continue
+- '0'/'1': Binary classification for rapids
+- '5': Maybe/uncertain for UHJ classification
+
+Output:
+- Updated CSV metadata with labels, timestamps, and annotator information
+- Binary mask files (.npy format) for segmentation annotations
+- Detailed annotation provenance and validation prompts
+
+## Segmentation
+
+The maskingTool directory provides automated river segmentation capabilities using fine-tuned SAM2 models for batch processing of river images. This tool generates predicted segmentation masks and evaluates model performance for large-scale river detection tasks.
+
+Directories and files:
+maskingTool
+   - maskimages.py: Automatically generates predicted segmentation masks of rivers for a batch of images using a fine-tuned SAM2 model, with confidence-based filtering and organized output structure.
+   - finetuning.ipynb: A Jupyter notebook that fine-tunes the SAM2 model on river images to create a specialized model for river channel segmentation with training, validation, and test loops.
+   - predict_new.ipynb: A notebook for evaluating fine-tuned models, calculating IoU scores, determining optimal confidence thresholds, and visualizing prediction results on validation and test sets.
+   - requirements.txt: Python package dependencies for the segmentation tools.
+
+Key Features:
+- Batch processing of images 
+- Automated river detection using fine-tuned SAM2 model
+- Confidence-based filtering with adjustable thresholds
+- Model fine-tuning and evaluation workflows
+- Intersection over Union (IoU) scoring for accuracy assessment
+- Organized output with separate folders for different confidence levels
+
+To run automated segmentation:
+1. Navigate to the maskingTool directory
+2. Run: `python maskimages.py --input_dir /path/to/images --output_dir /path/to/output`
+3. Optional parameters: `--threshold 0.1 --checkpoint_dir ../checkpoints`
+
+For model fine-tuning and evaluation:
+1. Open `finetuning.ipynb` to train a new SAM2 model on river data
+2. Use `predict_new.ipynb` to evaluate model performance and determine optimal thresholds
+
+Output Structure:
+- masks/: High-confidence binary masks (.npy files)
+- masked_images/: Original images with river regions highlighted (.png files)
+- low_confidence/: Masks below threshold for manual review
+- processing_log.txt: Detailed processing statistics and results
 
 ## Classifier
 
