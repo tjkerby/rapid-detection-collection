@@ -72,11 +72,22 @@ Before running, create a '.user.json' file in the project root with:
     "SAM2_CHECKPOINT_FOLDER": "path/to/sam2/checkpoints/"
 }
 ```
+Install the uv package manager by Astral (https://docs.astral.sh/uv/):
+1. Change the working directory to the annotation folder in the rapid-detection-collection code archive.
+
+2. Initialize a uv virtual environment: uv venv --python 3.12.3
+
+3. Activate the virtual environment: 
+   - Windows: source .venv/Scripts/activate
+   - Mac/Linux: source .venv/bin/activate
+
+4. Install required dependencies: uv pip install -r requirements.txt
 
 To start the annotation process:
 1. Navigate to the annotation directory
-2. Run: `python segmentation.py`
-3. Select your desired annotation workflow from the menu-driven interface
+2. Activate the virtual environment as described above
+3. Run: `uv run segmentation.py`
+4. Select your desired annotation workflow from the menu-driven interface
 
 Annotation Controls:
 - Left Click: Add positive points (include in segmentation)

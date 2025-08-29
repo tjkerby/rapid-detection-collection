@@ -35,7 +35,7 @@ Annotation Types:
 
 Input Requirements:
 - CSV metadata file with image information
-- Image folder containing PNG images
+- Image folder containing JPG images
 - User configuration for output paths
 
 Output:
@@ -143,6 +143,34 @@ def label(folders, label_type, model=None):
         'latitude': str,
         'longitude': str,
     })
+
+    # Code to add missing but required fields for labeling if not present
+    # (i.e. classes, labeled by fields, label timestamps)
+
+    required = {
+        "mask": "float",             
+        "river_class": "float",      
+        "rapid_class": "float",     
+        "uhj_class": "float",      
+        "mask_labeled_by": "string",  
+        "river_labeled_by": "string",
+        "rapid_labeled_by": "string", 
+        "uhj_labeled_by": "string",   
+        "mask_timestamp": "float",   
+        "river_timestamp": "float",  
+        "rapid_timestamp": "float",  
+        "uhj_timestamp": "float"
+    }
+
+    # Safe creation
+    for col, dtype in required.items():
+        if col not in df.columns:
+            if dtype == "float":  
+                # floats need np.nan
+                df[col] = pd.Series([np.nan] * len(df), dtype="float64", index=df.index)
+            else:
+                # everything else can use pd.NA
+                df[col] = pd.Series([pd.NA] * len(df), dtype=dtype, index=df.index)
     
     for i in range(len(df)):
         
@@ -162,7 +190,7 @@ def label(folders, label_type, model=None):
 
         try:
             my_image = Image(
-                image=cv2.imread(f'{folders["image_folder"]}/{line["image0"]}.png', 1),
+                image=cv2.imread(f'{folders["image_folder"]}/{line["image"]}.jpg', 1),
                 predictor=model,
                 has_textbox=(label_type!='mask'),
                 msg=msg

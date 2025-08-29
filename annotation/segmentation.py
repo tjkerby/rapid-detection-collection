@@ -99,7 +99,7 @@ def load_model():
     sam2_model = build_sam2(model_cfg, f'{folders["SAM2_CHECKPOINT_FOLDER"]}/sam2.1_hiera_tiny.pt', device=device)
     model = SAM2ImagePredictor(sam2_model)
     # model.model.load_state_dict(torch.load(f'{folders["SAM2_CHECKPOINT_FOLDER"]}/sam2_model_finetuned_2.pt'))
-    model.model.load_state_dict(torch.load(f'{folders["SAM2_CHECKPOINT_FOLDER"]}/sam2_model_finetuned_epoch_3.pt'))
+    # model.model.load_state_dict(torch.load(f'{folders["SAM2_CHECKPOINT_FOLDER"]}/sam2_model_finetuned_epoch_3.pt'))
     return model
 
 

@@ -3,6 +3,7 @@ annotation,RapidsImage.py,Defines a class that handles interactive image display
 annotation,label.py,Provides an interactive annotation interface for manually labeling river images with segmentation masks and rapid classifications  serving as the core labeling engine for creating ground truth data.
 annotation,segmentation.py,Provides the main entry point for manual annotation workflows  combining SAM2 model integration with multiple annotation modes (masks rapids standing waves) through a menu-driven interface.
 annotation,select_device.py,Handles automatic device selection and optimization configuration for PyTorch models specifically optimized for SAM2 inference with CUDA/CPU detection and performance tuning.
+annotation,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in classifier folder.
 api/rapids.api,rapids.api.Rproj,R project root for API code.
 api/rapids.api/code,kml_helpers.R,Defines helper functions for extracting data from the known rapids dataset KML files.
 api/rapids.api/code,kml_to_csv.R,Script to get coordinates of target images from KML files of NHD and OSM known rapids locations.

@@ -52,7 +52,7 @@ osm_df <- osm_df |>
 # Rename the place names to fit naming convention and remove images of 
 # water slide park
 osm_df <- osm_df |>
-  dplyr::mutate(name = ifelse(is.na(name), "Unnamed_Rapids", name),
+  dplyr::mutate(name = ifelse(is.na(name), "Unnamed-Rapids", name),
                 name = stringr::str_replace_all(name, " ", "-"),
                 name = stringr::str_replace_all(name, "\\(", ""),
                 name = stringr::str_replace_all(name, "\\)", ""),
