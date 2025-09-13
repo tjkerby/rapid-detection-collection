@@ -1,6 +1,10 @@
+# Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
+
 # Script for extracting desired image locations from KML files for the
 # National Hydrography Dataset (NHD) and OpenStreetMap (OSM) known rapids
-# locations databases using the xml2 package
+# locations databases using the xml2 package. This script returns two 
+# data.frames, one with a set of known rapids locations (as latitude/longitude
+# coordinate pairs) from the NHD and one from the OSM feature collection.
 
 # Before running this script, download the following files from the CIRRUS data
 # release and place them in the project root directory 

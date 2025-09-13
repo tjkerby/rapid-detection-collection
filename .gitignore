@@ -182,4 +182,5 @@ cython_debug/
 *.json
 *.csv
 *.db
+api/rapids.api/.Rproj.user
 .Rproj.user

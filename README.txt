@@ -2,6 +2,12 @@
 
 A set of tools for downloading and classifying satellite imagery of river rapids
 
+Author names and contact: 
+API, Classifier: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
+Annotation: Hannah Fluckiger, ORCID: 0009-0004-8246-1376
+Segmentation: Cameron Swapp, ORCID: 0009-0004-9019-1097
+
+
 ## API
 
 Directories and files: 
@@ -13,7 +19,7 @@ api
          - pull_maps_image.R: An R file containing a function for pulling and locally writing a single Maps Static API image.
          - sign.R: An R file containing a function implementing API key signatures using a cryptographic hashing algorithm. 
          - kml_to_csv.R: An R script used to extract coordinates for the locations in the known rapids datasets using the xml2 package.
-         - kml_helpers.csv: An R file containing helper functions for processing the known rapids datasets.
+         - kml_helpers.R: An R file containing helper functions for processing the known rapids datasets.
 
 To retrieve additional images from the API, follow these steps. 
 
@@ -42,6 +48,10 @@ To obtain a Google Maps API key:
 4. Create credentials for an API key
 
 Once an API key has been created, a secret can be obtained from the Keys & Credentials section of the Maps Platform page (https://console.cloud.google.com/google/maps-apis).
+
+Associated files from CIRRUS data release: None.
+
+Platforms: The API code was developed on Microsoft Windows 11 Enterprise and additionally tested on macOS 15 Sequoia.
 
 ## Annotation
 
@@ -104,6 +114,12 @@ Output:
 - Binary mask files (.npy format) for segmentation annotations
 - Detailed annotation provenance and validation prompts
 
+Associated files from CIRRUS data release:
+   - image_list.csv: A CSV containing the geographic metadata for each image. This file can be subset to get only records for the images the user wishes to label, and passed into the annotation tool. A modified version containing the labels the user generates with the annotation tool is returned. 
+   - The annotation tool does not work directly with the tar files provided in the data release. However, the user can download the tar files, extract the images, and place a subset of images for annotation in a new directory, which can be provided to the annotation tool for labeling. 
+
+Platforms: The annotation code was developed on Microsoft Windows 11 Home and additionally tested on macOS 15 Sequoia.
+
 ## Segmentation
 
 The maskingTool directory provides automated river segmentation capabilities using fine-tuned SAM2 models for batch processing of river images. This tool generates predicted segmentation masks and evaluates model performance for large-scale river detection tasks.
@@ -138,6 +154,12 @@ Output Structure:
 - low_confidence/: Masks below threshold for manual review
 - processing_log.txt: Detailed processing statistics and results
 
+Associated files from CIRRUS data release:
+   - river_mask_dataset.tar: The training data for the segmentation models, containing pairs of images and masks identifying the pixels representing the river in each image.
+   - river_mask_labels.csv: Metadata for the river mask dataset file, including a field denoting which train-test-validation split each image-mask pair belongs to.
+
+Platforms: The segmentation code was developed on macOS 15 Sequoia and additionally tested on Ubuntu 24.04.2
+
 ## Classifier
 
 Directories and files:
@@ -146,7 +168,7 @@ classifier
    - rapids_train.py: A Python file with code to process the rapids image dataset and a driver script to train the rapids classification model. 
    - rapids_predict.py: A Python file with a driver script to perform large-scale rapids detection on river images.
 
-The Python code for training the rapids classification models was run using the uv package manager by Astral (https://docs.astral.sh/uv/). Once uv is installed, run the following commands in the terminal to setup a Python environment with all packages required to run the model training code.
+The Python code for training the rapids classification models was run using the uv package manager. Once uv is installed, run the following commands in the terminal to setup a Python environment with all packages required to run the model training code.
 
 1. Change the working directory to the classifier folder in the rapid-detection-collection code archive.
 
@@ -172,4 +194,11 @@ To perform rapids detection on the unlabeled images provided in the dataset, run
 
 The resulting CSV contains the predicted probability of the presence of rapids in each image.
 
+Associated files from CIRRUS data release:
+   - rapids_label_dataset.tar: The training images for the rapids classifier. 
+   - rapids_labels.csv: Labels and other metadata for the training images in the rapids label dataset file. 
+   - alaska.tar, flowlines_0X.tar, known_rapids_locations.tar: The tar files containing river images can be used with the rapids_predict.py script to predict the presence of a rapid in each image. 
 
+Platforms: The classification code was developed on Microsoft Windows 11 Enterprise and additionally tested on Ubuntu 24.04.2
+
+This software has been approved for release by the U.S. Geological Survey (USGS). Although the software has been subjected to rigorous review, the USGS reserves the right to update the software as needed pursuant to further analysis and review. No warranty, expressed or implied, is made by the USGS or the U.S. Government as to the functionality of the software and related material nor shall the fact of release constitute any such warranty. Furthermore, the software is released on condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from its authorized or unauthorized use. 

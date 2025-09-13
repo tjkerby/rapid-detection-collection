@@ -1,6 +1,8 @@
 """
 Manual Image Annotation Tool for River Rapids and Segmentation
 
+Author name and contact: Hannah Fluckiger, ORCID: 0009-0004-8246-1376
+
 This script provides an interactive annotation interface for manually labeling river images
 with segmentation masks and rapid classifications. It serves as the core labeling engine
 for creating ground truth data for river feature detection and rapid identification.

@@ -1,3 +1,25 @@
+# Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
+#
+# This file contains code to train a RiverClassifier model (from the classifier.py file) to predict
+# the presence of rapids in satellite imagery of rivers. A custom RapidsDataset class is implemented
+# as a subclass of torch.Dataset to load the images for training. Output from training, including
+# the final model weights, performance metrics of the model on test data, and plots of the 
+# training and validation loss over time are written to the directory specified by the 
+# artifact_dir variable below. This code and the associated model class were designed to 
+# work with a pretrained ResNetv2_152 model (specified below) loaded from the timm library, but there
+# is some flexibility in implementing other model types, including other pure CNN models such as
+# EfficientNetv2, Vision-informed Transformer (ViT) models, or hybrid model such as CoAtNet
+# provided by timm. If this is done, the user will need to modify the code in the main method of 
+# this script unfreezing the final layers of the pretrained model to work with the backbone
+# structure of the selected model (or simply remove these lines altogether, although this may
+# reduce the model's ability to detect rapids). 
+
+
+# Before running this script, the file paths below should be set to the actual locations of the files
+# on the user's machine. The rapids_label_dataset.tar file containing the training images, and 
+# the rapids_labels.csv file containing the labels, should be downloaded from the CIRRUS data release. 
+# Note that the tar file should NOT be extracted/unzipped. 
+
 # Import libraries
 import os
 import tarfile
@@ -99,11 +121,11 @@ def main():
     # through active learning, or the initial dataset with both of the
     # above augmentations
 
-    if (train_subset == "masked"):
+    if (train_subset == "masked" and "al" in rapids_df.columns):
         # Remove active learning images
         rapids_df = rapids_df[(rapids_df["al"] == 0)]
 
-    elif (train_subset == "al"):
+    elif (train_subset == "al" and "masked" in rapids_df.columns):
         # Keep active learning but remove masked images
         rapids_df = rapids_df[(rapids_df["masked"] == 0)]
 
@@ -113,8 +135,10 @@ def main():
 
     else:
         # Remove both active learning images and masked images
-        rapids_df = rapids_df[(rapids_df["al"] == 0)]
-        rapids_df = rapids_df[(rapids_df["masked"] == 0)]
+        if ("al" in rapids_df.columns):
+            rapids_df = rapids_df[(rapids_df["al"] == 0)]
+        if ("masked" in rapids_df.columns):    
+            rapids_df = rapids_df[(rapids_df["masked"] == 0)]
 
     rapids_df = rapids_df.reset_index(drop=True)
 

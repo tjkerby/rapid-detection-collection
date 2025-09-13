@@ -1,6 +1,8 @@
 """
 River Segmentation and Rapids Annotation Interface
 
+Author name and contact: Hannah Fluckiger, ORCID: 0009-0004-8246-1376
+
 This script provides the main entry point for manual annotation of river images,
 offering multiple annotation workflows for creating training data for river
 segmentation and rapid detection models.
@@ -68,7 +70,7 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 
 
-### How to indclude metadata
+### How to include metadata
 # 
 # 1. Create a new file called .user.json in the rapid-detection-collection folder
 # 2. Copy everything between the triple quotes into .user.json

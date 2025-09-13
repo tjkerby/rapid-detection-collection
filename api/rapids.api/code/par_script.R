@@ -1,3 +1,13 @@
+# Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
+
+# This script downloads images from the Google Maps Static API given a CSV
+# of latitude and longitude coordinates. The images are written as JPEG files, 
+# and image metadata such as location, aerial zoom level, and time of download
+# are written to a CSV file. An option to run the code in parallel using the
+# future backend is provided, meaning that any parallelization strategy can be
+# used. 
+
+#-------------------------------------------------------------------------------
 library(base64enc)
 library(digest)
 library(dotenv)
@@ -7,9 +17,7 @@ library(httr)
 library(openssl)
 source("code/pull_maps_image.R")
 source("code/sign.R")
-dotenv::load_dot_env("D:/Rapids/rapids.api/.env")
-
-# This script downloads images from the Google Maps Static API
+dotenv::load_dot_env()
 
 # Path to CSV with river/watershed name and latitude and longitude coordinates
 # of desired locations
@@ -72,8 +80,6 @@ future::plan(future::sequential())
 # Collate batch metadata CSV files (optional)
 all_batch_meta <- vroom::vroom(list.files(csv_dir, full.names = TRUE)) |>
   dplyr::mutate(mask = NA_integer_, 
-                river_class = NA_integer_,
                 rapid_class = NA_integer_, 
-                uhj_class = NA_integer_,
                 huc2 = NA_character_, 
                 huc4 = NA_character_)
