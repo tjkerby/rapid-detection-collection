@@ -5,10 +5,10 @@
 # as a subclass of torch.Dataset to load the images for training. Output from training, including
 # the final model weights, performance metrics of the model on test data, and plots of the 
 # training and validation loss over time are written to the directory specified by the 
-# artifact_dir variable below. This code and the associated model class were designed to 
-# work with a pretrained ResNetv2_152 model (specified below) loaded from the timm library, but there
-# is some flexibility in implementing other model types, including other pure CNN models such as
-# EfficientNetv2, Vision-informed Transformer (ViT) models, or hybrid model such as CoAtNet
+# artifact_dir variable below. This code and the associated model class were designed to work with 
+# a pretrained ResNetv2_152 model (specified below) loaded from the timm library, but there is some 
+# flexibility in implementing other model types, including other pure convolutional neural network (CNN) 
+# models such as EfficientNetv2, Vision-informed Transformer (ViT) models, or hybrid model such as CoAtNet
 # provided by timm. If this is done, the user will need to modify the code in the main method of 
 # this script unfreezing the final layers of the pretrained model to work with the backbone
 # structure of the selected model (or simply remove these lines altogether, although this may

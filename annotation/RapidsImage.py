@@ -10,7 +10,7 @@ workflow, providing an intuitive interface for creating precise segmentation
 masks and classifying river features.
 
 Key Features:
-- Interactive point-based annotation with SAM2 model integration
+- Interactive point-based annotation with Segment Anything Model (SAM2) integration
 - Real-time mask visualization with color overlays
 - Mouse event handling for positive/negative point placement
 - Dynamic text overlay for classification prompts
@@ -28,7 +28,7 @@ Visual Feedback:
 - Text box: Classification prompts and instructions
 
 Integration:
-- Works with SAM2 predictor models for automated segmentation
+- Works with Segment Anything Model (SAM2) predictor for automated segmentation
 - Supports multiple annotation modes (mask-only, rapid-only, combined)
 - Maintains annotation state for undo/redo operations
 - Handles real-time mask updates based on user input

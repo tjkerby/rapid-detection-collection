@@ -10,7 +10,7 @@ for creating ground truth data for river feature detection and rapid identificat
 Key Features:
 - Interactive image display with mouse-based mask annotation
 - Rapid classification (presence/absence of rapids)
-- UHJ (Upstream Hydraulic Jump) classification for standing waves
+- Undular Hydraulic Jump (UHJ) classification for standing waves
 - Combined mask and rapid labeling workflow
 - Progress tracking and resumable annotation sessions
 - Automatic metadata and timestamp logging
@@ -45,7 +45,7 @@ Output:
 - Binary mask files (.npy format) for segmentation annotations
 - Validation prompts for quality control
 
-The script integrates with SAM2 model predictions to assist with segmentation
+The script integrates with Segment Anything Model(SAM2) predictions to assist with segmentation
 and maintains detailed provenance information for all annotations.
 
 Dependencies:
