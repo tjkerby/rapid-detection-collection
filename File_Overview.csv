@@ -5,8 +5,6 @@ annotation,segmentation.py,Provides the main entry point for manual annotation w
 annotation,select_device.py,Handles automatic device selection and optimization configuration for PyTorch models specifically optimized for inference using one of Meta's Segment Anything Model 2 (SAM2) models with mixed precison and performance tuning.
 annotation,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in classifier folder.
 api/rapids.api,rapids.api.Rproj,R project root for code to access Google Maps application programming interfaces (APIs).
-api/rapids.api/code,kml_helpers.R,Defines helper functions for extracting data from the known rapids dataset Keyhole Markup Language (KML) files.
-api/rapids.api/code,kml_to_csv.R,Script to get coordinates of target images from KML files containing known rapids locations from the National Hydrography Dataset and OpenStreetMap.
 api/rapids.api/code,par_script.R,Driver script to download high-resolution satellite imagery from the Google Maps Static API with the option to increase performance using parallel processing.
 api/rapids.api/code,pull_maps_image.R,Defines a function to pull and save a single satellite image from the Google Maps Static API.
 api/rapids.api/code,sign.R,Implementation of API key signatures using a cryptographic hashing algorithm. Used to sign requests to the Google Maps Static API.

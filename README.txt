@@ -18,8 +18,6 @@ api
          - par_script.R: The driver R script used for accessing the API.
          - pull_maps_image.R: An R file containing a function for pulling and locally writing a single Maps Static API image.
          - sign.R: An R file containing a function implementing API key signatures using a cryptographic hashing algorithm. 
-         - kml_to_csv.R: An R script used to extract coordinates for the locations in the known rapids datasets using the xml2 package.
-         - kml_helpers.R: An R file containing helper functions for processing the known rapids datasets.
 
 To retrieve additional images from the API, follow these steps. 
 
