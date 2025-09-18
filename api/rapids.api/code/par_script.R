@@ -1,11 +1,11 @@
 # Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
 
-# This script downloads images from the Google Maps Static API given a CSV
-# of latitude and longitude coordinates. The images are written as JPEG files, 
-# and image metadata such as location, aerial zoom level, and time of download
-# are written to a CSV file. An option to run the code in parallel using the
-# future backend is provided, meaning that any parallelization strategy can be
-# used. 
+# This script downloads images from the Google Maps Static Application 
+# Programming Interface (API) given a CSV of latitude and longitude coordinates. 
+# The images are written as JPEG files, and image metadata such as location, 
+# aerial zoom level, and time of download are written to a CSV file. An option 
+# to run the code in parallel using the future backend is provided, meaning that 
+# any parallelization strategy can be used. 
 
 #-------------------------------------------------------------------------------
 library(base64enc)

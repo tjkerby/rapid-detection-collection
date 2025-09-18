@@ -2,15 +2,15 @@
 Device Selection and Optimization for PyTorch Models
 
 This utility module handles automatic device selection and optimization configuration
-for PyTorch models, specifically optimized for SAM2 (Segment Anything Model 2)
+for PyTorch models, specifically optimized for Segment Anything Model (SAM2)
 inference and training workflows.
 
 The module automatically detects available hardware and configures appropriate
 settings for optimal performance across different computing environments.
 
 Key Features:
-- Automatic CUDA/CPU device detection
-- GPU memory optimization for SAM2 models
+- Automatic Compute Unified Device Architecture (CUDA) & Central Processing Unit (CPU) device detection
+- GPU memory optimization for Segment Anything Model (SAM2) models
 - Platform-specific performance tuning
 - MPS (Apple Silicon) compatibility warnings
 - Automatic precision and backend optimization

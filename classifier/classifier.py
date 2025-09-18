@@ -5,7 +5,7 @@
 # convolutional neural network (CNN) model obtained from the timm library is used as the primary 
 # backbone for this model. This class was designed and tested to work with a ResNetv2_152 model, but
 # there is some flexibility in implementing other pretrained networks as well. Mixed precision is implemented
-# to speed up training on machines where CUDA is available. 
+# to speed up training on machines where Compute Unified Device Architecture (CUDA) is available.
 
 import csv
 import os 

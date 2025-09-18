@@ -1,7 +1,7 @@
 Folder,File,Description
 annotation,RapidsImage.py,Defines a class that handles interactive image display mouse-based annotation and real-time mask visualization for river segmentation and rapid classification tasks.
-annotation,label.py,Provides an interactive annotation interface for manually labeling river images with segmentation masks and rapid classifications  serving as the core labeling engine for creating ground truth data.
-annotation,segmentation.py,Provides the main entry point for manual annotation workflows, combining segmentation model integration with multiple annotation modes through a menu-driven interface.
+annotation,label.py,Provides an interactive annotation interface for manually labeling river images with segmentation masks and rapid classifications serving as the core labeling engine for creating ground truth data.
+annotation,segmentation.py,Provides the main entry point for manual annotation workflows combining segmentation model integration with multiple annotation modes through a menu-driven interface.
 annotation,select_device.py,Handles automatic device selection and optimization configuration for PyTorch models specifically optimized for inference using one of Meta's Segment Anything Model 2 (SAM2) models with mixed precison and performance tuning.
 annotation,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in classifier folder.
 api/rapids.api,rapids.api.Rproj,R project root for code to access Google Maps application programming interfaces (APIs).
@@ -16,3 +16,4 @@ maskingTool,finetuning.ipynb,Jupyter Notebook that takes a SAM2 model and finetu
 maskingTool,maskimages.py,Automatically generates predicted segmentation masks of rivers for a batch of images using a fine-tuned SAM2 model processing entire directories and outputting binary masks with confidence-based filtering and organized results structure.
 maskingTool,predict_new.ipynb,Jupyter Notebook that loads in the model trained in finetuning.ipynb and evaluates it on individual images and on the dataset as a whole.
 maskingTool,requirements.txt,Plain text list of Python package dependencies (and their versions) to ensure consistent environments by allowing others to install the exact libraries needed for code in maskingTool folder.
+

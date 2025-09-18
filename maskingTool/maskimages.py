@@ -2,7 +2,7 @@
 Automated River Segmentation Mask Generator
 
 This script automatically generates predicted segmentation masks of rivers for a batch of images
-using a fine-tuned SAM2 (Segment Anything Model 2) model. It processes all images in a specified
+using a fine-tuned Segment Anything Model 2 (SAM2). It processes all images in a specified
 directory and outputs binary masks highlighting detected river features.
 
 Key Features:

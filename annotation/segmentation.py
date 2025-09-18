@@ -7,7 +7,7 @@ This script provides the main entry point for manual annotation of river images,
 offering multiple annotation workflows for creating training data for river
 segmentation and rapid detection models.
 
-The script combines interactive segmentation using SAM2 (Segment Anything Model 2)
+The script combines interactive segmentation using Segment Anything Model (SAM2)
 with manual classification of river features, providing a comprehensive annotation
 platform for building high-quality datasets.
 
@@ -15,7 +15,7 @@ Annotation Workflows:
 1. Create Masks Only - Generate segmentation masks for river boundaries
 2. Label Rapids Only - Classify images for presence/absence of rapids
 3. Combined Workflow - Both segmentation and rapid classification
-4. Label Standing Waves - Classify UHJs (Upstream Hydraulic Jumps)
+4. Label Standing Waves - Classify Undular Hydraulic Jumps (UHJs)
 
 Setup Requirements:
 Before running, create a '.user.json' file in the project root with:
