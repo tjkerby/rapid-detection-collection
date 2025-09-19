@@ -13,7 +13,7 @@ Segmentation: Cameron Swapp, ORCID: 0009-0004-9019-1097
 Directories and files: 
 
 api
-   - rapids.api: An R project containing the code for downloading satellite imagery from the Google Maps Static API.
+   - rapids.api: An R project containing the code for downloading satellite imagery from the Google Maps Static Application Programming Interface (API).
       - code
          - par_script.R: The driver R script used for accessing the API.
          - pull_maps_image.R: An R file containing a function for pulling and locally writing a single Maps Static API image.
@@ -55,12 +55,14 @@ Platforms: The API code was developed on Microsoft Windows 11 Enterprise and add
 
 The annotation directory provides an interactive manual annotation system for creating ground truth data for river feature detection and rapid identification. The system combines segmentation mask creation with rapid classification workflows using SAM2 model integration.
 
+We note that this system allows for annotating a binary label for Undular Hydraulic Jumps (UHJs). These are a subset of rapids that are of high interest due to their shared information with river volume. We provide a setup for annotating these along with a small sample of labels for potential future research endeavors, even though they are not used in any of the methods of the present paper.
+
 Directories and files:
 annotation
    - label.py: The core labeling engine providing an interactive annotation interface for manually labeling river images with segmentation masks and rapid classifications, supporting multiple annotation modes (mask-only, rapid-only, combined, and UHJ classification).
-   - RapidsImage.py: A class that handles interactive image display, mouse-based annotation, and real-time mask visualization with SAM2 model integration for point-based segmentation assistance.
+   - RapidsImage.py: A class that handles interactive image display, mouse-based annotation, and real-time mask visualization with Meta's Segment Anything Model (SAM2) integration for point-based segmentation assistance.
    - segmentation.py: The main entry point providing a menu-driven interface for selecting annotation workflows, combining SAM2 model integration with multiple annotation modes and comprehensive metadata tracking.
-   - select_device.py: A utility module for automatic device selection and optimization configuration for PyTorch models, specifically optimized for SAM2 inference with CUDA/CPU detection and performance tuning.
+   - select_device.py: A utility module for automatic device selection and optimization configuration for PyTorch models, specifically optimized for SAM2 inference with Compute Unified Device Architecture / Central Processing Unit (CUDA/CPU) detection and performance tuning.
 
 Key Features:
 - Interactive point-based annotation with SAM2 model assistance
