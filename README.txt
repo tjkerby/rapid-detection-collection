@@ -55,7 +55,7 @@ Platforms: The API code was developed on Microsoft Windows 11 Enterprise and add
 
 The annotation directory provides an interactive manual annotation system for creating ground truth data for river feature detection and rapid identification. The system combines segmentation mask creation with rapid classification workflows using SAM2 model integration.
 
-We note that this system allows for annotating a binary label for Undular Hydraulic Jumps (UHJs). These are a subset of rapids that are of high interest due to their shared information with river volume. We provide a setup for annotating these along with a small sample of labels for potential future research endeavors, even though they are not used in any of the methods of the present paper.
+We note that this system supports annotating a binary label for Undular Hydraulic Jumps (UHJs), a subset of rapids of particular interest due to their relationship with river volume. We include both an annotation capability along with a small sample of labels to support future research, though these are not included in any of the methods of the present data release.
 
 Directories and files:
 annotation
