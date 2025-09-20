@@ -190,9 +190,9 @@ To perform rapids detection on the unlabeled images provided in the dataset, run
 
 8. Edit the file paths in rapids_predict.py with the local machine paths for the directory with the above tar files, the weights for a trained rapids classifier, and an output file directory. Select a model log name to identify the CSV containing the rapid predictions.
 
-9. Run the prediction script using: uv run rapids_predict.py
+9. Run the prediction script using: uv run rapids_predict.py The resulting CSV contains the predicted probability of the presence of rapids in each image. 
 
-The resulting CSV contains the predicted probability of the presence of rapids in each image.
+The script rapids_predict.py can effectively be used to obtain classifications for any and all images, whether labeled or not. We recognize that performance may differ (for better or worse) from the accuracy on our test data. Since our test set is spatially separate from the training and validation data, we would generally expect that using the trained model on unlabeled data would exceed the test results. Ideally, the test results would align nicely with unlabeled images beyond our dataset that may differ substantially in their geographic location, but this cannot be guaranteed. And it definitely is not a certainty for images differing in size or resolution.
 
 Associated files from CIRRUS data release:
    - rapids_label_dataset.tar: The training images for the rapids classifier. 
