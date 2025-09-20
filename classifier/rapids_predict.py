@@ -1,12 +1,21 @@
-# Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
-#
-# This file contains a script to predict the presence of rapids in a collection of satellite images of rivers. 
-# The model uses the RiverClassifier class from the file classifier.py. Data is loaded using the WebDataset 
-# library. Before running this script, the file paths below should be set to the actual locations of the files
-# on the user's machine. The tar files containing river images should be downloaded from the CIRRUS data release
-# and all placed in one directory (NOT extracted/unzipped). WebDataset is able to stream images directly from 
-# uncompressed tar files. The image key and predicted probability of rapids are written to a CSV file
-# in the directory specified by the artifact_dir variable below. 
+"""
+Rapids Prediction Script
+
+Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
+
+This file contains a script to predict the presence of rapids in a collection of satellite images of rivers. 
+The model uses the RiverClassifier class from the file classifier.py. Data is loaded using the WebDataset 
+library. Before running this script, the file paths below should be set to the actual locations of the files
+on the user's machine. The tar files containing river images should be downloaded from the CIRRUS data release
+and all placed in one directory (NOT extracted/unzipped). WebDataset is able to stream images directly from 
+uncompressed tar files. The image key and predicted probability of rapids are written to a CSV file
+in the directory specified by the artifact_dir variable below. 
+
+Dependencies:
+    - os, pathlib, dataclasses, typing
+    - torch, torchvision, torch.utils.data
+    - webdataset
+"""
 
 import os
 from pathlib import Path

@@ -1,11 +1,20 @@
-# Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
-#
-# This file contains a class definition for a RiverClassifier deep learning model, which can be used to predict
-# the presence of rapids in satellite imagery of rivers. The model itself is implemented using PyTorch. A pretrained
-# convolutional neural network (CNN) model obtained from the timm library is used as the primary 
-# backbone for this model. This class was designed and tested to work with a ResNetv2_152 model, but
-# there is some flexibility in implementing other pretrained networks as well. Mixed precision is implemented
-# to speed up training on machines where Compute Unified Device Architecture (CUDA) is available.
+"""
+Classifier Class for Rapids Detection
+
+Author name and contact: Nicholas Brimhall, ORCID: 0009-0008-7410-0166
+
+This file contains a class definition for a RiverClassifier deep learning model, which can be used to predict
+the presence of rapids in satellite imagery of rivers. The model itself is implemented using PyTorch. A pretrained
+convolutional neural network (CNN) model obtained from the timm library is used as the primary
+backbone for this model. This class was designed and tested to work with a ResNetv2_152 model, but
+there is some flexibility in implementing other pretrained networks as well. Mixed precision is implemented
+to speed up training on machines where Compute Unified Device Architecture (CUDA) is available.
+
+Dependencies:
+    - csv, os, contextlib, dataclasses
+    - torch, torch.nn, torch.optim, torch.nn.functional, torch.amp
+    - matplotlib.pyplot, timm
+"""
 
 import csv
 import os 

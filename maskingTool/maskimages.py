@@ -1,6 +1,8 @@
 """
 Automated River Segmentation Mask Generator
 
+Author Name and contact: Cameron Swapp, ORCID: 0009-0004-9019-1097
+
 This script automatically generates predicted segmentation masks of rivers for a batch of images
 using a fine-tuned Segment Anything Model 2 (SAM2). It processes all images in a specified
 directory and outputs binary masks highlighting detected river features.
@@ -37,7 +39,7 @@ automatic segmentation without requiring manual point prompts. Results are filte
 confidence score to ensure quality while preserving lower-confidence predictions for review.
 
 Dependencies:
-    - torch, numpy, opencv-python, tqdm, omegaconf
+    - torch, numpy, os, cv2, glob, tqdm, argparse, omegaconf
     - SAM2 model components (sam2.build_sam, sam2.sam2_image_predictor)
 """
 
